@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Regie_Phone</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="logo_text">武汉烟草移动办公平台</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="autologin">自动登录</string>
+</resources>
