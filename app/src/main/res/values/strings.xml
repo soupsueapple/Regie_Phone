@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Regie_Phone</string>
+    <string name="app_name">专卖移动办公平台</string>
     <string name="title_activity_base">BaseActivity</string>
     <string name="logo_text">武汉烟草移动办公平台</string>
     <string name="username">用户名</string>
