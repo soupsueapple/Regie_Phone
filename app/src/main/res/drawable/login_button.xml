@@ -2,10 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- (按钮按下时，或被点击时) -->
     <item android:state_pressed="true"
-        android:drawable="@mipmap/lgin_buttion_s" />
+        android:drawable="@drawable/login_button_s" />
         <!-- （焦点在button上，但没有按下） -->
     <item android:state_focused="true"
-        android:drawable="@mipmap/lgin_buttion_s" />
+        android:drawable="@drawable/login_button_s" />
          <!-- 默认情况 -->
-    <item android:drawable="@mipmap/lgin_buttion" />
+    <item android:drawable="@drawable/login_button" />
 </selector>

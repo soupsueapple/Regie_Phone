@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.keertech.regie_phone.LoginActivity"
-    android:background="@mipmap/backgroud"
+    android:background="@drawable/backgroud"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
 
@@ -14,7 +14,7 @@
         android:id="@+id/imageView"
         android:layout_width="68dp"
         android:layout_height="68dp"
-        app:srcCompat="@mipmap/logo"
+        app:srcCompat="@drawable/logo"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,8 +35,8 @@
 
     <EditText
         android:layout_width="304dp"
-        android:layout_height="37dp"
-        android:background="@mipmap/srk"
+        android:layout_height="45dp"
+
         android:hint="@string/username"
         android:layout_marginTop="32dp"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
@@ -47,8 +47,8 @@
     <EditText
         android:id="@+id/password_et"
         android:layout_width="304dp"
-        android:layout_height="37dp"
-        android:background="@mipmap/srk"
+        android:layout_height="45dp"
+
         android:hint="@string/password"
         android:layout_marginTop="26dp"
         app:layout_constraintTop_toBottomOf="@+id/username_et"
@@ -59,10 +59,14 @@
         android:id="@+id/is_auto_login_tv"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:background="@mipmap/not_auto_login"
-        tools:layout_editor_absoluteY="322dp"
+        android:background="@drawable/not_auto_login"
+        android:layout_marginEnd="14dp"
         app:layout_constraintRight_toLeftOf="@+id/auto_login_tv"
-        android:layout_marginRight="14dp" />
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/password_et"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/login_tv" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,8 +74,23 @@
         android:text="@string/autologin"
         android:textSize="16sp"
         android:id="@+id/auto_login_tv"
-        tools:layout_editor_absoluteY="331dp"
-        android:layout_marginRight="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/password_et"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/login_tv"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="@+id/password_et" />
+
+    <TextView
+        android:id="@+id/login_tv"
+        android:layout_width="304dp"
+        android:layout_height="37dp"
+        android:background="@drawable/login_button"
+        android:layout_marginTop="55dp"
+        app:layout_constraintTop_toBottomOf="@+id/password_et"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

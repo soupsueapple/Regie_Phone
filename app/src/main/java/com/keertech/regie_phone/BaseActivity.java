@@ -76,7 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     private void showBack(){
         //setNavigationIcon必须在setSupportActionBar(toolbar);方法后面加入
-        getToolbar().setNavigationIcon(R.mipmap.back);
+        getToolbar().setNavigationIcon(R.drawable.back);
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
