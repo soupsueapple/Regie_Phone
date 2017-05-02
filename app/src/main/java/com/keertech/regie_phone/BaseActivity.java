@@ -1,11 +1,15 @@
 package com.keertech.regie_phone;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.keertech.regie_phone.Utility.KeerAlertDialog;
 
 public abstract class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
@@ -32,6 +36,27 @@ public abstract class BaseActivity extends AppCompatActivity {
             //设置默认的标题不显示
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+    }
+
+    protected void showToast(String string, Context context) {
+
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage(string);
+            builder.setTitle("提示");
+            builder.setPositiveButton("确认", null);
+            builder.create().show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void showNetworkError(Context context) {
+        this.showToast("服务链接错误", context);
+    }
+
+    protected KeerAlertDialog showKeerAlertDialog(int strID){
+        return new KeerAlertDialog(this, getResources().getString(strID));
     }
 
     @Override
