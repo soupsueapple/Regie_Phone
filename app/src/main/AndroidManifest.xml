@@ -66,6 +66,9 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.XZFW.XZFWMainActivity"
+            android:screenOrientation="portrait"></activity>
+
         <activity android:name=".Activity.SystemSetting.SystemSettingActivity"
             android:screenOrientation="portrait"></activity>
     </application>

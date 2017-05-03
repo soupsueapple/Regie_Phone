@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.keertech.regie_phone.Activity.SystemSetting.SystemSettingActivity;
+import com.keertech.regie_phone.Activity.XZFW.XZFWMainActivity;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Models.Apps;
 import com.keertech.regie_phone.Models.TerraceApp;
@@ -386,7 +387,8 @@ public class MainActivity extends BaseActivity {
 
                     switch (name){
                         case "行政服务":
-
+                            intent = new Intent(MainActivity.this, XZFWMainActivity.class);
+                            startActivity(intent);
                             break;
                         case "问题核查":
 

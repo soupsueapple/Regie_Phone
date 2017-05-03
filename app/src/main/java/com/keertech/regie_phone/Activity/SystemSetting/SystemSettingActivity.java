@@ -33,7 +33,7 @@ import java.util.List;
  * Created by soup on 2017/5/3.
  */
 
-public class SystemSettingActivity extends BaseActivity{
+public class SystemSettingActivity extends BaseActivity {
 
     private ListView listView;
 

@@ -8,8 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="titleTextColor">@color/white</item>
-        <item name="actionMenuTextColor">@color/white</item>
+        <item name="titleTextColor">@color/color_white</item>
+        <item name="actionMenuTextColor">@color/color_white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
