@@ -1,41 +1,87 @@
 package com.keertech.regie_phone;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    private static final String TAG = BaseActivity.class.getSimpleName();
-    private TextView mToolbarTitle;
+    private LinearLayout contentView = null;
     private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
+        setContentView(R.layout.activity_base);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        mToolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-
         if (mToolbar != null) {
             //将Toolbar显示到界面
             setSupportActionBar(mToolbar);
         }
-        if (mToolbarTitle != null) {
-            //getTitle()的值是activity的android:lable属性值
-            mToolbarTitle.setText(getTitle());
-            //设置默认的标题不显示
+    }
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+
+        if (contentView == null && R.layout.activity_base == layoutResID) {
+            super.setContentView(R.layout.activity_base);
+            contentView = (LinearLayout) findViewById(R.id.layout_center);
+            contentView.removeAllViews();
+
+        } else if (layoutResID != R.layout.activity_base) {
+            View addView = LayoutInflater.from(this).inflate(layoutResID, null);
+            contentView.addView(addView, new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+            //不要改变下面三者的顺序
+            beforeSetActionBar();
+            afterSettingActionBar();
+
+        }
+    }
+
+    public void beforeSetActionBar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setEnabled(true);
+    }
+
+
+
+    private void afterSettingActionBar() {
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            //隐藏标题栏
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    protected void setToolbarTitle(String title){
+        getToolbar().setTitle(title);
+    }
+
+
+    public void showBack(){
+        mToolbar.setNavigationIcon(R.drawable.back);
     }
 
     protected void showToast(String string, Context context) {
@@ -62,33 +108,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        /**
-         * 判断是否有Toolbar,并默认显示返回按钮
-         */
-        if(null != getToolbar() && isShowBacking()){
-            showBack();
-        }
-    }
-
-    /**
-     * 获取头部标题的TextView
-     * @return
-     */
-    public TextView getToolbarTitle(){
-        return mToolbarTitle;
-    }
-
-    /**
-     * 设置头部标题
-     * @param title
-     */
-    public void setToolBarTitle(CharSequence title) {
-        if(mToolbarTitle != null){
-            mToolbarTitle.setText(title);
-        }else{
-            getToolbar().setTitle(title);
-            setSupportActionBar(getToolbar());
-        }
     }
 
     /**
@@ -97,37 +116,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @return support.v7.widget.Toolbar.
      */
     public Toolbar getToolbar() {
-        return (Toolbar) findViewById(R.id.toolbar);
+        return mToolbar;
     }
-
-    /**
-     * 版本号小于21的后退按钮图片
-     */
-    private void showBack(){
-        //setNavigationIcon必须在setSupportActionBar(toolbar);方法后面加入
-        getToolbar().setNavigationIcon(R.drawable.back);
-        getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-    }
-
-    /**
-     * 是否显示后退按钮,默认显示,可在子类重写该方法.
-     * @return
-     */
-    protected boolean isShowBacking(){
-        return true;
-    }
-
-    /**
-     * this activity layout res
-     * 设置layout布局,在子类重写该方法.
-     * @return res layout xml id
-     */
-    protected abstract int getLayoutId();
 
 
 }

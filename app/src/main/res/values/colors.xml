@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#137c03</color>
+    <color name="colorPrimaryDark">#137c03</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+
+    <color name="location_countdown">#ca000000</color>
+    <color name="color_transparent">#00000000</color>
+
+    <color name="color_black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="blue">#a5e6f2</color>
+    <color name="light_blue">#d6edf1</color>
+    <color name="orange">#ffe09e</color>
+    <color name="dark_orange">#ff8200</color>
+    <color name="gray">#ccc</color>
+    <color name="light_gray">#f0f0f0</color>
+
+    <color name="inspection_button_backgrond">#f6f6f6</color>
+    <color name="gray_green">#137c03</color>
+    <color name="tint_green">#e7f7dd</color>
+    <color name="tint_green_line">#92cc89</color>
+    <color name="middle_green">#9deb6a</color>
+    <color name="middle_green_line">#2c971f</color>
+    <color name="button_green">#43bb2d</color>
+    <color name="gray_black">#696969</color>
+    <color name="gray_white">#f4f4f4</color>
+    <color name="gray_blue">#1239be</color>
+
+    <color name="tint_orange">#fa9018</color>
 </resources>

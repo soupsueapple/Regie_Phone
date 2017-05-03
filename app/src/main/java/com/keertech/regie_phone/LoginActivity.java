@@ -2,6 +2,8 @@ package com.keertech.regie_phone;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,12 +11,13 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.keertech.regie_phone.Constant.Constant;
+import com.keertech.regie_phone.Models.Apps;
 import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
@@ -29,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static com.keertech.regie_phone.R.id.password_et;
@@ -71,7 +75,12 @@ public class LoginActivity extends BaseActivity{
     private CheckBox autoLoginCb;
     private TextView loginTv;
 
+    private int apkId = 2;
+    private ArrayList<Apps> apps = new ArrayList<>();
+
     private void assignViews() {
+        getToolbar().setVisibility(View.GONE);
+
         usernameEt = (EditText) findViewById(username_et);
         passwordEt = (EditText) findViewById(password_et);
         autoLoginCb = (CheckBox) findViewById(R.id.auto_login_cb);
@@ -83,16 +92,42 @@ public class LoginActivity extends BaseActivity{
                 doLogin();
             }
         });
+
+        autoLoginCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    if (!StringUtility.isEmpty(usernameEt.getText().toString())
+                            && !StringUtility.isEmpty(passwordEt.getText().toString()))
+                        StringUtility.putSharedPreferences(LoginActivity.this, Constant.SharedPreferencesLogin,
+                                Constant.SharedPreferencesLoginKey, true);
+                } else {
+                    StringUtility.putSharedPreferences(LoginActivity.this, Constant.SharedPreferencesLogin,
+                            Constant.SharedPreferencesLoginKey, false);
+                }
+            }
+        });
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        setContentView(R.layout.activity_login);
 
         assignViews();
+
+        PackageInfo packageInfo;
+
+        try {
+            packageInfo = this.getPackageManager().getPackageInfo(
+                    "com.qihoo360.mobilesafe", 0);
+            if(packageInfo != null){
+                showToast("请卸载360,以免频繁离线影响考核成绩", this);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         if(isMarshmallow()){
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET)
@@ -231,11 +266,6 @@ public class LoginActivity extends BaseActivity{
         }
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_login;
-    }
-
     private void doLogin(){
         if(usernameEt.getText().toString().length() == 0){
             LoginActivity.this.showToast("请输入用户名", this);
@@ -275,6 +305,26 @@ public class LoginActivity extends BaseActivity{
                         String userId = response.getString("userId");
                         Constant.userId = userId;
                         StringUtility.putSharedPreferences(getApplicationContext(), "id", "id", userId);
+
+                        JSONArray datas = response.getJSONArray("data");
+
+                        for (int i = 0; i < datas.length(); i++) {
+                            JSONObject object = datas.getJSONObject(i);
+
+                            Apps app = new Apps(new Integer(object.getString("id")), object.getString("apkName"), object.getString("name"), object.getString("apkUrl"), object.getString("apkEntry"), object.getString("apkVer"), object.getString("createdDate"), new Integer(object.getString("apkSize")), object.getString("modifiedDate"), new Integer(object.getString("version")));
+
+                            if (app.getId() != apkId) apps.add(app);
+                        }
+
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("apps", apps);
+                        intent.putExtra("apkId", apkId);
+                        intent.putExtra("username", usernameEt.getText().toString());
+                        intent.putExtra("password", passwordEt.getText().toString());
+                        startActivity(intent);
+
+                        finish();
+
                     } else {
                         LoginActivity.this.showToast(response.getString("message"), LoginActivity.this);
                     }

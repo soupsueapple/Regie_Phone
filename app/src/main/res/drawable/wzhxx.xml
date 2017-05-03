@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- (按钮按下时，或被点击时) -->
+    <item android:state_pressed="true"
+        android:drawable="@drawable/wzhxx1" />
+        <!-- （焦点在button上，但没有按下） -->
+    <item android:state_focused="true"
+        android:drawable="@drawable/wzhxx1" />
+         <!-- 默认情况 -->
+    <item android:drawable="@drawable/wzhxx0" />
+</selector>

@@ -4,9 +4,9 @@
 
     <item android:id="@+id/main_action_myaccount"
         android:title="我的帐号"
-        app:showAsAction="always"/>
+        />
 
     <item android:id="@+id/main_action_exit"
         android:title="安全退出"
-        app:showAsAction="always"/>
+        />
 </menu>
