@@ -25,6 +25,7 @@ import com.keertech.regie_phone.Models.TerraceApp;
 import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
+import com.keertech.regie_phone.Utility.VibrateHelp;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -384,6 +385,8 @@ public class MainActivity extends BaseActivity {
                 public void onClick(View view) {
                     Intent intent;
                     Bundle bundle = new Bundle();
+
+                    VibrateHelp.vSimple(view.getContext());
 
                     switch (name){
                         case "行政服务":

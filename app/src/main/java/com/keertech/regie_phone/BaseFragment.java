@@ -12,6 +12,8 @@ import com.keertech.regie_phone.Utility.KeerAlertDialog;
 
 public class BaseFragment extends Fragment{
 
+
+
     protected void showToast(String string, Context context) {
 
         try {

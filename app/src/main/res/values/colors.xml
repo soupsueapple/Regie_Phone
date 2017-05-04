@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#137c03</color>
     <color name="colorPrimaryDark">#137c03</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#137c03</color>
     <color name="black">#000000</color>
 
     <color name="location_countdown">#ca000000</color>

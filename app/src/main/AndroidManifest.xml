@@ -13,6 +13,7 @@
 
     <!-- sdcard状态监听所需权限begin -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- sdcard状态监听所需权限end -->
 
@@ -71,6 +72,14 @@
 
         <activity android:name=".Activity.SystemSetting.SystemSettingActivity"
             android:screenOrientation="portrait"></activity>
+
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
+        </service>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="x2Am9qdyhGSz0Gm0frlYYxLCZqSfFiN0" />
+
     </application>
 
 

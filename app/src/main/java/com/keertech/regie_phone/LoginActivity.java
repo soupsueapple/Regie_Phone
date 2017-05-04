@@ -21,6 +21,7 @@ import com.keertech.regie_phone.Models.Apps;
 import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
+import com.keertech.regie_phone.Utility.VibrateHelp;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.zhy.m.permission.MPermissions;
@@ -69,6 +70,7 @@ public class LoginActivity extends BaseActivity{
     private static final int WAKE_LOCK = 23;
     private static final int WRITE_SETTINGS = 24;
     private static final int DISABLE_KEYGUARD = 25;
+    private static final int READ_EXTERNAL_STORAGE = 26;
 
     private EditText usernameEt;
     private EditText passwordEt;
@@ -89,6 +91,8 @@ public class LoginActivity extends BaseActivity{
         loginTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                VibrateHelp.vSimple(view.getContext());
+
                 doLogin();
             }
         });
@@ -231,6 +235,10 @@ public class LoginActivity extends BaseActivity{
 
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.DISABLE_KEYGUARD) != PackageManager.PERMISSION_GRANTED){
                 MPermissions.requestPermissions(this, DISABLE_KEYGUARD, Manifest.permission.DISABLE_KEYGUARD);
+            }
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                MPermissions.requestPermissions(this, READ_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
             }
 
         }

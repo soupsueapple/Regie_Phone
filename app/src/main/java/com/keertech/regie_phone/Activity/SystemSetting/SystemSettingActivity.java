@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.keertech.regie_phone.Adapter.SetAdapter;
 import com.keertech.regie_phone.BaseActivity;
 import com.keertech.regie_phone.Constant.Constant;
+import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.Models.TerraceApp;
 import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.R;
@@ -164,9 +165,10 @@ public class SystemSettingActivity extends BaseActivity {
             holder.appusername_tv.setText(StringUtility.isEmpty(app.getUsername())?"":app.getUsername());
             holder.apppassword_tv.setText(StringUtility.isEmpty(app.getPassword())?"":app.getPassword());
 
-            holder.appedit_tv.setOnClickListener(new View.OnClickListener() {
+            holder.appedit_tv.setOnClickListener(new ViewClickVibrate() {
                 @Override
                 public void onClick(View v) {
+                    super.onClick(v);
 
                     View layout = inflater.inflate(R.layout.custom_edit_dialog, (ViewGroup)findViewById(R.id.custom_dialog));
                     final EditText username = (EditText)layout.findViewById(R.id.dialog_username_ed);
@@ -235,9 +237,11 @@ public class SystemSettingActivity extends BaseActivity {
                 }
             });
 
-            holder.jiebang_tv.setOnClickListener(new View.OnClickListener() {
+            holder.jiebang_tv.setOnClickListener(new ViewClickVibrate() {
                 @Override
                 public void onClick(View v) {
+                    super.onClick(v);
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setMessage("是否要解除" + app.getAppname() + "的账号绑定");
                     builder.setTitle("提示");
