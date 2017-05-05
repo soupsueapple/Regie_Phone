@@ -59,9 +59,10 @@ public class XZFWMainActivity extends BaseFragmentActivity implements View.OnCli
         refresh_fab = (TextView) findViewById(R.id.refresh_fab);
 
         title_tv.setText("日常服务");
-        back_tv.setOnClickListener(new View.OnClickListener() {
+        back_tv.setOnClickListener(new ViewClickVibrate() {
             @Override
             public void onClick(View view) {
+                super.onClick(view);
                 finish();
             }
         });
@@ -75,6 +76,9 @@ public class XZFWMainActivity extends BaseFragmentActivity implements View.OnCli
             @Override
             public void onClick(View view) {
                 super.onClick(view);
+
+                Intent intent = new Intent(XZFWMainActivity.this, MyLocationMapActivity.class);
+                startActivity(intent);
 
             }
         });

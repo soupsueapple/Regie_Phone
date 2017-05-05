@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -67,9 +68,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             //隐藏标题栏
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mToolbar.setNavigationOnClickListener(new ViewClickVibrate() {
             @Override
             public void onClick(View v) {
+                super.onClick(v);
                 finish();
             }
         });

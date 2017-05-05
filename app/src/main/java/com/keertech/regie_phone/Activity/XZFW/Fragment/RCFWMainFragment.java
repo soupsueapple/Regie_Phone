@@ -2,6 +2,7 @@ package com.keertech.regie_phone.Activity.XZFW.Fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.keertech.regie_phone.Activity.XZFW.RCFW.ServiceInfoAcitvity;
 import com.keertech.regie_phone.BaseFragment;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
@@ -64,6 +67,7 @@ public class RCFWMainFragment extends BaseFragment{
     private RecyclerView recyclerView;
     private FloatingActionButton searchFab;
 
+    ArrayList<JSONObject> allDatas = new ArrayList<>();
     ArrayList<JSONObject> datas = new ArrayList<>();
     private ArrayList<JSONObject> wxcdatas = new ArrayList<>();
     private ArrayList<JSONObject> ycdatas = new ArrayList<>();
@@ -120,6 +124,32 @@ public class RCFWMainFragment extends BaseFragment{
         recyclerAdapter = new RecyclerAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerAdapter);
+
+        wsckhCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    datas = wxcdatas;
+                    recyclerAdapter.notifyDataSetChanged();
+                }else{
+                    datas = allDatas;
+                    recyclerAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        ycCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    datas = ycdatas;
+                    recyclerAdapter.notifyDataSetChanged();
+                }else{
+                    datas = allDatas;
+                    recyclerAdapter.notifyDataSetChanged();
+                }
+            }
+        });
 
         sqLl.setOnClickListener(new ViewClickVibrate(){
 
@@ -221,7 +251,7 @@ public class RCFWMainFragment extends BaseFragment{
                                     drafts += 1;
                                 }
 
-                                datas.add(object);
+                                allDatas.add(object);
 
                                 int num = object.getInt("num");
                                 int targetNum = object.getInt("targetNum");
@@ -241,6 +271,8 @@ public class RCFWMainFragment extends BaseFragment{
 
                             }
 
+
+                            datas = allDatas;
 
                             Collections.sort(datas, comparator_jl2);
                             Collections.sort(wxcdatas, comparator_jl2);
@@ -435,6 +467,8 @@ public class RCFWMainFragment extends BaseFragment{
                 final int dsfAbnormalFlag = object.getInt("dsfAbnormalFlag");
                 final int lotteryAbnormalFlag = object.getInt("lotteryAbnormalFlag");
 
+                final String inspectWeekId = object.getString("inspectWeekId");
+
                 if(num < targetNum) holder.csTv.setTextColor(getActivity().getResources().getColor(R.color.red));
                 else holder.csTv.setTextColor(getActivity().getResources().getColor(R.color.color_black));
 
@@ -447,6 +481,39 @@ public class RCFWMainFragment extends BaseFragment{
                 holder.xmTv.setText(chargerName);
                 holder.sqTv.setText(communityName);
                 holder.csTv.setText(num + "/" + targetNum);
+
+                holder.jd_tv.setOnClickListener(new ViewClickVibrate(){
+
+                    @Override
+                    public void onClick(View view) {
+                        super.onClick(view);
+
+                        if (zjAbnormalFlag == 1 || jyAbnormalFlag == 1 || apcdAbnormalFlag == 1 || dsfAbnormalFlag == 1 || lotteryAbnormalFlag == 1) {
+
+                            try {
+                                loadyc(object);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }else {
+
+                            Intent intent = new Intent(getActivity(), ServiceInfoAcitvity.class);
+                            intent.putExtra("customerId", customerId);
+                            intent.putExtra("liceNo", liceNo);
+                            intent.putExtra("latitude", latitude);
+                            intent.putExtra("longitude", longitude);
+                            intent.putExtra("zjAbnormalFlag", zjAbnormalFlag);
+                            intent.putExtra("jyAbnormalFlag", jyAbnormalFlag);
+                            intent.putExtra("apcdAbnormalFlag", apcdAbnormalFlag);
+                            intent.putExtra("dsfAbnormalFlag", dsfAbnormalFlag);
+                            intent.putExtra("lotteryAbnormalFlag", lotteryAbnormalFlag);
+                            intent.putExtra("inspectWeekId", inspectWeekId);
+                            RCFWMainFragment.this.startActivity(intent);
+
+                        }
+                    }
+                });
 
 
                 if(distance == null) holder.jlTv.setText("--"); else  holder.jlTv.setText(distance + "米");
@@ -479,7 +546,7 @@ public class RCFWMainFragment extends BaseFragment{
 
                 if ((bdlongitude == 0 && bdlatitude == 0) || distance > Constant.INTO_SHOP || distance == null){
 
-                    holder.jd_tv.setVisibility(View.GONE);
+//                    holder.jd_tv.setVisibility(View.GONE);
 
                     holder.xkzhTv.setTextColor(getResources().getColor(R.color.red));
 
@@ -488,20 +555,20 @@ public class RCFWMainFragment extends BaseFragment{
                     if (drafts > 0){
                         if (s.length() > 0){
 
-                            holder.jd_tv.setVisibility(View.VISIBLE);
+//                            holder.jd_tv.setVisibility(View.VISIBLE);
 
                             holder.xkzhTv.setTextColor(getResources().getColor(R.color.color_black));
 
                         }else{
 
-                            holder.jd_tv.setVisibility(View.GONE);
+//                            holder.jd_tv.setVisibility(View.GONE);
 
                             holder.xkzhTv.setTextColor(getResources().getColor(R.color.red));
 
                         }
                     }else{
 
-                        holder.jd_tv.setVisibility(View.VISIBLE);
+//                        holder.jd_tv.setVisibility(View.VISIBLE);
 
                         holder.xkzhTv.setTextColor(getResources().getColor(R.color.color_black));
 
@@ -566,24 +633,27 @@ public class RCFWMainFragment extends BaseFragment{
                                 builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-//                                        Intent intent = new Intent(DiaryMainFragment.this.getActivity(), EntranceActivity.class);
-//                                        intent.putExtra("customerId", customerId);
-//                                        intent.putExtra("liceNo", liceNo);
-//                                        intent.putExtra("latitude", latitude);
-//                                        intent.putExtra("longitude", longitude);
-//                                        intent.putExtra("zjAbnormalFlag", zjAbnormalFlag);
-//                                        intent.putExtra("jyAbnormalFlag", jyAbnormalFlag);
-//                                        intent.putExtra("apcdAbnormalFlag", apcdAbnormalFlag);
-//                                        intent.putExtra("dsfAbnormalFlag", dsfAbnormalFlag);
-//                                        intent.putExtra("lotteryAbnormalFlag", lotteryAbnormalFlag);
-//
-//                                        intent.putExtra("zjAbnormal", zjAbnormal);
-//                                        intent.putExtra("jyAbnormal", jyAbnormal);
-//                                        intent.putExtra("apcdAbnormal", apcdAbnormal);
-//                                        intent.putExtra("dsfAbnormal", dsfAbnormal);
-//                                        intent.putExtra("lotteryAbnormal", lotteryAbnormal);
-//                                        intent.putExtra("inspectWeekId", inspectWeekId);
-//                                        DiaryMainFragment.this.startActivity(intent);
+
+                                        Intent intent = new Intent(getActivity(), ServiceInfoAcitvity.class);
+                                        intent.putExtra("customerId", customerId);
+                                        intent.putExtra("liceNo", liceNo);
+                                        intent.putExtra("latitude", latitude);
+                                        intent.putExtra("longitude", longitude);
+                                        intent.putExtra("zjAbnormalFlag", zjAbnormalFlag);
+                                        intent.putExtra("jyAbnormalFlag", jyAbnormalFlag);
+                                        intent.putExtra("apcdAbnormalFlag", apcdAbnormalFlag);
+                                        intent.putExtra("dsfAbnormalFlag", dsfAbnormalFlag);
+                                        intent.putExtra("lotteryAbnormalFlag", lotteryAbnormalFlag);
+                                        intent.putExtra("inspectWeekId", inspectWeekId);
+
+                                        intent.putExtra("zjAbnormal", zjAbnormal);
+                                        intent.putExtra("jyAbnormal", jyAbnormal);
+                                        intent.putExtra("apcdAbnormal", apcdAbnormal);
+                                        intent.putExtra("dsfAbnormal", dsfAbnormal);
+                                        intent.putExtra("lotteryAbnormal", lotteryAbnormal);
+                                        intent.putExtra("inspectWeekId", inspectWeekId);
+
+                                        RCFWMainFragment.this.startActivity(intent);
                                     }
                                 });
                                 builder.create().show();
@@ -747,12 +817,8 @@ public class RCFWMainFragment extends BaseFragment{
 
                         if(isMc) {
                             isMc = false;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.jx);
                         }else{
                             isMc = true;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.sx);
                         }
 
                         if(wsckhCb.isChecked()){
@@ -776,8 +842,6 @@ public class RCFWMainFragment extends BaseFragment{
 
                         if(isXkz) {
                             isXkz = false;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.jx);
 
                             if(wsckhCb.isChecked()){
                                 Collections.sort(wxcdatas, comparator_zh1);
@@ -794,8 +858,6 @@ public class RCFWMainFragment extends BaseFragment{
                             }
                         }else{
                             isXkz = true;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.sx);
 
                             if(wsckhCb.isChecked()){
                                 Collections.sort(wxcdatas, comparator_zh2);
@@ -822,12 +884,8 @@ public class RCFWMainFragment extends BaseFragment{
 
                         if(isJyr) {
                             isJyr = false;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.jx);
                         } else {
                             isJyr = true;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.sx);
                         }
 
                         if(wsckhCb.isChecked()){
@@ -854,12 +912,8 @@ public class RCFWMainFragment extends BaseFragment{
 
                         if(isSheQu) {
                             isSheQu = false;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.jx);
                         } else {
                             isSheQu = true;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.sx);
                         }
 
                         if(wsckhCb.isChecked()){
@@ -886,8 +940,6 @@ public class RCFWMainFragment extends BaseFragment{
 
                         if(isXccs) {
                             isXccs = false;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.jx);
 
 
                             if(wsckhCb.isChecked()){
@@ -902,9 +954,6 @@ public class RCFWMainFragment extends BaseFragment{
                             }
                         }else{
                             isXccs = true;
-
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.sx);
 
                             if(wsckhCb.isChecked()){
                                 Collections.sort(wxcdatas, comparator_xccs1);
@@ -927,8 +976,6 @@ public class RCFWMainFragment extends BaseFragment{
 
                         if(isJl) {
                             isJl = false;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.jx);
 
                             if(wsckhCb.isChecked()){
                                 Collections.sort(wxcdatas, comparator_jl1);
@@ -945,8 +992,6 @@ public class RCFWMainFragment extends BaseFragment{
                             }
                         }else{
                             isJl = true;
-                            px_tv.setVisibility(View.VISIBLE);
-                            px_tv.setBackgroundResource(R.drawable.sx);
 
                             if(wsckhCb.isChecked()){
                                 Collections.sort(wxcdatas, comparator_jl2);

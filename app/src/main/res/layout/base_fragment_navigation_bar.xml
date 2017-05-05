@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/title_tv"
         android:text="title"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="30dp"
         android:layout_gravity="center"
         android:textSize="20sp"
         android:textColor="@color/color_white"/>

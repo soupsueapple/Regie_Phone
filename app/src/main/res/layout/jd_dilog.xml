@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/dialog">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="异常类型："
+            android:textColor="@color/gray_green"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/jd_dilog_gkbm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="公开摆卖"
+                android:textSize="18sp"/>
+
+            <CheckBox
+                android:id="@+id/jd_dilog_ajsm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暗中售卖"
+                android:textSize="18sp"/>
+
+            <CheckBox
+                android:id="@+id/jd_dilog_xsjy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="销售假烟"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_black"></LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+        <LinearLayout
+            android:id="@+id/jd_dilog_pg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="品         规："
+                android:textColor="@color/gray_green"/>
+
+            <TextView
+                android:layout_marginTop="6dp"
+                android:id="@+id/jd_dilog_tv1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="请选择"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/jd_dilog_sl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="数         量："
+                android:textColor="@color/gray_green"/>
+
+            <EditText
+                android:id="@+id/jd_dilog_ed2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="条"
+                android:textColor="@color/gray_green"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

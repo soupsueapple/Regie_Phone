@@ -73,6 +73,12 @@
         <activity android:name=".Activity.SystemSetting.SystemSettingActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.XZFW.MyLocationMapActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.XZFW.RCFW.ServiceInfoAcitvity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 
