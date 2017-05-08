@@ -21,7 +21,7 @@ public class StringUtility {
     }
 
     public static boolean isEmpty(String str){
-        if(str != null && str.length() > 0 && !"".equals(str)) return false;
+        if(str != null && str.length() > 0 && !"".equals(str) && !"null".equals(str)) return false;
 
         return true;
     }
@@ -92,6 +92,13 @@ public class StringUtility {
     public static float getSharedPreferencesForFloat(Context context, String where, String key){
         SharedPreferences sharedPreferences = StringUtility.getSharedPreferences(context, where);
         return sharedPreferences.getFloat(key, 0.0f);
+    }
+
+    public static void cleanSharedPreferences(Context context, String where){
+        SharedPreferences sharedPreferences = StringUtility.getSharedPreferences(context, where);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
     }
 
 }

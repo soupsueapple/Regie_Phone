@@ -2,10 +2,17 @@ package com.keertech.regie_phone.Activity.XZFW.RCFW;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.SystemClock;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -17,16 +24,36 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.keertech.core.json.Json;
 import com.keertech.regie_phone.BaseActivity;
+import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
+import com.keertech.regie_phone.Models.CustomerInfo;
+import com.keertech.regie_phone.Models.Image;
 import com.keertech.regie_phone.Models.MarketInspect;
 import com.keertech.regie_phone.Models.MarketInspectCig;
+import com.keertech.regie_phone.Network.HttpClient;
+import com.keertech.regie_phone.Observer.ScreenObserver;
 import com.keertech.regie_phone.R;
+import com.keertech.regie_phone.Utility.DateTimeUtil;
+import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.keertech.regie_phone.R.id.shopname_tv;
 
 /**
  * Created by soup on 2017/5/5.
@@ -54,6 +81,8 @@ public class ServiceInfoAcitvity extends BaseActivity{
 
     private HashMap<String, String> brandMap = new HashMap<>();
 
+    JSONObject data;
+
     private String customerId = "";
 
     private TextView shopnameTv;
@@ -61,10 +90,11 @@ public class ServiceInfoAcitvity extends BaseActivity{
     private TextView address;
     private TextView nameTv;
     private TextView phoneTv;
-    private TextView randomAbnormalTv;
+    private TextView third_abnormal_tv;
     private TextView licenseAbnormalTv;
     private TextView businessAbnormalTv;
     private TextView apceAbnormalTv;
+    private TextView random_abnormal_tv;
     private TextView takeEvidenceTv;
     private Chronometer chronometer;
     private TextView addAbnormalInfoTv;
@@ -84,19 +114,52 @@ public class ServiceInfoAcitvity extends BaseActivity{
     private RadioButton publicityRuleYesRb;
     private RadioButton publicityRuleNoRb;
     private EditText otherAbnormalInfoEt;
+    private EditText apcd_abnormal_info_et;
     private TextView outshopTv;
     private TextView markCheckTargetTv;
+    private LinearLayout apcd_ll;
 
-    private void assignViews() {
-        shopnameTv = (TextView) findViewById(R.id.shopname_tv);
+    String inspectWeekId  = "";
+
+    private String liceNo = "";
+
+    private String zjAbnormal = "";
+    private String jyAbnormal = "";
+    private String apcdAbnormal = "";
+    private String dsfAbnormal = "";
+    private String lotteryAbnormal = "";
+
+    private int apcdAbnormalFlag = 0;
+    private int zjAbnormalFlag = 0;
+    private int dsfAbnormalFlag = 0;
+    private int jyAbnormalFlag = 0;
+    private int lotteryAbnormalFlag = 0;
+
+    boolean isOutShop;
+
+    private final static int MTZ = 99;
+    private final static int ZJZ = 98;
+
+    private boolean unlocation = false;
+
+    private ArrayList<Image> mtzUris;
+    private ArrayList<Image> zjzUris;
+
+    private int onFailure = 0;
+
+    private ScreenObserver mScreenObserver;
+
+    private void assignViews(Bundle savedInstanceState) {
+        shopnameTv = (TextView) findViewById(shopname_tv);
         licenseTv = (TextView) findViewById(R.id.license_tv);
         address = (TextView) findViewById(R.id.address);
         nameTv = (TextView) findViewById(R.id.name_tv);
         phoneTv = (TextView) findViewById(R.id.phone_tv);
-        randomAbnormalTv = (TextView) findViewById(R.id.random_abnormal_tv);
+        third_abnormal_tv = (TextView) findViewById(R.id.third_abnormal_tv);
         licenseAbnormalTv = (TextView) findViewById(R.id.license_abnormal_tv);
         businessAbnormalTv = (TextView) findViewById(R.id.business_abnormal_tv);
         apceAbnormalTv = (TextView) findViewById(R.id.apce_abnormal_tv);
+        random_abnormal_tv = (TextView) findViewById(R.id.random_abnormal_tv);
         takeEvidenceTv = (TextView) findViewById(R.id.take_evidence_tv);
         chronometer = (Chronometer) findViewById(R.id.chronometer);
         addAbnormalInfoTv = (TextView) findViewById(R.id.add_abnormal_info_tv);
@@ -116,8 +179,10 @@ public class ServiceInfoAcitvity extends BaseActivity{
         publicityRuleYesRb = (RadioButton) findViewById(R.id.publicity_rule_yes_rb);
         publicityRuleNoRb = (RadioButton) findViewById(R.id.publicity_rule_no_rb);
         otherAbnormalInfoEt = (EditText) findViewById(R.id.other_abnormal_info_et);
+        apcd_abnormal_info_et = (EditText) findViewById(R.id.apcd_abnormal_info_et);
         outshopTv = (TextView) findViewById(R.id.outshop_tv);
         markCheckTargetTv = (TextView) findViewById(R.id.mark_check_target_tv);
+        apcd_ll = (LinearLayout) findViewById(R.id.apcd_ll);
 
         abnormalInfoRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         abnormalInfoRecyclerview.setAdapter(recyclerAdapter);
@@ -128,6 +193,771 @@ public class ServiceInfoAcitvity extends BaseActivity{
             public void onClick(View view) {
                 super.onClick(view);
                 customDialog();
+            }
+        });
+
+        takeEvidenceTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                Intent intent = new Intent(ServiceInfoAcitvity.this, ImageActivity.class);
+                intent.putExtra("isSingle", false);
+                intent.putExtra("liceNo", liceNo);
+                if (zjzUris != null) intent.putExtra("zjzUris", zjzUris);
+                startActivityForResult(intent, ZJZ);
+            }
+        });
+
+        third_abnormal_tv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                if(!StringUtility.isEmpty(dsfAbnormal)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceInfoAcitvity.this);
+                    builder.setMessage(dsfAbnormal);
+                    builder.setTitle("第三方调查异常");
+                    builder.setPositiveButton("确认", null);
+                    builder.create().show();
+                }
+            }
+        });
+
+        licenseAbnormalTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                if(!StringUtility.isEmpty(zjAbnormal)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceInfoAcitvity.this);
+                    builder.setMessage(zjAbnormal);
+                    builder.setTitle("证件异常");
+                    builder.setPositiveButton("确认", null);
+                    builder.create().show();
+                }
+            }
+        });
+
+        businessAbnormalTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                if(!StringUtility.isEmpty(jyAbnormal)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceInfoAcitvity.this);
+                    builder.setMessage(jyAbnormal);
+                    builder.setTitle("经营异常");
+                    builder.setPositiveButton("确认", null);
+                    builder.create().show();
+                }
+            }
+        });
+
+        apceAbnormalTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                if(!StringUtility.isEmpty(apcdAbnormal)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceInfoAcitvity.this);
+                    builder.setMessage(apcdAbnormal);
+                    builder.setTitle("APCD异常");
+                    builder.setPositiveButton("确认", null);
+                    builder.create().show();
+                }
+            }
+        });
+
+        random_abnormal_tv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                if(!StringUtility.isEmpty(lotteryAbnormal)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceInfoAcitvity.this);
+                    builder.setMessage(lotteryAbnormal);
+                    builder.setTitle("随机检查异常");
+                    builder.setPositiveButton("确认", null);
+                    builder.create().show();
+                }
+            }
+        });
+
+        getToolbar().setNavigationOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                backOutShop();
+            }
+        });
+
+        outshopTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+
+                if(marketInspectCigs == null ) marketInspectCigs = new ArrayList<>();
+
+                if(marketInspectCigs.size() > 0 && marketInspect.getIsPropagandaLR() == -1){
+                    showToast("请选择，是否宣传法律法规",ServiceInfoAcitvity.this);
+                }else if(apcdAbnormalFlag == 1 && apcd_abnormal_info_et.getText().toString().length() == 0){
+                    showToast("请输入APCD异常反馈",ServiceInfoAcitvity.this);
+                }else if ((System.currentTimeMillis() - marketInspect.getInDate().getTime()) <= 60 * 1000){
+                    showToast("服务时长必需大于1分钟",ServiceInfoAcitvity.this);
+                }else {
+                    if (unlocation) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ServiceInfoAcitvity.this);
+                        builder.setMessage("无店铺坐标无法出店");
+                        builder.setTitle("提示");
+                        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ServiceInfoAcitvity.this.finish();
+                            }
+                        });
+                        builder.create().show();
+                    } else {
+
+                        if (mtzUris.size() == 0) {
+                            onFailure = 0;
+                            marketInspect.setCigList(marketInspectCigs);
+                            marketInspect.setOutDate(new Date());
+                            if (zjzUris.size() > 0) {
+                                uploadAllImage(zjzUris, false);
+                            } else {
+                                outShop();
+                            }
+                        } else if (mtzUris.size() > 0) {
+                            onFailure = 0;
+                            marketInspect.setCigList(marketInspectCigs);
+                            marketInspect.setOutDate(new Date());
+                            uploadAllImage(mtzUris, true);
+                        }
+                    }
+                }
+
+            }
+        });
+
+        markCheckTargetTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+
+                AlertDialog alertDialog = new AlertDialog.Builder(ServiceInfoAcitvity.this).setTitle("列为检查对象").setItems(wheres, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        marketInspect.setIsIntoCheck(1);
+                        marketInspect.setCheckLevel(which + 1);
+
+                        final EditText editText = new EditText(ServiceInfoAcitvity.this);
+
+                        new AlertDialog.Builder(ServiceInfoAcitvity.this).setTitle("原因").setView(editText).setPositiveButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (!StringUtility.isEmpty(editText.getText().toString())) {
+                                            marketInspect.setIntoCheckReason(editText.getText().toString());
+                                        }
+                                    }
+                                }).setNegativeButton("取消", null).show();
+                    }
+                }).create();
+                alertDialog.show();
+
+            }
+        });
+
+        inspectWeekId = getIntent().getStringExtra("inspectWeekId");
+
+        liceNo = getIntent().getStringExtra("liceNo");
+
+        customerId = getIntent().getStringExtra("customerId");
+
+        zjAbnormal = getIntent().getStringExtra("zjAbnormal");
+        jyAbnormal = getIntent().getStringExtra("jyAbnormal");
+        apcdAbnormal = getIntent().getStringExtra("apcdAbnormal");
+        dsfAbnormal = getIntent().getStringExtra("dsfAbnormal");
+        lotteryAbnormal = getIntent().getStringExtra("lotteryAbnormal");
+
+        if (null != savedInstanceState){
+            marketInspect = (MarketInspect) savedInstanceState.getSerializable("obj");
+            marketInspectCigs = (ArrayList<MarketInspectCig>) savedInstanceState.getSerializable("list");
+            currentMarketInspectCig = (MarketInspectCig) savedInstanceState.getSerializable("cobj");
+        }else{
+
+            if(StringUtility.getSharedPreferencesForBoolean(this, "isOutShopDraft", "draft")) {
+                customerId = StringUtility.getSharedPreferencesForInt(this, "draftKey", "draftKey") + "";
+
+                String s = StringUtility.getSharedPreferencesForString(this, "outShop", customerId);
+                marketInspect = s.length() > 0 ? Json.fromJson(MarketInspect.class, s) : null;
+
+                zjAbnormalFlag = StringUtility.getSharedPreferencesForInt(this, "zjAbnormalFlag", customerId);
+                jyAbnormalFlag = StringUtility.getSharedPreferencesForInt(this, "jyAbnormalFlag", customerId);
+                apcdAbnormalFlag = StringUtility.getSharedPreferencesForInt(this, "apcdAbnormalFlag", customerId);
+                dsfAbnormalFlag = StringUtility.getSharedPreferencesForInt(this, "dsfAbnormalFlag", customerId);
+                lotteryAbnormalFlag = StringUtility.getSharedPreferencesForInt(this, "lotteryAbnormalFlag", customerId);
+                inspectWeekId = StringUtility.getSharedPreferencesForString(this, "inspectWeekId", inspectWeekId);
+            }
+
+            mtzUris = new ArrayList<>();
+            zjzUris = new ArrayList<>();
+
+            if(marketInspect == null){
+
+                marketInspectCigs = new ArrayList<>();
+
+                marketInspect = new MarketInspect();
+
+                CustomerInfo customerInfo = new CustomerInfo();
+                marketInspect.setCustomer(customerInfo);
+                marketInspect.setIsLightCard(new Integer(0));
+                marketInspect.setIsRzConform(new Integer(0));
+                marketInspect.setIsAddressChange(new Integer(0));
+                marketInspect.setIllegalBusiness(new Integer(0));
+
+                marketInspect.setInDate(new Date());
+
+                marketInspect.getCustomer().setId(new Integer(customerId));
+
+                latitude = getIntent().getDoubleExtra("latitude", 0.0);
+                longitude = getIntent().getDoubleExtra("longitude", 0.0);
+                marketInspect.setLatitude_bd(latitude);
+                marketInspect.setLongitude_bd(longitude);
+
+                zjAbnormalFlag = getIntent().getIntExtra("zjAbnormalFlag", 0);
+                jyAbnormalFlag = getIntent().getIntExtra("jyAbnormalFlag", 0);
+                apcdAbnormalFlag = getIntent().getIntExtra("apcdAbnormalFlag", 0);
+                dsfAbnormalFlag = getIntent().getIntExtra("dsfAbnormalFlag", 0);
+                lotteryAbnormalFlag = getIntent().getIntExtra("lotteryAbnormalFlag", 0);
+
+            }else{
+                if(marketInspect.getCustomer() != null ){
+                    marketInspect.getCustomer().setId(new Integer(customerId));
+                }else{
+                    CustomerInfo customerInfo = new CustomerInfo();
+                    marketInspect.setCustomer(customerInfo);
+                    marketInspect.getCustomer().setId(new Integer(customerId));
+                }
+
+                latitude = marketInspect.getLatitude_bd();
+                longitude = marketInspect.getLongitude_bd();
+
+                marketInspectCigs = (ArrayList<MarketInspectCig>) marketInspect.getCigList();
+
+                if(marketInspect.getDoorPhotos().length() > 0){
+
+                    Image image = new Image();
+                    image.setName(marketInspect.getDoorPhotos());
+
+                    File sdcard = Environment.getExternalStorageDirectory();
+                    String path = sdcard.getPath()+File.separator+ Constant.Base_path;
+                    String fileName = path + File.separator + image.getName();
+                    File myCaptureFile = new File(fileName);
+
+                    image.setUrl(myCaptureFile.getAbsolutePath());
+
+                    image.setSuccess(false);
+
+                    mtzUris.add(image);
+                }
+
+                if(marketInspect.getEvidencePhotos().length() > 0){
+                    String[] names = marketInspect.getEvidencePhotos().split(";");
+
+                    for(String name : names){
+                        Image image = new Image();
+                        image.setName(name);
+
+                        File sdcard = Environment.getExternalStorageDirectory();
+                        String path = sdcard.getPath()+File.separator+Constant.Base_path;
+                        String fileName = path + File.separator + image.getName();
+                        File myCaptureFile = new File(fileName);
+
+                        image.setUrl(myCaptureFile.getAbsolutePath());
+
+                        image.setSuccess(false);
+
+                        zjzUris.add(image);
+                    }
+                }
+
+                if(marketInspect.getApcdFeedback().length() > 0) apcd_abnormal_info_et.setText(marketInspect.getAddressChange());
+
+                if(marketInspect.getOtherAbnormal().length() > 0) otherAbnormalInfoEt.setText(marketInspect.getOtherAbnormal());
+
+                notMatchingNoteTv.setText(marketInspect.getRzConform());
+                addressChangedNoteTv.setText(marketInspect.getAddressChange());
+            }
+
+            currentMarketInspectCig = new MarketInspectCig();
+
+        }
+
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+            }
+        });
+
+        if(marketInspect.getInDate() != null) {
+            chronometer.setBase(SystemClock.elapsedRealtime() - (System.currentTimeMillis() - marketInspect.getInDate().getTime()));
+            chronometer.start();
+        }
+
+        loadCustomerData();
+
+        if(marketInspect.getIsLightCard() != null) {
+            if (marketInspect.getIsLightCard() == 1) {
+                notShowLicenseYesRb.setChecked(true);
+                notShowLicenseNoRb.setChecked(false);
+            } else {
+                notShowLicenseYesRb.setChecked(false);
+                notShowLicenseNoRb.setChecked(true);
+            }
+        }else{
+            marketInspect.setIsLightCard(new Integer(0));
+            notShowLicenseYesRb.setChecked(false);
+            notShowLicenseNoRb.setChecked(true);
+        }
+
+        if(marketInspect.getIsRzConform() == 1) {
+            notMatchingYesRb.setChecked(true);
+            notMatchingNoRb.setChecked(false);
+        }else{
+            notMatchingYesRb.setChecked(false);
+            notMatchingNoRb.setChecked(true);
+        }
+
+        if(marketInspect.getIsAddressChange() == 1) {
+            addressChangedYesRb.setChecked(true);
+            addressChangedNoRb.setChecked(false);
+        }else{
+            addressChangedYesRb.setChecked(false);
+            addressChangedNoRb.setChecked(true);
+        }
+
+        if(marketInspect.getIsPropagandaLR() == 1) {
+            publicityRuleYesRb.setChecked(true);
+            publicityRuleNoRb.setChecked(false);
+        }else{
+            publicityRuleYesRb.setChecked(false);
+            publicityRuleNoRb.setChecked(true);
+        }
+
+        notShowLicenseRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
+                switch (id){
+                    case R.id.not_show_license_yes_rb:
+                        marketInspect.setIsLightCard(new Integer(1));
+                        break;
+                    case R.id.not_show_license_no_rb:
+                        marketInspect.setIsLightCard(new Integer(0));
+                        break;
+                }
+            }
+        });
+
+        notMatchingRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
+                switch (id){
+                    case R.id.not_matching_yes_rb:
+                        marketInspect.setIsRzConform(new Integer(1));
+                        break;
+                    case R.id.not_matching_no_rb:
+                        marketInspect.setIsRzConform(new Integer(0));
+                        break;
+                }
+
+                editDialog("实际经营人", "rzConform_Remark", notMatchingNoteTv);
+            }
+        });
+
+        addressChangedRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
+                switch (id){
+                    case R.id.address_changed_yes_rb:
+                        marketInspect.setIsAddressChange(new Integer(1));
+                        break;
+                    case R.id.address_changed_no_rb:
+                        marketInspect.setIsAddressChange(new Integer(0));
+                        break;
+                }
+                editDialog("经营地址", "addressChange_Remark", addressChangedNoteTv);
+            }
+        });
+
+        publicityRuleRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int id) {
+                switch (id){
+                    case R.id.publicity_rule_yes_rb:
+                        marketInspect.setIsPropagandaLR(new Integer(1));
+                        break;
+                    case R.id.publicity_rule_no_rb:
+                        marketInspect.setIsPropagandaLR(new Integer(0));
+                        break;
+                }
+            }
+        });
+
+        if(zjAbnormalFlag == 1) licenseAbnormalTv.setBackgroundResource(R.drawable.zjyc); else licenseAbnormalTv.setBackgroundResource(R.drawable.zjwyc);
+        if(jyAbnormalFlag == 1) businessAbnormalTv.setBackgroundResource(R.drawable.jyyc); else businessAbnormalTv.setBackgroundResource(R.drawable.jywyc);
+        if(apcdAbnormalFlag == 1) apceAbnormalTv.setBackgroundResource(R.drawable.apcdyc); else apceAbnormalTv.setBackgroundResource(R.drawable.apcdwyc);
+        if(dsfAbnormalFlag == 1) third_abnormal_tv.setBackgroundResource(R.drawable.dsfyc); else third_abnormal_tv.setBackgroundResource(R.drawable.dsfwyc);
+        if(lotteryAbnormalFlag == 1) random_abnormal_tv.setBackgroundResource(R.drawable.sjyc); else random_abnormal_tv.setBackgroundResource(R.drawable.sjwyc);
+
+        if(apcdAbnormalFlag == 1) apcd_ll.setVisibility(View.VISIBLE); else apcd_ll.setVisibility(View.GONE);
+
+        recyclerAdapter.notifyDataSetChanged();
+
+        mScreenObserver = new ScreenObserver(this);
+        mScreenObserver.requestScreenStateUpdate(new ScreenObserver.ScreenStateListener() {
+            @Override
+            public void onScreenOn() {
+                doSomethingOnScreenOn();
+            }
+
+            @Override
+            public void onScreenOff() {
+                doSomethingOnScreenOff();
+            }
+        });
+
+    }
+
+    private void doSomethingOnScreenOn() {
+
+    }
+
+    private void doSomethingOnScreenOff() {
+        saveDraft();
+    }
+
+    private void editDialog(final String tip, final String bean, final TextView textView) {
+        final EditText editText = new EditText(this);
+
+        new AlertDialog.Builder(this).setTitle(tip).setView(editText).setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (!StringUtility.isEmpty(editText.getText().toString())) {
+                            textView.setText(editText.getText().toString());
+                        }
+                    }
+                }).setNegativeButton("取消", null).show();
+
+    }
+
+    private void saveDraft(){
+
+        if (!isOutShop){
+            marketInspect.setCigList(marketInspectCigs);
+
+            StringBuffer mtzbuffer = new StringBuffer("");
+
+            if(mtzUris != null) {
+                for (int i = 0; i < mtzUris.size(); i++) {
+                    Image image = mtzUris.get(i);
+                    if (i != mtzUris.size() - 1) {
+                        mtzbuffer.append(image.getName() + ";");
+                    } else {
+                        mtzbuffer.append(image.getName());
+                    }
+                }
+            }
+
+            marketInspect.setDoorPhotos(mtzbuffer.toString());
+
+            StringBuffer zjzbuffer = new StringBuffer("");
+
+            if(zjzUris != null) {
+                for (int i = 0; i < zjzUris.size(); i++) {
+                    Image image = zjzUris.get(i);
+                    if (i != zjzUris.size() - 1) {
+                        zjzbuffer.append(image.getName() + ";");
+                    } else {
+                        zjzbuffer.append(image.getName());
+                    }
+                }
+            }
+
+            marketInspect.setEvidencePhotos(zjzbuffer.toString());
+
+            if (notMatchingNoteTv.getText().toString().length() > 0) marketInspect.setRzConform(notMatchingNoteTv.getText().toString());
+
+            if (addressChangedNoteTv.getText().toString().length() > 0) marketInspect.setAddressChange(addressChangedNoteTv.getText().toString());
+
+            if (apcd_abnormal_info_et.getText().toString().length() > 0) marketInspect.setApcdFeedback(apcd_abnormal_info_et.getText().toString());
+
+            if (otherAbnormalInfoEt.getText().toString().length() > 0) marketInspect.setOtherAbnormal(otherAbnormalInfoEt.getText().toString());
+
+            StringUtility.putSharedPreferences(this, "outShop", marketInspect.getCustomer().getId() + "", Json.toJson(marketInspect));
+
+            StringUtility.putSharedPreferences(this, "draftKey", "draftKey", marketInspect.getCustomer().getId());
+
+            StringUtility.putSharedPreferences(this, "isOutShopDraft","draft",true);
+
+            StringUtility.putSharedPreferences(this, "zjAbnormalFlag",marketInspect.getCustomer().getId()+"", zjAbnormalFlag);
+            StringUtility.putSharedPreferences(this, "jyAbnormalFlag",marketInspect.getCustomer().getId()+"", jyAbnormalFlag);
+            StringUtility.putSharedPreferences(this, "apcdAbnormalFlag",marketInspect.getCustomer().getId()+"", apcdAbnormalFlag);
+            StringUtility.putSharedPreferences(this, "dsfAbnormalFlag",marketInspect.getCustomer().getId()+"", dsfAbnormalFlag);
+
+            StringUtility.putSharedPreferences(this, "inspectWeekId",inspectWeekId, inspectWeekId);
+
+            Constant.isRefreshXCJL = true;
+        }
+
+    }
+
+    private void uploadAllImage(ArrayList<Image> Uris, boolean isSingle) {
+        if (Uris.size() > 0) {
+            KeerAlertDialog pd = showKeerAlertDialog(R.string.sending);
+
+            int update = 0;
+
+            ArrayList<Image> temp = new ArrayList<>();
+
+            for (int i = 0; i < Uris.size(); i++) {
+                Image image = Uris.get(i);
+                if (!image.isSuccess()) {
+                    image.setIndex(i);
+                    update += 1;
+                    temp.add(image);
+                }
+            }
+
+            for (int i = 0; i < temp.size(); i++) {
+                Image image = temp.get(i);
+                File file = new File(image.getUrl());
+                String name = image.getName();
+                uploadImage(file, name, i, temp.size(), isSingle, Uris, image.getIndex());
+            }
+
+            if (update == 0) pd.dismiss();
+        }
+    }
+
+    private void uploadImage(File file, String filename, final int f, final int imageSize, final boolean isSingle, final ArrayList<Image> Uris, final int index) {
+
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.sending);
+
+        String action = isSingle ? "marketInspect!uploadDoorP.action" : "marketInspect!uploadEvidenceP.action";
+
+        RequestParams params = new RequestParams();
+        params.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\"" + Constant.MWB_Base_URL + action + "\"," +
+                "\"parameter\":{\"upload\":\"$uploadFile\"}," +
+                "\"type\":\"WebExecutor\",\"method\":\"POST\"},\"app\":\"1001\"}");
+
+        try {
+            params.put("uploadFile", file);
+            params.put("uploadFileName", filename);
+            params.put("uploadContentType", "image/jpeg");
+
+            HttpClient.post(Constant.EXEC, params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+
+                    pd.dismiss();
+
+                    try {
+                        String messageSting = response.getString("message");
+                        JSONObject message = new JSONObject(messageSting);
+                        if (StringUtility.isSuccess(message)) {
+
+                            Image image = Uris.get(index);
+                            image.setSuccess(true);
+                            image.setName(message.getString("newFileName"));
+
+                            if (f == imageSize - 1) {
+                                if (onFailure == 0) {
+                                    if (isSingle) {
+                                        if (zjzUris.size() > 0) {
+                                            uploadAllImage(zjzUris, false);
+                                        } else {
+                                            outShop();
+                                        }
+                                    } else outShop();
+                                }
+                            }
+
+                        } else {
+                            onFailure += 1;
+                            if (f == imageSize - 1) {
+                                pd.dismiss();
+                                if (onFailure > 0) {
+                                    pd.dismiss();
+                                    showToast("有" + onFailure + "张照片上传失败,请重试", ServiceInfoAcitvity.this);
+                                    onFailure = 0;
+                                }
+                            }
+                        }
+                    } catch (JSONException e) {
+                        pd.dismiss();
+                        e.printStackTrace();
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    showNetworkError(ServiceInfoAcitvity.this);
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    onFailure += 1;
+                    if (f == imageSize) {
+                        pd.dismiss();
+                        if (onFailure > 0) {
+                            showToast("有" + onFailure + "张照片上传失败,请重试", ServiceInfoAcitvity.this);
+                            onFailure = 0;
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    onFailure += 1;
+                    pd.dismiss();
+                    if (f == imageSize) {
+
+                        if (onFailure > 0) {
+                            showToast("有" + onFailure + "张照片上传失败,请重试", ServiceInfoAcitvity.this);
+                            onFailure = 0;
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    onFailure += 1;
+                    pd.dismiss();
+                    if (f == imageSize) {
+
+                        if (onFailure > 0) {
+                            showToast("有" + onFailure + "张照片上传失败,请重试", ServiceInfoAcitvity.this);
+                            onFailure = 0;
+                        }
+                    }
+                }
+            });
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void loadCustomerData(){
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.loginning);
+        pd.show();
+
+        RequestParams params = new RequestParams();
+        params.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+Constant.MWB_Base_URL+"marketInspect!intoShop.action?privilegeFlag=VIEW&_query.customerId="+customerId+"\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
+
+        HttpClient.post(Constant.EXEC, params, new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                pd.dismiss();
+
+                try {
+
+                    String messageSting = response.getString("message");
+
+                    JSONObject message = new JSONObject(messageSting);
+
+                    if (StringUtility.isSuccess(message)) {
+
+                        data = message.getJSONObject("data");
+
+                        JSONObject customer = data.getJSONObject("customer");
+
+                        String liceNo = customer.getString("liceNo");
+                        String shopName = customer.getString("shopName");
+                        String chargerName = customer.getString("chargerName");
+                        String shopAddress = customer.getString("shopAddress");
+                        String contactphone = customer.getString("contactphone");
+
+                        shopnameTv.setText( shopName);
+                        address.setText(shopAddress);
+                        licenseTv.setText(liceNo);
+                        nameTv.setText(chargerName);
+                        phoneTv.setText(StringUtility.isEmpty(contactphone) ? "" : contactphone);
+
+                    } else {
+                        isOutShop = true;
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ServiceInfoAcitvity.this);
+                        builder.setMessage(message.getString("message"));
+                        builder.setTitle("提示");
+                        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Constant.isRefreshXCJL = false;
+                                Constant.isRefreshRCXC = true;
+
+                                StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "outShop",customerId + "", "");
+                                StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "draftKey", "draftKey",0);
+                                StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "isOutShopDraft","draft",false);
+
+                                StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "zjAbnormalFlag",customerId+"", 0);
+                                StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "jyAbnormalFlag",customerId+"", 0);
+                                StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "apcdAbnormalFlag",customerId+"", 0);
+                                StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "dsfAbnormalFlag",customerId+"", 0);
+                                StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "lotteryAbnormalFlag",lotteryAbnormalFlag+"", 0);
+                                ServiceInfoAcitvity.this.finish();
+                            }
+                        });
+                        builder.create().show();
+                    }
+
+                } catch (JSONException e) {
+                    isOutShop = true;
+                    unlocation = true;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceInfoAcitvity.this);
+                    builder.setMessage("无店铺坐标无法进店");
+                    builder.setTitle("提示");
+                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ServiceInfoAcitvity.this.finish();
+                        }
+                    });
+                    builder.create().show();
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                pd.dismiss();
+                showNetworkError(ServiceInfoAcitvity.this);
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                pd.dismiss();
+                showNetworkError(ServiceInfoAcitvity.this);
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                pd.dismiss();
+                showNetworkError(ServiceInfoAcitvity.this);
+                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
     }
@@ -268,7 +1098,7 @@ public class ServiceInfoAcitvity extends BaseActivity{
         final EditText username = (EditText)layout.findViewById(R.id.dialog_username_ed);
         final EditText password = (EditText)layout.findViewById(R.id.dialog_password_ed);
 
-        final AlertDialog pd = new AlertDialog.Builder(ServiceInfoAcitvity.this).setTitle("提示").setView(layout).setPositiveButton("确定", new DialogInterface.OnClickListener(){
+        new AlertDialog.Builder(ServiceInfoAcitvity.this).setTitle("提示").setView(layout).setPositiveButton("确定", new DialogInterface.OnClickListener(){
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -334,6 +1164,272 @@ public class ServiceInfoAcitvity extends BaseActivity{
 
     }
 
+    private void outShop() {
+
+        StringBuffer mtzbuffer = new StringBuffer("");
+
+        for (int i = 0; i < mtzUris.size(); i++) {
+            Image image = mtzUris.get(i);
+            if (image.isSuccess()) {
+                if (i != mtzUris.size() - 1) {
+                    mtzbuffer.append(image.getName() + ";");
+                } else {
+                    mtzbuffer.append(image.getName());
+                }
+            }
+        }
+
+        marketInspect.setDoorPhotos(mtzbuffer.toString());
+
+        StringBuffer zjzbuffer = new StringBuffer("");
+
+        for (int i = 0; i < zjzUris.size(); i++) {
+            Image image = zjzUris.get(i);
+            if (image.isSuccess()) {
+                if (i != zjzUris.size() - 1) {
+                    zjzbuffer.append(image.getName() + ";");
+                } else {
+                    zjzbuffer.append(image.getName());
+                }
+            }
+        }
+
+        marketInspect.setEvidencePhotos(zjzbuffer.toString());
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("&bean.customer.id=" + marketInspect.getCustomer().getId());
+        buffer.append("&bean.isLightCard=" + marketInspect.getIsLightCard().intValue());
+        buffer.append("&bean.isRzConform=" + marketInspect.getIsRzConform().intValue());
+        buffer.append("&bean.isAddressChange=" + marketInspect.getIsAddressChange().intValue());
+        buffer.append("&bean.inDate=" + DateTimeUtil.getFormatDate(marketInspect.getInDate()!=null?marketInspect.getInDate():new Date(), DateTimeUtil.TIME_FORMAT));
+        buffer.append("&bean.outDate=" + DateTimeUtil.getFormatDate(new Date(), DateTimeUtil.TIME_FORMAT));
+        buffer.append("&bean.longitude_bd=" + marketInspect.getLongitude_bd());
+        buffer.append("&bean.latitude_bd=" + marketInspect.getLatitude_bd());
+        if(marketInspect.getIsPropagandaLR() == -1) marketInspect.setIsPropagandaLR(0);
+        buffer.append("&bean.isPropagandaLR=" + marketInspect.getIsPropagandaLR());
+        buffer.append("&bean.isIntoCheck=" + marketInspect.getIsIntoCheck());
+        buffer.append("&bean.intoCheckReason=" + marketInspect.getIntoCheckReason());
+        buffer.append("&bean.inspectWeekId=" + inspectWeekId);
+        if( apcd_abnormal_info_et.getText().toString().length() > 0)buffer.append("&bean.apcdFeedback=" + apcd_abnormal_info_et.getText().toString());
+        if( otherAbnormalInfoEt.getText().toString().length() > 0)buffer.append("&bean.otherAbnormal=" + otherAbnormalInfoEt.getText().toString());
+
+        if (!StringUtility.isEmpty(marketInspect.getDoorPhotos()))
+            buffer.append("&bean.doorPhotos=" + marketInspect.getDoorPhotos());
+        if (!StringUtility.isEmpty(marketInspect.getEvidencePhotos()))
+            buffer.append("&bean.evidencePhotos=" + marketInspect.getEvidencePhotos());
+
+        if (notMatchingNoteTv.getText().toString().length() > 0)
+            buffer.append("&bean.rzConform_Remark=" + notMatchingNoteTv.getText().toString());
+        if (addressChangedNoteTv.getText().toString().length() > 0)
+            buffer.append("&bean.addressChange_Remark=" + addressChangedNoteTv.getText().toString());
+
+        if(marketInspect.getCheckLevel() > 0) buffer.append("&bean.checkLevel=" + marketInspect.getCheckLevel());
+
+        if (marketInspect.getCigList().size() > 0) {
+            for (int i = 0; i < marketInspect.getCigList().size(); i++) {
+                MarketInspectCig marketInspectCig = marketInspect.getCigList().get(i);
+                buffer.append("&bean.cigList[" + i + "].type=" + marketInspectCig.getType() + "&bean.cigList[" + i + "].cigName=" + marketInspectCig.getCigName() + "&bean.cigList[" + i + "].cigCode=" + marketInspectCig.getCigCode() + "&bean.cigList[" + i + "].amount=" + marketInspectCig.getAmount());
+            }
+        }
+
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.sending);
+
+        String base = "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\"" + Constant.MWB_Base_URL + "marketInspect!outShop.action?privilegeFlag=EDIT" + buffer + "\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}";
+
+        RequestParams params = new RequestParams();
+        params.add("data", base);
+
+        HttpClient.post(Constant.EXEC,
+                params, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        pd.dismiss();
+                        System.out.println("response: " + response.toString());
+                        isOutShop = true;
+                        try {
+
+                            if (StringUtility.isSuccess(response)) {
+
+                                String messageSting = response.getString("message");
+
+                                JSONObject message = new JSONObject(messageSting);
+
+                                if (!StringUtility.isSuccess(message)) {
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceInfoAcitvity.this);
+                                    builder.setMessage(message.getString("message"));
+                                    builder.setTitle("提示");
+                                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            ServiceInfoAcitvity.this.finish();
+                                        }
+                                    });
+                                    builder.create().show();
+                                } else {
+
+                                    Constant.isRefreshXCJL = true;
+                                    Constant.isRefreshRCXC = true;
+
+                                    StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "outShop", marketInspect.getCustomer().getId() + "", "");
+                                    StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "draftKey", "draftKey",0);
+                                    StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "isOutShopDraft","draft",false);
+
+                                    StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "zjAbnormalFlag",marketInspect.getCustomer().getId()+"", 0);
+                                    StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "jyAbnormalFlag",marketInspect.getCustomer().getId()+"", 0);
+                                    StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "apcdAbnormalFlag",marketInspect.getCustomer().getId()+"", 0);
+                                    StringUtility.putSharedPreferences(ServiceInfoAcitvity.this, "dsfAbnormalFlag",marketInspect.getCustomer().getId()+"", 0);
+                                    finish();
+                                }
+                            } else {
+                                showToast(response.getString("message"), ServiceInfoAcitvity.this);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        pd.dismiss();
+                        showNetworkError(ServiceInfoAcitvity.this);
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        pd.dismiss();
+                        showNetworkError(ServiceInfoAcitvity.this);
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        pd.dismiss();
+                        showNetworkError(ServiceInfoAcitvity.this);
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+                });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("list", marketInspectCigs);
+        outState.putSerializable("obj", marketInspect);
+        outState.putSerializable("cobj", currentMarketInspectCig);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case MTZ:
+                if (resultCode == RESULT_OK) {
+                    mtzUris = (ArrayList<Image>) data.getSerializableExtra("mtzUris");
+                }
+                break;
+            case ZJZ:
+                if (resultCode == RESULT_OK) {
+                    zjzUris = (ArrayList<Image>) data.getSerializableExtra("zjzUris");
+                }
+                break;
+        }
+    }
+
+    private void backOutShop(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("是否出店");
+        builder.setTitle("提示");
+        builder.setPositiveButton("出店", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(marketInspectCigs.size() > 0 && marketInspect.getIsPropagandaLR() == -1){
+                    showToast("请选择，是否宣传法律法规",ServiceInfoAcitvity.this);
+                }else if(apcdAbnormalFlag == 1 && apcd_abnormal_info_et.getText().toString().length() == 0){
+                    showToast("请输入APCD异常反馈",ServiceInfoAcitvity.this);
+                }else if ((System.currentTimeMillis() - marketInspect.getInDate().getTime()) <= 60 * 1000){
+                    showToast("服务时长必需大于1分钟",ServiceInfoAcitvity.this);
+                }else {
+                    if (unlocation) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ServiceInfoAcitvity.this);
+                        builder.setMessage("无店铺坐标无法出店");
+                        builder.setTitle("提示");
+                        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ServiceInfoAcitvity.this.finish();
+                            }
+                        });
+                        builder.create().show();
+                    } else {
+
+                        if (mtzUris.size() == 0) {
+                            onFailure = 0;
+                            marketInspect.setCigList(marketInspectCigs);
+                            marketInspect.setOutDate(new Date());
+                            if (zjzUris.size() > 0) {
+                                uploadAllImage(zjzUris, false);
+                            } else {
+                                outShop();
+                            }
+                        } else if (mtzUris.size() > 0) {
+                            onFailure = 0;
+                            marketInspect.setCigList(marketInspectCigs);
+                            marketInspect.setOutDate(new Date());
+                            uploadAllImage(mtzUris, true);
+                        }
+                    }
+                }
+            }
+        });
+        builder.setNegativeButton("保存", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                saveDraft();
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK )
+        {
+            backOutShop();
+
+        }
+
+        return false;
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.base_info_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id == R.id.action_customer){
+//            Intent intent = new Intent(this, OperatorInfoActivity.class);
+//            intent.putExtra("id",customerId);
+//            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -341,7 +1437,13 @@ public class ServiceInfoAcitvity extends BaseActivity{
         setToolbarTitle("服务");
         showBack();
 
-        assignViews();
+        assignViews(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mScreenObserver.stopScreenStateUpdate();
     }
 
     class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder>{

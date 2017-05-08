@@ -80,7 +80,7 @@
                         android:layout_marginTop="10dp">
 
                         <TextView
-                            android:id="@+id/random_abnormal_tv"
+                            android:id="@+id/third_abnormal_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/sjwyc"/>
@@ -104,6 +104,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/apcdwyc"
+                            android:layout_marginLeft="15dp"/>
+
+                        <TextView
+                            android:id="@+id/random_abnormal_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/sjwyc"
                             android:layout_marginLeft="15dp"/>
 
                     </LinearLayout>
@@ -454,6 +461,52 @@
                         android:checked="true"/>
 
                 </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/apcd_ll">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/gray"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray_green"
+                            android:text="APCD异常反馈"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="5dp"/>
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/apcd_abnormal_info_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -40,6 +40,7 @@ public class Constant {
 
     public static String apkVer = "1.0";
 
-    public static boolean isRefreshRCFWList = false;
+    public static boolean isRefreshXCJL = false;
+    public static boolean isRefreshRCXC = false;
 
 }

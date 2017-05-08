@@ -182,8 +182,8 @@ public class RCFWMainFragment extends BaseFragment{
         loadingCommunity();
 
         if(StringUtility.getSharedPreferencesForBoolean(getActivity(), "isOutShopDraft", "draft")){
-//            Intent intent = new Intent(DiaryMainFragment.this.getActivity(), EntranceActivity.class);
-//            DiaryMainFragment.this.startActivity(intent);
+            Intent intent = new Intent(RCFWMainFragment.this.getActivity(), ServiceInfoAcitvity.class);
+            RCFWMainFragment.this.startActivity(intent);
         }else {
             location();
         }
@@ -412,8 +412,8 @@ public class RCFWMainFragment extends BaseFragment{
     public void onResume() {
         super.onResume();
 
-        if(Constant.isRefreshRCFWList){
-            Constant.isRefreshRCFWList = false;
+        if(Constant.isRefreshXCJL){
+            Constant.isRefreshXCJL = false;
 
             drafts = 0;
 

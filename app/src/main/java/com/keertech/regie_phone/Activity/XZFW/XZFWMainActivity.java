@@ -17,9 +17,9 @@ import com.keertech.regie_phone.Activity.XZFW.Fragment.FWJLMainFragment;
 import com.keertech.regie_phone.Activity.XZFW.Fragment.FWYCMainFragment;
 import com.keertech.regie_phone.Activity.XZFW.Fragment.RCFWMainFragment;
 import com.keertech.regie_phone.BaseFragmentActivity;
-import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.R;
+import com.keertech.regie_phone.Utility.StringUtility;
 import com.keertech.regie_phone.Utility.VibrateHelp;
 
 
@@ -87,6 +87,10 @@ public class XZFWMainActivity extends BaseFragmentActivity implements View.OnCli
             @Override
             public void onClick(View view) {
                 super.onClick(view);
+                StringUtility.cleanSharedPreferences(XZFWMainActivity.this, "outShop");
+                StringUtility.cleanSharedPreferences(XZFWMainActivity.this, "draftKey");
+                StringUtility.cleanSharedPreferences(XZFWMainActivity.this, "isOutShopDraft");
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(XZFWMainActivity.this);
                 builder.setMessage("是否只使用GPS定位");
                 builder.setTitle("提示");
