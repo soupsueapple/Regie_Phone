@@ -42,5 +42,6 @@ public class Constant {
 
     public static boolean isRefreshXCJL = false;
     public static boolean isRefreshRCXC = false;
+    public static boolean isRefresPlan = false;
 
 }

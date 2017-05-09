@@ -546,7 +546,7 @@ public class RCFWMainFragment extends BaseFragment{
 
                 if ((bdlongitude == 0 && bdlatitude == 0) || distance > Constant.INTO_SHOP || distance == null){
 
-//                    holder.jd_tv.setVisibility(View.GONE);
+                    holder.jd_tv.setVisibility(View.GONE);
 
                     holder.xkzhTv.setTextColor(getResources().getColor(R.color.red));
 
@@ -555,20 +555,20 @@ public class RCFWMainFragment extends BaseFragment{
                     if (drafts > 0){
                         if (s.length() > 0){
 
-//                            holder.jd_tv.setVisibility(View.VISIBLE);
+                            holder.jd_tv.setVisibility(View.VISIBLE);
 
                             holder.xkzhTv.setTextColor(getResources().getColor(R.color.color_black));
 
                         }else{
 
-//                            holder.jd_tv.setVisibility(View.GONE);
+                            holder.jd_tv.setVisibility(View.GONE);
 
                             holder.xkzhTv.setTextColor(getResources().getColor(R.color.red));
 
                         }
                     }else{
 
-//                        holder.jd_tv.setVisibility(View.VISIBLE);
+                        holder.jd_tv.setVisibility(View.VISIBLE);
 
                         holder.xkzhTv.setTextColor(getResources().getColor(R.color.color_black));
 
