@@ -85,10 +85,16 @@
         <activity android:name=".Utility.ImagePagerActivity"
             android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".Activity.XZFW.ServicePlanInfoActivity"
+        <activity android:name=".Activity.XZFW.ServicePlan.ServicePlanInfoActivity"
             android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".Activity.XZFW.AddServicePlanAcvitivy"
+        <activity android:name=".Activity.XZFW.ServicePlan.AddServicePlanAcvitivy"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.XZFW.ServiceRecord.ServiceRecordInfoListActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.XZFW.ServiceRecord.ServiceRecordInfoActivity"
             android:screenOrientation="portrait"></activity>
 
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">

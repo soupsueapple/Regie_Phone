@@ -13,7 +13,7 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.keertech.regie_phone.Activity.XZFW.ServicePlanInfoActivity;
+import com.keertech.regie_phone.Activity.XZFW.ServicePlan.ServicePlanInfoActivity;
 import com.keertech.regie_phone.BaseFragment;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
