@@ -23,7 +23,7 @@ import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.Models.ImageDrawable;
 import com.keertech.regie_phone.Network.HttpClient;
-import com.keertech.regie_phone.R;
+import com.keertech.regie_phone.R
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
@@ -38,6 +38,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.baidu.location.d.j.R;
 import static com.keertech.regie_phone.R.id.recycler_view;
 
 /**
@@ -312,6 +313,64 @@ public class ServiceRecordInfoActivity extends BaseActivity{
                 }
 
 
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                pd.dismiss();
+                showNetworkError(ServiceRecordInfoActivity.this);
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                pd.dismiss();
+                showNetworkError(ServiceRecordInfoActivity.this);
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                pd.dismiss();
+                showNetworkError(ServiceRecordInfoActivity.this);
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
+    private void del(){
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.sending);
+        pd.show();
+
+        RequestParams params = new RequestParams();
+        params.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+Constant.MWB_Base_URL+"marketInspect!delete.action?privilegeFlag=DELETE&bean.id="+id+"\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");//"&bean.version="+version+
+
+        HttpClient.post(Constant.EXEC, params, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                pd.dismiss();
+
+                try {
+                    String messageSting = response.getString("message");
+
+                    JSONObject message = new JSONObject(messageSting);
+
+                    if (StringUtility.isSuccess(message)) {
+                        Constant.isRefreshXCJ2 = true;
+                        if(Constant.isYc){
+                            Constant.isRefreshXCJ3 = true;
+                        }else {
+                            Constant.isRefreshXCJ2 = true;
+                        }
+                        finish();
+                    } else {
+                        showToast(message.getString("message"), ServiceRecordInfoActivity.this);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
             }
 
             @Override

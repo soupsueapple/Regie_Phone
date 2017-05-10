@@ -127,6 +127,14 @@ public class ServiceRecordInfoListActivity extends BaseActivity{
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(Constant.isRefreshXCJ2){
+            loadRightList(getIntent().getStringExtra("date"), getIntent().getStringExtra("postId"));
+            Constant.isRefreshXCJ2 = false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
