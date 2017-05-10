@@ -1,8 +1,11 @@
 package com.keertech.regie_phone;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +16,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 public abstract class BaseActivity extends AppCompatActivity {
     private LinearLayout contentView = null;
@@ -119,6 +126,49 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    protected File getFile(String name){
+        File sdcard = Environment.getExternalStorageDirectory();
+        String path = sdcard.getPath()+File.separator+ Constant.Base_path;
+        String fileName = path + File.separator + name;
+        File myCaptureFile = new File(fileName);
+
+        return myCaptureFile;
+    }
+
+    protected Bitmap decodeFile(File f, int req_Height, int req_Width){
+        try {
+            //decode image size
+            BitmapFactory.Options o1 = new BitmapFactory.Options();
+            o1.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(f),null,o1);
+
+
+            //Find the correct scale value. It should be the power of 2.
+            int width_tmp = o1.outWidth;
+            int height_tmp = o1.outHeight;
+            int scale = 1;
+
+            if(width_tmp > req_Width || height_tmp > req_Height)
+            {
+                int heightRatio = Math.round((float) height_tmp / (float) req_Height);
+                int widthRatio = Math.round((float) width_tmp / (float) req_Width);
+
+
+                scale = heightRatio < widthRatio ? heightRatio : widthRatio;
+            }
+
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            o2.inScaled = false;
+            return BitmapFactory.decodeFile(f.getAbsolutePath(),o2);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
