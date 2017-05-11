@@ -63,8 +63,11 @@ public class ServiceRecordInfoListActivity extends BaseActivity{
         final KeerAlertDialog pd = showKeerAlertDialog(R.string.loading);
         pd.show();
 
+        String action = "recordList";
+        if(Constant.isYc) action = "abnormalRecordList";
+
         RequestParams params = new RequestParams();
-        params.put("data","{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+ Constant.MWB_Base_URL+"marketInspect!recordList.action?privilegeFlag=VIEW&_query.yearMonth="+startDate+"&_query.postId="+postId+"\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
+        params.put("data","{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+ Constant.MWB_Base_URL+"marketInspect!"+ action +".action?privilegeFlag=VIEW&_query.yearMonth="+startDate+"&_query.postId="+postId+"\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
 
         HttpClient.post(Constant.EXEC, params, new JsonHttpResponseHandler(){
             @Override

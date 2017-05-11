@@ -97,6 +97,9 @@
         <activity android:name=".Activity.XZFW.ServiceRecord.ServiceRecordInfoActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.XZFW.ServiceRecord.LookImageActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 

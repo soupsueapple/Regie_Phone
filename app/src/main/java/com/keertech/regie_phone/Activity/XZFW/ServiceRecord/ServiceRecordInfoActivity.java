@@ -1,11 +1,13 @@
 package com.keertech.regie_phone.Activity.XZFW.ServiceRecord;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,13 +19,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.keertech.regie_phone.Activity.XZFW.RCFW.ImageActivity;
 import com.keertech.regie_phone.BaseActivity;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.Models.ImageDrawable;
 import com.keertech.regie_phone.Network.HttpClient;
-import com.keertech.regie_phone.R
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
@@ -38,7 +38,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.baidu.location.d.j.R;
 import static com.keertech.regie_phone.R.id.recycler_view;
 
 /**
@@ -86,29 +85,29 @@ public class ServiceRecordInfoActivity extends BaseActivity{
     boolean DELETE = false;
 
     private void assignViews() {
-        evidenceIv = (ImageView) findViewById(R.id.evidence_iv);
-        textView = (TextView) findViewById(R.id.textView);
-        licenseTv = (TextView) findViewById(R.id.license_tv);
-        shopnameTv = (TextView) findViewById(R.id.shopname_tv);
-        addressTv = (TextView) findViewById(R.id.address_tv);
-        customerTv = (TextView) findViewById(R.id.customer_tv);
-        textView3 = (TextView) findViewById(R.id.textView3);
-        nameTv = (TextView) findViewById(R.id.name_tv);
-        serviceDateTv = (TextView) findViewById(R.id.service_date_tv);
-        serviceDurationTimeTv = (TextView) findViewById(R.id.service_duration_time_tv);
-        startTime = (TextView) findViewById(R.id.start_time);
-        endTime = (TextView) findViewById(R.id.end_time);
-        textView4 = (TextView) findViewById(R.id.textView4);
-        textView5 = (TextView) findViewById(R.id.textView5);
-        notShowLicenseTv = (TextView) findViewById(R.id.not_show_license_tv);
-        linearLayout7 = (LinearLayout) findViewById(R.id.linearLayout7);
-        textView6 = (TextView) findViewById(R.id.textView6);
-        notMatchingTv = (TextView) findViewById(R.id.not_matching_tv);
-        notMatchingNoteTv = (TextView) findViewById(R.id.not_matching_note_tv);
-        linearLayout8 = (LinearLayout) findViewById(R.id.linearLayout8);
-        textView7 = (TextView) findViewById(R.id.textView7);
-        addressChangedTv = (TextView) findViewById(R.id.address_changed_tv);
-        addressChangedNoteTv = (TextView) findViewById(R.id.address_changed_note_tv);
+        evidenceIv = (ImageView) findViewById(com.keertech.regie_phone.R.id.evidence_iv);
+        textView = (TextView) findViewById(com.keertech.regie_phone.R.id.textView);
+        licenseTv = (TextView) findViewById(com.keertech.regie_phone.R.id.license_tv);
+        shopnameTv = (TextView) findViewById(com.keertech.regie_phone.R.id.shopname_tv);
+        addressTv = (TextView) findViewById(com.keertech.regie_phone.R.id.address_tv);
+        customerTv = (TextView) findViewById(com.keertech.regie_phone.R.id.customer_tv);
+        textView3 = (TextView) findViewById(com.keertech.regie_phone.R.id.textView3);
+        nameTv = (TextView) findViewById(com.keertech.regie_phone.R.id.name_tv);
+        serviceDateTv = (TextView) findViewById(com.keertech.regie_phone.R.id.service_date_tv);
+        serviceDurationTimeTv = (TextView) findViewById(com.keertech.regie_phone.R.id.service_duration_time_tv);
+        startTime = (TextView) findViewById(com.keertech.regie_phone.R.id.start_time);
+        endTime = (TextView) findViewById(com.keertech.regie_phone.R.id.end_time);
+        textView4 = (TextView) findViewById(com.keertech.regie_phone.R.id.textView4);
+        textView5 = (TextView) findViewById(com.keertech.regie_phone.R.id.textView5);
+        notShowLicenseTv = (TextView) findViewById(com.keertech.regie_phone.R.id.not_show_license_tv);
+        linearLayout7 = (LinearLayout) findViewById(com.keertech.regie_phone.R.id.linearLayout7);
+        textView6 = (TextView) findViewById(com.keertech.regie_phone.R.id.textView6);
+        notMatchingTv = (TextView) findViewById(com.keertech.regie_phone.R.id.not_matching_tv);
+        notMatchingNoteTv = (TextView) findViewById(com.keertech.regie_phone.R.id.not_matching_note_tv);
+        linearLayout8 = (LinearLayout) findViewById(com.keertech.regie_phone.R.id.linearLayout8);
+        textView7 = (TextView) findViewById(com.keertech.regie_phone.R.id.textView7);
+        addressChangedTv = (TextView) findViewById(com.keertech.regie_phone.R.id.address_changed_tv);
+        addressChangedNoteTv = (TextView) findViewById(com.keertech.regie_phone.R.id.address_changed_note_tv);
         recyclerView = (RecyclerView) findViewById(recycler_view);
 
         evidenceIv.setOnClickListener(new ViewClickVibrate(){
@@ -116,7 +115,7 @@ public class ServiceRecordInfoActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                Intent intent = new Intent(ServiceRecordInfoActivity.this, ImageActivity.class);
+                Intent intent = new Intent(ServiceRecordInfoActivity.this, LookImageActivity.class);
                 intent.putExtra("imageDrawables",evidenceDrawables);
                 startActivity(intent);
             }
@@ -132,7 +131,7 @@ public class ServiceRecordInfoActivity extends BaseActivity{
     }
 
     private void loadData() {
-        final KeerAlertDialog pd = showKeerAlertDialog(R.string.loading);
+        final KeerAlertDialog pd = showKeerAlertDialog(com.keertech.regie_phone.R.string.loading);
         pd.show();
 
         RequestParams params = new RequestParams();
@@ -188,9 +187,9 @@ public class ServiceRecordInfoActivity extends BaseActivity{
                         if (!data.isNull("privilegeMap")) {
                             JSONObject privilegeMap = data.getJSONObject("privilegeMap");
                             DELETE = privilegeMap.getBoolean("DELETE");
-                            if (!DELETE) menu.removeItem(R.id.action_del_record);
+                            if (!DELETE) menu.removeItem(com.keertech.regie_phone.R.id.action_del_record);
                         } else {
-                            menu.removeItem(R.id.action_del_record);
+                            menu.removeItem(com.keertech.regie_phone.R.id.action_del_record);
                         }
 
                         loadListData();
@@ -274,7 +273,7 @@ public class ServiceRecordInfoActivity extends BaseActivity{
 
     private void loadListData() {
 
-        final KeerAlertDialog pd = showKeerAlertDialog(R.string.loading);
+        final KeerAlertDialog pd = showKeerAlertDialog(com.keertech.regie_phone.R.string.loading);
 
         RequestParams params = new RequestParams();
         params.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\"" + Constant.MWB_Base_URL + "marketInspect!findDetails.action?privilegeFlag=VIEW&bean.id=" + id + "\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
@@ -339,7 +338,7 @@ public class ServiceRecordInfoActivity extends BaseActivity{
     }
 
     private void del(){
-        final KeerAlertDialog pd = showKeerAlertDialog(R.string.sending);
+        final KeerAlertDialog pd = showKeerAlertDialog(com.keertech.regie_phone.R.string.sending);
         pd.show();
 
         RequestParams params = new RequestParams();
@@ -399,15 +398,24 @@ public class ServiceRecordInfoActivity extends BaseActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
-        getMenuInflater().inflate(R.menu.del_record_menu, menu);
+        getMenuInflater().inflate(com.keertech.regie_phone.R.menu.del_record_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_del_record){
-
+        if(id == com.keertech.regie_phone.R.id.action_del_record){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("是否确定删除此服务记录");
+            builder.setTitle("提示");
+            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    del();
+                }
+            });
+            builder.create().show();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -416,7 +424,7 @@ public class ServiceRecordInfoActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_record_info);
+        setContentView(com.keertech.regie_phone.R.layout.activity_service_record_info);
         setToolbarTitle("服务记录");
         showBack();
 
@@ -427,7 +435,7 @@ public class ServiceRecordInfoActivity extends BaseActivity{
 
         @Override
         public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            RecyclerHolder holder = new RecyclerHolder(LayoutInflater.from(ServiceRecordInfoActivity.this).inflate(R.layout.activity_xzfw_rcfw_service_info_abnormal_info_recyclerview, parent, false));
+            RecyclerHolder holder = new RecyclerHolder(LayoutInflater.from(ServiceRecordInfoActivity.this).inflate(com.keertech.regie_phone.R.layout.activity_xzfw_rcfw_service_info_abnormal_info_recyclerview, parent, false));
             return holder;
         }
 
@@ -473,9 +481,9 @@ public class ServiceRecordInfoActivity extends BaseActivity{
             private TextView numberTv;
 
             private void holderAssignViews(View itemView) {
-                abnormalTypeTv = (TextView) itemView.findViewById(R.id.abnormal_type_tv);
-                varietyTv = (TextView) itemView.findViewById(R.id.variety_tv);
-                numberTv = (TextView) itemView.findViewById(R.id.number_tv);
+                abnormalTypeTv = (TextView) itemView.findViewById(com.keertech.regie_phone.R.id.abnormal_type_tv);
+                varietyTv = (TextView) itemView.findViewById(com.keertech.regie_phone.R.id.variety_tv);
+                numberTv = (TextView) itemView.findViewById(com.keertech.regie_phone.R.id.number_tv);
             }
 
             public RecyclerHolder(View itemView) {

@@ -202,6 +202,8 @@ public class FWJLMainFragment extends BaseFragment{
                     public void onClick(View view) {
                         super.onClick(view);
 
+                        Constant.isYc = false;
+
                         Intent intent = new Intent(getActivity(), ServiceRecordInfoListActivity.class);
                         intent.putExtra("name", name);
                         intent.putExtra("deptName", deptName);
