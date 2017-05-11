@@ -100,6 +100,12 @@
         <activity android:name=".Activity.XZFW.ServiceRecord.LookImageActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.ProblemChecking.ProblemCheckingMainActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemChecking.CheckingActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 

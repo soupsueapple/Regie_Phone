@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.keertech.regie_phone.Activity.ProblemChecking.ProblemCheckingMainActivity;
 import com.keertech.regie_phone.Activity.SystemSetting.SystemSettingActivity;
 import com.keertech.regie_phone.Activity.XZFW.XZFWMainActivity;
 import com.keertech.regie_phone.Constant.Constant;
@@ -394,7 +395,8 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "问题核查":
-
+                            intent = new Intent(MainActivity.this, ProblemCheckingMainActivity.class);
+                            startActivity(intent);
                             break;
                         case "举报投诉":
 
