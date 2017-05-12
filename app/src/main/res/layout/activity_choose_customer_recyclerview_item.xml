@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/license_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="420102106587"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/department_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="江岸后湖"
+        android:layout_alignBaseline="@+id/license_tv"
+        android:layout_alignBottom="@+id/license_tv"
+        android:layout_toRightOf="@+id/license_tv"
+        android:layout_toEndOf="@+id/license_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="江铭"
+        android:layout_below="@+id/license_tv"
+        android:layout_alignLeft="@+id/license_tv"
+        android:layout_alignStart="@+id/license_tv"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/phone_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="02751330987"
+        android:layout_alignBaseline="@+id/name_tv"
+        android:layout_alignBottom="@+id/name_tv"
+        android:layout_toRightOf="@+id/name_tv"
+        android:layout_toEndOf="@+id/name_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/shopname_tv"
+        android:text="武汉市江岸区美味园零食坊"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_tv"
+        android:layout_alignLeft="@+id/name_tv"
+        android:layout_alignStart="@+id/name_tv"
+        android:layout_marginTop="10dp" />
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/phone_tv"
+        android:layout_alignBottom="@+id/phone_tv"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/shopname_tv"
+        android:layout_margin="10dp"
+        android:background="@color/gray_black"></LinearLayout>
+
+</RelativeLayout>

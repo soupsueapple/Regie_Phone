@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="420102106587"
+        android:id="@+id/license_tv"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="江铭"
+        android:layout_alignBaseline="@+id/license_tv"
+        android:layout_alignBottom="@+id/license_tv"
+        android:layout_toRightOf="@+id/license_tv"
+        android:layout_toEndOf="@+id/license_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/address_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="武汉市江岸区美味园零食坊"
+        android:layout_below="@+id/license_tv"
+        android:layout_alignLeft="@+id/license_tv"
+        android:layout_alignStart="@+id/license_tv"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/del_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="删除"
+        android:textColor="@color/gray_blue"
+        android:layout_below="@+id/name_tv"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
+
+</RelativeLayout>

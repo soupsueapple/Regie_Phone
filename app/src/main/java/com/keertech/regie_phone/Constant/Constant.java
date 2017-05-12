@@ -51,5 +51,7 @@ public class Constant {
     public static boolean isRefresNoJZZZS = false;
     public static boolean isRefresJZZZS = false;
     public static boolean isRefreshSCJC = false;
+    public static boolean isRefresJJFinish = false;
+    public static boolean isRefresJZZZSFinish = false;
 
 }

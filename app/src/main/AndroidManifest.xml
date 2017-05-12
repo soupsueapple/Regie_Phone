@@ -106,6 +106,21 @@
         <activity android:name=".Activity.ProblemChecking.CheckingActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.ProblemChecking.DepartmentChecking.AddDepartmentCheckingActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemChecking.DepartmentChecking.AddCustomerDepartmentCheckingActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemChecking.DepartmentChecking.ChooseCustomerActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemChecking.DepartmentChecking.AddNotHasLicenseActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemChecking.DepartmentChecking.AddNotHasLicenseActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 
