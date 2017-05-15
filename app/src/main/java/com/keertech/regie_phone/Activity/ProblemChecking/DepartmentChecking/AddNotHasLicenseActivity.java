@@ -288,6 +288,7 @@ public class AddNotHasLicenseActivity extends BaseActivity{
 
             public RecyclerHolder(View itemView) {
                 super(itemView);
+                assignViews(itemView);
             }
         }
     }

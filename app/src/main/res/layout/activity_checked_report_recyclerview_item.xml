@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/shopname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="武汉市江岸区美味园零食坊"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="江铭"
+        android:layout_below="@+id/shopname_tv"
+        android:layout_alignLeft="@+id/shopname_tv"
+        android:layout_alignStart="@+id/shopname_tv"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/license_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_alignBaseline="@+id/name_tv"
+        android:layout_alignBottom="@+id/name_tv"
+        android:layout_toRightOf="@+id/name_tv"
+        android:layout_toEndOf="@+id/name_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/measure_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="出具《先行教育通知书》"
+        android:layout_below="@+id/name_tv"
+        android:layout_alignLeft="@+id/name_tv"
+        android:layout_alignStart="@+id/name_tv"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/report_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上报"
+        android:textColor="@color/gray_blue"
+        android:layout_alignBaseline="@+id/measure_tv"
+        android:layout_alignBottom="@+id/measure_tv"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:id="@+id/look_up_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看"
+        android:textColor="@color/gray_blue"
+        android:layout_alignBaseline="@+id/report_tv"
+        android:layout_alignBottom="@+id/report_tv"
+        android:layout_toLeftOf="@+id/report_tv"
+        android:layout_toStartOf="@+id/report_tv"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_black"
+        android:layout_below="@id/look_up_tv"
+        android:layout_margin="10dp"></LinearLayout>
+
+</RelativeLayout>

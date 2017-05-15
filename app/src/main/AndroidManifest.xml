@@ -118,7 +118,10 @@
         <activity android:name=".Activity.ProblemChecking.DepartmentChecking.AddNotHasLicenseActivity"
             android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".Activity.ProblemChecking.DepartmentChecking.AddNotHasLicenseActivity"
+        <activity android:name=".Activity.ProblemChecking.DepartmentChecking.DepartmentCustomerCheckingActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemChecking.DepartmentChecking.CheckedReportActivity"
             android:screenOrientation="portrait"></activity>
 
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
