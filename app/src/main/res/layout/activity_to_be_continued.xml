@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/license_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="20111109557"
+                    android:textColor="@color/gray_blue" />
+
+                <TextView
+                    android:id="@+id/phone_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/license_tv"
+                    android:layout_alignBottom="@+id/license_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/license_tv"
+                    android:layout_toRightOf="@+id/license_tv"
+                    android:text="13886030450"
+                    android:textColor="@color/gray_blue" />
+
+                <TextView
+                    android:id="@+id/shopname_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/license_tv"
+                    android:layout_alignStart="@+id/license_tv"
+                    android:layout_below="@+id/license_tv"
+                    android:layout_marginTop="10dp"
+                    android:text="武汉市洪山区乐家便利副食经营部"
+                    android:textColor="@color/gray_blue" />
+
+                <TextView
+                    android:id="@+id/type_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/shopname_tv"
+                    android:layout_alignStart="@+id/shopname_tv"
+                    android:layout_below="@+id/shopname_tv"
+                    android:layout_marginTop="10dp"
+                    android:text="举报人：" />
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/type_tv"
+                    android:layout_alignBottom="@+id/type_tv"
+                    android:layout_toEndOf="@+id/type_tv"
+                    android:layout_toRightOf="@+id/type_tv"
+                    android:text="李先生" />
+
+                <TextView
+                    android:id="@+id/time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/name_tv"
+                    android:layout_alignBottom="@+id/name_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/name_tv"
+                    android:layout_toRightOf="@+id/name_tv"
+                    android:text="2015-10-31 20:55:21" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/type_tv"
+                    android:layout_alignStart="@+id/type_tv"
+                    android:layout_below="@+id/type_tv"
+                    android:layout_marginTop="10dp"
+                    android:text="内容：" />
+
+                <TextView
+                    android:id="@+id/content_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView9"
+                    android:layout_alignBottom="@+id/textView9"
+                    android:layout_toEndOf="@+id/textView9"
+                    android:layout_toRightOf="@+id/textView9"
+                    android:text="消费者在和平乡徐东村新绿美地购买了黄鹤楼（软珍品），怀疑是假烟，请求鉴别" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView9"
+                    android:layout_alignStart="@+id/textView9"
+                    android:layout_below="@+id/content_tv"
+                    android:layout_marginTop="10dp"
+                    android:text="工单类别：" />
+
+                <TextView
+                    android:id="@+id/work_type_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView10"
+                    android:layout_alignBottom="@+id/textView10"
+                    android:layout_toEndOf="@+id/textView10"
+                    android:layout_toRightOf="@+id/textView10"
+                    android:text="专卖管理 卷烟鉴别" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView10"
+                    android:layout_alignStart="@+id/textView10"
+                    android:layout_below="@+id/textView10"
+                    android:layout_marginTop="10dp"
+                    android:text="卷烟品牌：" />
+
+                <TextView
+                    android:id="@+id/brand_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView13"
+                    android:layout_alignBottom="@+id/textView13"
+                    android:layout_toEndOf="@+id/textView13"
+                    android:layout_toRightOf="@+id/textView13"
+                    android:text="黄鹤楼（软珍品）" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout14"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/brand_tv"
+                    android:layout_margin="10dp"
+                    android:background="@color/gray_black"
+                    android:orientation="horizontal"></LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/linearLayout14"
+                    android:layout_alignStart="@+id/linearLayout14"
+                    android:layout_below="@+id/linearLayout14"
+                    android:text="处理结果"
+                    android:textColor="@color/gray_green" />
+
+                <TextView
+                    android:id="@+id/to_be_continued_info_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView14"
+                    android:layout_alignStart="@+id/textView14"
+                    android:layout_below="@+id/textView14"
+                    android:layout_marginTop="10dp"
+                    android:text="" />
+
+                <EditText
+                    android:id="@+id/to_be_continued_info_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignEnd="@+id/linearLayout14"
+                    android:layout_alignLeft="@+id/to_be_continued_info_tv"
+                    android:layout_alignRight="@+id/linearLayout14"
+                    android:layout_alignStart="@+id/to_be_continued_info_tv"
+                    android:layout_below="@+id/to_be_continued_info_tv"
+                    android:layout_marginTop="10dp" />
+
+                <LinearLayout
+                    android:id="@+id/dispose_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_below="@id/to_be_continued_info_et"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:id="@+id/dispose_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        android:text="办理"
+                        android:background="@drawable/green_button"
+                        android:textColor="@color/color_white"/>
+
+                    <TextView
+                        android:id="@+id/reject_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="驳回"
+                        android:padding="5dp"
+                        android:background="@drawable/green_button"
+                        android:textColor="@color/color_white"/>
+
+                    <TextView
+                        android:id="@+id/to_checking_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/green_button"
+                        android:gravity="center"
+                        android:text="列为检查对象"
+                        android:padding="5dp"
+                        android:textColor="@color/color_white" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
