@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/license_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="420102106587"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/business_no_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="420102600633276"
+        android:layout_below="@+id/license_tv"
+        android:layout_alignLeft="@+id/license_tv"
+        android:layout_alignStart="@+id/license_tv"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="江铭"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_alignBaseline="@+id/license_tv"
+        android:layout_alignBottom="@+id/license_tv"
+        android:layout_toRightOf="@+id/license_tv"
+        android:layout_toEndOf="@+id/license_tv" />
+
+    <TextView
+        android:id="@+id/date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2016-09-05"
+        android:layout_alignBaseline="@+id/name_tv"
+        android:layout_alignBottom="@+id/name_tv"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:id="@+id/shopname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="武汉市江岸区美味零食坊"
+        android:layout_below="@+id/business_no_tv"
+        android:layout_alignLeft="@+id/business_no_tv"
+        android:layout_alignStart="@+id/business_no_tv"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/pic_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pic"
+        android:layout_below="@+id/name_tv"
+        android:layout_alignRight="@+id/shopname_tv"
+        android:layout_alignEnd="@+id/shopname_tv" />
+
+    <TextView
+        android:id="@+id/mark_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xx1"
+        android:layout_above="@+id/shopname_tv"
+        android:layout_toRightOf="@+id/pic_tv"
+        android:layout_toEndOf="@+id/pic_tv"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp" />
+
+    <TextView
+        android:id="@+id/look_up_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/ic_menu_search"
+        android:layout_alignBaseline="@+id/business_no_tv"
+        android:layout_alignBottom="@+id/business_no_tv"
+        android:layout_alignRight="@+id/date_tv"
+        android:layout_alignEnd="@+id/date_tv" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/shopname_tv"
+        android:background="@color/gray_black"
+        android:layout_margin="10dp"></LinearLayout>
+
+</RelativeLayout>
