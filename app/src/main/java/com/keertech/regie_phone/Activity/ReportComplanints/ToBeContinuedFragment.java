@@ -1,5 +1,6 @@
 package com.keertech.regie_phone.Activity.ReportComplanints;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.keertech.regie_phone.Activity.ReportComplanints.ToBeContinued.ToBeContinuedActivity;
 import com.keertech.regie_phone.BaseFragment;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Network.HttpClient;
@@ -158,7 +160,6 @@ public class ToBeContinuedFragment extends BaseFragment{
                 String customerName = object.getString("customername");
                 String workOrderDate = object.getString("workorderdate");
                 String phoneType = object.getString("phonetype");
-                String phoneNo = object.getString("phoneno");
 
                 holder.licenseTv.setText(cigLicenseNo);
                 holder.shopnameTv.setText(tradename);
@@ -169,9 +170,9 @@ public class ToBeContinuedFragment extends BaseFragment{
                 holder.lookUpTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(getActivity(), WWCInfoActivity.class);
-//                        intent.putExtra("data", jsonString);
-//                        getActivity().startActivity(intent);
+                        Intent intent = new Intent(getActivity(), ToBeContinuedActivity.class);
+                        intent.putExtra("data", jsonString);
+                        getActivity().startActivity(intent);
                     }
                 });
 

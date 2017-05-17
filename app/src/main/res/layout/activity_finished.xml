@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="420111206019" />
+
+        <TextView
+            android:id="@+id/tradename_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView15"
+            android:layout_alignBottom="@+id/textView15"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/textView15"
+            android:layout_toRightOf="@+id/textView15"
+            android:text="武汉市新宿酒店管理有限公司" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="举报投诉人："
+            android:layout_below="@+id/textView15"
+            android:layout_alignLeft="@+id/textView15"
+            android:layout_alignStart="@+id/textView15"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView16" />
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="黄先生"
+            android:layout_alignBaseline="@+id/textView16"
+            android:layout_alignBottom="@+id/textView16"
+            android:layout_toRightOf="@+id/textView16"
+            android:layout_toEndOf="@+id/textView16" />
+
+        <TextView
+            android:id="@+id/phone_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13434334343"
+            android:textColor="@color/gray_blue"
+            android:layout_alignBaseline="@+id/name_tv"
+            android:layout_alignBottom="@+id/name_tv"
+            android:layout_toRightOf="@+id/name_tv"
+            android:layout_toEndOf="@+id/name_tv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015-08-17 17:00:45"
+            android:layout_below="@+id/textView16"
+            android:layout_alignLeft="@+id/textView16"
+            android:layout_alignStart="@+id/textView16"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="内容："
+            android:layout_below="@+id/time_tv"
+            android:layout_alignLeft="@+id/time_tv"
+            android:layout_alignStart="@+id/time_tv"
+            android:layout_marginTop="12dp"
+            android:id="@+id/textView17" />
+
+        <TextView
+            android:id="@+id/content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="卖假烟 黄鹤楼1916"
+            android:layout_alignBaseline="@+id/textView17"
+            android:layout_alignBottom="@+id/textView17"
+            android:layout_toRightOf="@+id/textView17"
+            android:layout_toEndOf="@+id/textView17" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="工单类别："
+            android:layout_below="@+id/textView17"
+            android:layout_alignLeft="@+id/textView17"
+            android:layout_alignStart="@+id/textView17"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView18" />
+
+        <TextView
+            android:id="@+id/business_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="专卖管理"
+            android:layout_alignBaseline="@+id/textView18"
+            android:layout_alignBottom="@+id/textView18"
+            android:layout_toRightOf="@+id/textView18"
+            android:layout_toEndOf="@+id/textView18" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="举报投诉方式："
+            android:layout_below="@+id/textView18"
+            android:layout_alignLeft="@+id/textView18"
+            android:layout_alignStart="@+id/textView18"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView19" />
+
+        <TextView
+            android:id="@+id/work_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="卷烟鉴别"
+            android:layout_alignBaseline="@+id/textView19"
+            android:layout_alignBottom="@+id/textView19"
+            android:layout_toRightOf="@+id/textView15"
+            android:layout_toEndOf="@+id/textView15" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="卷烟品牌："
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/textView19"
+            android:layout_alignLeft="@+id/textView19"
+            android:layout_alignStart="@+id/textView19"
+            android:id="@+id/textView20" />
+
+        <TextView
+            android:id="@+id/brand_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="黄鹤楼1916"
+            android:layout_alignBaseline="@+id/textView20"
+            android:layout_alignBottom="@+id/textView20"
+            android:layout_toRightOf="@+id/textView20"
+            android:layout_toEndOf="@+id/textView20" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/brand_tv"
+            android:layout_margin="10dp"
+            android:background="@color/gray_black"></LinearLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="处理结果"
+        android:textColor="@color/gray_green"
+        android:layout_marginLeft="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

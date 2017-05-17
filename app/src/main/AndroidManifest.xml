@@ -127,6 +127,9 @@
         <activity android:name=".Activity.ReportComplanints.ReportComplanintsMainActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.ReportComplanints.Finished.FinishedActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 

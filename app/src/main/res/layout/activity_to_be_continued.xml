@@ -184,7 +184,8 @@
                     android:layout_alignRight="@+id/linearLayout14"
                     android:layout_alignStart="@+id/to_be_continued_info_tv"
                     android:layout_below="@+id/to_be_continued_info_tv"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:gravity="top"/>
 
                 <LinearLayout
                     android:id="@+id/dispose_ll"

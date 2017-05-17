@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="姜惠"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/name_tv" />
+
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2015-08-17 17:00:45"
+        android:layout_alignBaseline="@+id/name_tv"
+        android:layout_alignBottom="@+id/name_tv"
+        android:layout_toRightOf="@+id/name_tv"
+        android:layout_toEndOf="@+id/name_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/action_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="派单"
+        android:layout_alignBaseline="@+id/time_tv"
+        android:layout_alignBottom="@+id/time_tv"
+        android:layout_toRightOf="@+id/time_tv"
+        android:layout_toEndOf="@+id/time_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="卖假烟："
+        android:layout_below="@+id/name_tv"
+        android:layout_alignLeft="@+id/name_tv"
+        android:layout_alignStart="@+id/name_tv"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_black"
+        android:layout_below="@id/content_tv"
+        android:layout_margin="10dp"></LinearLayout>
+
+</RelativeLayout>
