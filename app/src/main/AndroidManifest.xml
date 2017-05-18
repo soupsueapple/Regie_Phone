@@ -133,6 +133,12 @@
         <activity android:name=".Activity.CustomerInfo.CustomerInfoMainFragmentActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.CustomerInfo.CustomerMapActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.CustomerInfo.CustomerInfo.CucstomerInfoActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 

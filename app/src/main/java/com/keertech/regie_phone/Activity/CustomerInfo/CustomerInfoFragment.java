@@ -1,27 +1,46 @@
 package com.keertech.regie_phone.Activity.CustomerInfo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.keertech.regie_phone.BaseFragment;
+import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
+import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.R;
+import com.keertech.regie_phone.Utility.DateTimeUtil;
+import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import static com.keertech.regie_phone.R.id.recycler_view;
 
 /**
  * Created by soup on 2017/5/17.
@@ -44,6 +63,8 @@ public class CustomerInfoFragment extends BaseFragment{
     private FloatingActionButton mapFab;
 
     private ArrayList<JSONObject> datas = new ArrayList<>();
+
+    private ArrayList<JSONObject> allDatas = new ArrayList<>();
 
     private ArrayList<JSONObject> notDoorPhoto = new ArrayList<>();
 
@@ -68,6 +89,8 @@ public class CustomerInfoFragment extends BaseFragment{
     String currentporpertiyCode = "";
     String currentcommonId = "";
 
+    RecyclerAdapter recyclerAdapter = new RecyclerAdapter();
+
     private void assignViews(View convertView) {
         linearLayout16 = (LinearLayout) convertView.findViewById(R.id.linearLayout16);
         licenseTv = (EditText) convertView.findViewById(R.id.license_tv);
@@ -79,12 +102,491 @@ public class CustomerInfoFragment extends BaseFragment{
         statusTv = (CheckBox) convertView.findViewById(R.id.status_tv);
         notHasPic = (CheckBox) convertView.findViewById(R.id.not_has_pic);
         notHasPosition = (CheckBox) convertView.findViewById(R.id.not_has_position);
-        recyclerView = (RecyclerView) convertView.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) convertView.findViewById(recycler_view);
         searchFab = (FloatingActionButton) convertView.findViewById(R.id.search_fab);
         mapFab = (FloatingActionButton) convertView.findViewById(R.id.map_fab);
+
+        communityTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                showCommunityItemDialog();
+            }
+        });
+
+        porpertiyTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                showPorpertiyItemDialog();
+            }
+        });
+
+        commonTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                showCommonItemDialog();
+            }
+        });
+
+        searchFab.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                searchCustomerInfo(licenseTv.getText().toString(), shopnameTv.getText().toString(), nameTv.getText().toString());
+            }
+        });
+
+        statusTv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if (isChecked) otherCondition = true;
+                else otherCondition = false;
+
+                searchCustomerInfo(licenseTv.getText().toString(), shopnameTv.getText().toString(), nameTv.getText().toString());
+            }
+        });
+
+        notHasPic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if (isChecked) {
+                    datas = notDoorPhoto;
+                } else {
+                    datas = allDatas;
+                }
+
+                recyclerAdapter.notifyDataSetChanged();
+            }
+        });
+
+        notHasPosition.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if(isChecked){
+                    searchNotLocationCustomer(licenseTv.getText().toString(), shopnameTv.getText().toString(), nameTv.getText().toString());
+                }else{
+                    searchCustomerInfo(licenseTv.getText().toString(), shopnameTv.getText().toString(), nameTv.getText().toString());
+                }
+            }
+        });
+
+        mapFab.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                fileWrite(mapdatas.toString());
+            }
+        });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(recyclerAdapter);
+
+        mHandler = new Handler();
+
+        loadingCommunity();
+        loadingCommon();
+        searchCustomerInfo(licenseTv.getText().toString(), shopnameTv.getText().toString(), nameTv.getText().toString());
     }
 
+    private void fileWrite(String json){
+        File sdcard = Environment.getExternalStorageDirectory();
+        String path = sdcard.getPath()+File.separator+Constant.Base_path;
+        String fileName = path + File.separator + DateTimeUtil.getCurrDateTimeStr()+".txt";
 
+        try {
+            FileWriter writer=new FileWriter(fileName);
+            writer.write(json);
+            writer.close();
+
+            Intent intent = new Intent(getActivity(), CustomerMapActivity.class);
+            intent.putExtra("fileName", fileName);
+            startActivity(intent);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showCommunityItemDialog() {
+
+        if (communityNames == null || communityIDs == null) return;
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).setTitle("选择社区").setItems(communityNames, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                communityTv.setText(communityNames[which]);
+                currentCommunityId = communityIDs[which];
+            }
+        }).create();
+        alertDialog.show();
+    }
+
+    private void showPorpertiyItemDialog(){
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).setTitle("选择业态").setItems(porpertiyNames, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                porpertiyTv.setText(porpertiyNames[which]);
+                currentporpertiyCode = porpertiyCodes[which];
+            }
+        }).create();
+        alertDialog.show();
+    }
+
+    private void showCommonItemDialog(){
+        if(commonNames == null || commonIds == null) return;
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).setTitle("选择市管员").setItems(commonNames, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                commonTv.setText(commonNames[which]);
+                currentcommonId = commonIds[which];
+            }
+        }).create();
+        alertDialog.show();
+    }
+
+    private void loadingCommunity(){
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.loading);
+        pd.show();
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+ Constant.MWB_Base_URL+"communityInfo!searchBeans.action?privilegeFlag=VIEW\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
+
+        HttpClient.post(Constant.EXEC, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                System.out.println("response: " + response.toString());
+                pd.dismiss();
+
+                try {
+                    if (StringUtility.isSuccess(response)) {
+                        String messageSting = response.getString("message");
+
+                        JSONObject message = new JSONObject(messageSting);
+
+                        if (StringUtility.isSuccess(message)) {
+
+                            JSONArray data = message.optJSONArray("data");
+
+                            communityNames = new String[data.length()];
+                            communityIDs = new String[data.length()];
+
+                            for(int i=0;i<data.length();i++){
+                                JSONObject object = data.optJSONObject(i);
+
+                                String communityName = object.optString("communityName");
+                                String id = object.getString("id");
+
+                                communityNames[i] = communityName;
+                                communityIDs[i] = id;
+                            }
+
+
+                        } else {
+                            showToast(response.getString("message"), getActivity());
+                        }
+                    } else {
+                        showToast(response.getString("message"), getActivity());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
+    private void loadingCommon(){
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.loading);
+        pd.show();
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+Constant.MWB_Base_URL+"common!findPostList.action\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
+
+        HttpClient.post(Constant.EXEC, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                System.out.println("response: " + response.toString());
+                pd.dismiss();
+
+                try {
+                    if (StringUtility.isSuccess(response)) {
+                        String messageSting = response.getString("message");
+
+                        JSONObject message = new JSONObject(messageSting);
+
+                        if (StringUtility.isSuccess(message)) {
+
+                            JSONArray data = message.optJSONArray("data");
+
+                            commonNames = new String[data.length()];
+                            commonIds = new String[data.length()];
+
+                            for(int i=0;i<data.length();i++){
+                                JSONObject object = data.optJSONObject(i);
+
+                                String postUser = object.optString("postUser");
+                                String id = object.getString("id");
+
+                                commonNames[i] = postUser;
+                                commonIds[i] = id;
+                            }
+
+                            if(data.length() > 1) commonTv.setVisibility(View.VISIBLE);
+                            else commonTv.setVisibility(View.GONE);
+
+                        } else {
+                            showToast(response.getString("message"), getActivity());
+                        }
+                    } else {
+                        showToast(response.getString("message"), getActivity());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
+    private void searchCustomerInfo(String liceNo, String shopName, String chargerName) {
+
+        String other = liceNo.length() > 0 ? "&_query.liceNo=" + liceNo : "";
+        other = other + (shopName.length() > 0 ? "&_query.shopName=" + shopName : "");
+        other = other + (chargerName.length() > 0 ? "&_query.chargerName=" + chargerName : "");
+        other = other + (currentcommonId.length() > 0 ? "&_query.postId=" + currentcommonId : "");
+        other = other + (currentporpertiyCode.length() > 0 ? "&_query.porpertiy_code=" + currentporpertiyCode : "");
+        other = other + (currentCommunityId.length() > 0 ? "&_query.communityId=" + currentCommunityId : "");
+
+        if(otherCondition) other = other +"&_query.otherCondition=7";
+
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.loading);
+        pd.show();
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+ Constant.MWB_Base_URL +"customerInfo!searchBeans.action?privilegeFlag=VIEW&start="+index+"&limit=20"+other+"\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
+
+
+        HttpClient.post(Constant.EXEC, requestParams, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                pd.dismiss();
+
+                try {
+
+                    if (StringUtility.isSuccess(response)) {
+                        String messageSting = response.getString("message");
+
+                        JSONObject message = new JSONObject(messageSting);
+
+                        if (StringUtility.isSuccess(message)) {
+
+
+                            JSONArray data = message.getJSONArray("data");
+
+                            if (mapdatas.size() > 0) mapdatas.clear();
+                            if(notDoorPhoto.size() > 0) notDoorPhoto.clear();
+                            if(allDatas.size() > 0) allDatas.clear();
+
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject object = data.getJSONObject(i);
+
+                                if(!allDatas.contains(object)) allDatas.add(object);
+                                if(!mapdatas.contains(object)) mapdatas.add(object);
+
+                                Integer door_photo = object.getInt("door_photo");
+
+                                if(door_photo == 0){
+                                    if(!notDoorPhoto.contains(object)) notDoorPhoto.add(object);
+                                }
+                            }
+
+                            datas = allDatas;
+
+                            recyclerAdapter.notifyDataSetChanged();
+
+                        } else {
+                            showToast(response.getString("message"), getActivity());
+                        }
+                    } else {
+                        showToast(response.getString("message"), getActivity());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+
+    }
+
+    private void searchNotLocationCustomer(String liceNo, String shopName, String chargerName) {
+
+        String other = liceNo.length() > 0 ? "&_query.liceNo=" + liceNo : "";
+        other = other + (shopName.length() > 0 ? "&_query.shopName=" + shopName : "");
+        other = other + (chargerName.length() > 0 ? "&_query.chargerName=" + chargerName : "");
+        other = other + (currentcommonId.length() > 0 ? "&_query.postId=" + currentcommonId : "");
+        other = other + (currentporpertiyCode.length() > 0 ? "&_query.porpertiy_code=" + currentporpertiyCode : "");
+        other = other + (currentCommunityId.length() > 0 ? "&_query.communityId=" + currentCommunityId : "");
+
+        other = other +"&_query.otherCondition=5";
+
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.loading);
+        pd.show();
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+Constant.MWB_Base_URL + "customerInfo!searchBeans.action?privilegeFlag=VIEW&start="+index+"&limit=20"+other+"\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
+
+
+        HttpClient.post(Constant.EXEC, requestParams, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                pd.dismiss();
+
+
+                try {
+
+                    if (StringUtility.isSuccess(response)) {
+                        String messageSting = response.getString("message");
+
+                        JSONObject message = new JSONObject(messageSting);
+
+                        if (StringUtility.isSuccess(message)) {
+
+
+                            JSONArray data = message.getJSONArray("data");
+
+                            if (mapdatas.size() > 0) mapdatas.clear();
+                            if(notDoorPhoto.size() > 0) notDoorPhoto.clear();
+                            if(allDatas.size() > 0) allDatas.clear();
+
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject object = data.getJSONObject(i);
+
+                                allDatas.add(object);
+                            }
+                            datas = allDatas;
+
+                            recyclerAdapter.notifyDataSetChanged();
+
+                        } else {
+                            showToast(response.getString("message"), getActivity());
+                        }
+                    } else {
+                        showToast(response.getString("message"), getActivity());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
