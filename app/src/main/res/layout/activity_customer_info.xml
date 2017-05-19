@@ -83,7 +83,8 @@
                 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
                     
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -252,7 +253,7 @@
                             android:id="@+id/regionalism_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="江岸区烟草专卖分局"/>
+                            android:text="江岸区烟草专卖分局" />
 
                     </LinearLayout>
 
@@ -490,9 +491,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="状态信息（可编辑）"
+                    android:textColor="@color/gray_green"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="10dp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                     <LinearLayout
                         android:id="@+id/real_name_ll"

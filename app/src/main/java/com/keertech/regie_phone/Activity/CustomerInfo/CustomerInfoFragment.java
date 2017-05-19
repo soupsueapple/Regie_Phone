@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfo.CucstomerInfoActivity;
+import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfo.CustomerInfoActivity;
 import com.keertech.regie_phone.BaseFragment;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
@@ -660,7 +661,7 @@ public class CustomerInfoFragment extends BaseFragment{
                         super.onClick(view);
 
                         try {
-                            Intent intent = new Intent(getActivity(), CucstomerInfoActivity.class);
+                            Intent intent = new Intent(getActivity(), CustomerInfoActivity.class);
                             intent.putExtra("id", object.getString("id"));
                             if (!object.isNull("needLocation"))
                                 intent.putExtra("needLocation", object.getInt("needLocation"));
