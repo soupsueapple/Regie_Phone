@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfo.CucstomerInfoActivity;
 import com.keertech.regie_phone.BaseFragment;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
@@ -611,7 +612,7 @@ public class CustomerInfoFragment extends BaseFragment{
         @Override
         public void onBindViewHolder(RecyclerHolder holder, int position) {
 
-            JSONObject object = datas.get(position);
+            final JSONObject object = datas.get(position);
 
             try {
                 String liceNo = object.getString("liceNo");
@@ -657,6 +658,18 @@ public class CustomerInfoFragment extends BaseFragment{
                     @Override
                     public void onClick(View view) {
                         super.onClick(view);
+
+                        try {
+                            Intent intent = new Intent(getActivity(), CucstomerInfoActivity.class);
+                            intent.putExtra("id", object.getString("id"));
+                            if (!object.isNull("needLocation"))
+                                intent.putExtra("needLocation", object.getInt("needLocation"));
+                            else intent.putExtra("needLocation", false);
+                            getActivity().startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
 
