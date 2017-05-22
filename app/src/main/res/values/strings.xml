@@ -8,4 +8,5 @@
     <string name="loginning">正在登录</string>
     <string name="loading">加载中</string>
     <string name="sending">提交中</string>
+    <string name="locationing">定位中</string>
 </resources>

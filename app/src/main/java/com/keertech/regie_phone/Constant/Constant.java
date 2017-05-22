@@ -38,6 +38,8 @@ public class Constant {
     public final static String SharedPreferencesLoginUserName = "username";
     public final static String SharedPreferencesLoginUserPassword = "password";
 
+    public final static String MAP_RECEIVER = "com.keer.client.map";
+
     public static String apkVer = "1.0";
 
     public static boolean isRefreshXCJL = false;
@@ -56,5 +58,7 @@ public class Constant {
 
     public static boolean isRefreshTSJB = false;
     public static boolean isRefreshJYH = false;
+
+    public static boolean isRefreshUNID = false;
 
 }

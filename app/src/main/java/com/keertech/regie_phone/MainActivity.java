@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfoMainFragmentActivity;
+import com.keertech.regie_phone.Activity.NothaveLicenseCustomer.NothaveLicenseCustomerMainActivity;
 import com.keertech.regie_phone.Activity.ProblemChecking.ProblemCheckingMainActivity;
 import com.keertech.regie_phone.Activity.ReportComplanints.ReportComplanintsMainActivity;
 import com.keertech.regie_phone.Activity.SystemSetting.SystemSettingActivity;
@@ -404,13 +406,15 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "经营户信息":
-
+                            intent = new Intent(MainActivity.this, CustomerInfoMainFragmentActivity.class);
+                            startActivity(intent);
                             break;
                         case "暗访检查":
 
                             break;
                         case "无证户信息":
-
+                            intent = new Intent(MainActivity.this, NothaveLicenseCustomerMainActivity.class);
+                            startActivity(intent);
                             break;
                         case "专销互动":
 

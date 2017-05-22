@@ -139,6 +139,39 @@
         <activity android:name=".Activity.CustomerInfo.CustomerInfo.CustomerInfoActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.CustomerInfo.CustomerInfo.OrdergoodsActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.CustomerInfo.CustomerInfo.OrdergoodsInfoActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.CustomerInfo.CustomerInfo.PunishActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.CustomerInfo.CustomerInfo.PunishInfoActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.CustomerInfo.CustomerInfo.MapTestActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.CustomerInfo.CustomerInfo.PersonnelLocationMapActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.CustomerInfo.CustomerInfo.CustomerPicturesActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.CustomerInfo.AllCityCustomerInfo.CustomerInfoActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.NothaveLicenseCustomer.NothaveLicenseCustomerMainActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.NothaveLicenseCustomer.NothaveLicenseCustomerInfoActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.NothaveLicenseCustomer.NothaveLicenseCustomerAddActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 

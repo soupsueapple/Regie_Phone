@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfo.CucstomerInfoActivity;
 import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfo.CustomerInfoActivity;
 import com.keertech.regie_phone.BaseFragment;
 import com.keertech.regie_phone.Constant.Constant;

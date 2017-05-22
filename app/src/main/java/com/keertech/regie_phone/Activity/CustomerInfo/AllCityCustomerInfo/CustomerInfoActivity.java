@@ -1,4 +1,4 @@
-package com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfo;
+package com.keertech.regie_phone.Activity.CustomerInfo.AllCityCustomerInfo;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfo.MapTestActivity;
 import com.keertech.regie_phone.BaseActivity;
 import com.keertech.regie_phone.BroadcastReceiver.MapBroadcastReceiver;
 import com.keertech.regie_phone.Constant.Constant;
@@ -266,180 +267,6 @@ public class CustomerInfoActivity extends BaseActivity {
         MapBroadcastReceiver.registerSwitchPluginReceiver(this);
         MapBroadcastReceiver.registerObserver(mapObserver);
 
-        realNameLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                editDialog("实际经营人姓名", "bean.real_operate_person", realNameTv);
-            }
-        });
-
-        birthdayLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                editDialog("出生年份", "bean.birthYear", birthdayTv);
-            }
-        });
-
-        businessSectionLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                chickDialog("经营地段", "bean.business_type", JYDDkey, JYDDValue, businessSectionTv);
-            }
-        });
-
-        connectPhoneLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                editDialog("联系电话", "bean.contactphone", connectPhoneTv);
-            }
-        });
-
-        businessTypeLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                chickDialog("市场类型", "bean.market_type", SCLXKey, SCLXValue, businessTypeTv);
-            }
-        });
-
-        porpertiyLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                chickDialog("业态", "bean.porpertiy_code", JYYTKey, JYYTValue, porpertiyTv);
-            }
-        });
-
-        storePorpertiyLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                chickDialog("门店性质", "bean.store_nature", MDXZKey, MDXZValue, storePorpertiyTv);
-            }
-        });
-
-        practitionerNumLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                editDialog("从业人数", "bean.practitionerNum", practitionerNumTv);
-            }
-        });
-
-        orderInfoTv.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                Intent intent = new Intent(CustomerInfoActivity.this, OrdergoodsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("operator",operator);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-
-        punishNumTv.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                Intent intent = new Intent(CustomerInfoActivity.this, PunishActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("operator",operator);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-
-        provinceLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                loadAddrProvince(false);
-            }
-        });
-
-        cityLl.setOnClickListener(new ViewClickVibrate() {
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                if (!StringUtility.isEmpty(provinceId)) {
-                    loadAddrCity(false);
-                } else {
-                    showToast("请选择省份", CustomerInfoActivity.this);
-                }
-            }
-        });
-
-        countyLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                if (!StringUtility.isEmpty(cityId)) {
-                    loadAddrCounty(false);
-                } else {
-                    showToast("请选择城市", CustomerInfoActivity.this);
-                }
-            }
-        });
-
-        helpingGroupsLl.setOnClickListener(new ViewClickVibrate() {
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                chickDialog("帮扶群体", "bean.support_groups", BFQTKey, BFQTValue, helpingGroupsTv);
-            }
-        });
-
-        addressStatusLl.setOnClickListener(new ViewClickVibrate() {
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                chickDialog("地址状态", "bean.addressState", DZZTKey, DZZTValue, addressStatusTv);
-            }
-        });
-
-        businessNumberLl.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                editDialog("工商执照号", "bean.businessNo", businessNumberTv);
-            }
-        });
-
-        staredTv.setOnClickListener(new ViewClickVibrate() {
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                if (mark == 0) {
-                    mark = 1;
-                    staredTv.setBackgroundResource(R.drawable.star1);
-                } else {
-                    mark = 0;
-                    staredTv.setBackgroundResource(R.drawable.star0);
-                }
-
-                upload("");
-            }
-        });
-
         phoneTv.setOnClickListener(new ViewClickVibrate() {
 
             @Override
@@ -470,17 +297,6 @@ public class CustomerInfoActivity extends BaseActivity {
                         startActivity(intent);
                     }
                 }
-            }
-        });
-
-        takePhotoTv.setOnClickListener(new ViewClickVibrate(){
-
-            @Override
-            public void onClick(View view) {
-                super.onClick(view);
-                Intent intent = new Intent(CustomerInfoActivity.this, CustomerPicturesActivity.class);
-                intent.putExtra("liceNo", operator.getLiceNo() == null?"":operator.getLiceNo());
-                startActivity(intent);
             }
         });
 
@@ -1244,7 +1060,7 @@ public class CustomerInfoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_info);
+        setContentView(R.layout.activity_customer_info2);
         setToolbarTitle("经营户信息");
         showBack();
 
