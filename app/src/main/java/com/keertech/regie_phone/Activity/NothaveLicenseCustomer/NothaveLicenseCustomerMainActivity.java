@@ -264,15 +264,15 @@ public class NothaveLicenseCustomerMainActivity extends BaseActivity{
                 @Override
                 public void onClick(View v) {
 
-//                    Intent intent = new Intent(UNIDCustomerActivity.this, UNIDCustomerEditActivity.class);
-//                    intent.putExtra("id",id);
-//                    intent.putExtra("relationId","");
-//                    intent.putExtra("sourceType","00");
-//                    intent.putExtra("name","");
-//                    intent.putExtra("shopname","");
-//                    intent.putExtra("address","");
-//                    intent.putExtra("title", "编辑");
-//                    UNIDCustomerActivity.this.startActivity(intent);
+                    Intent intent = new Intent(NothaveLicenseCustomerMainActivity.this, NothaveLicenseCustomerInfoActivity.class);
+                    intent.putExtra("id",id);
+                    intent.putExtra("relationId","");
+                    intent.putExtra("sourceType","00");
+                    intent.putExtra("name","");
+                    intent.putExtra("shopname","");
+                    intent.putExtra("address","");
+                    intent.putExtra("title", "编辑");
+                    startActivity(intent);
                 }
             });
         }

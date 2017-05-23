@@ -61,4 +61,7 @@ public class Constant {
 
     public static boolean isRefreshUNID = false;
 
+    public static boolean isWZHTB = false;
+    public static boolean isWZHTBFinish = false;
+
 }

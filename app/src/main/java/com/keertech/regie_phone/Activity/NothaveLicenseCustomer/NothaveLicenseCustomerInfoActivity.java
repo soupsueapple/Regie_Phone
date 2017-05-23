@@ -5,12 +5,14 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.keertech.regie_phone.BaseActivity;
 import com.keertech.regie_phone.Constant.Constant;
+import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.R;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
@@ -30,7 +32,7 @@ import org.json.JSONObject;
 public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
 
     private TextView informationSourceTv;
-    private TextView shopnameTv;
+    private EditText shopnameEt;
     private TextView genderTv;
     private EditText identityAddressEt;
     private EditText nameEt;
@@ -42,7 +44,7 @@ public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
     private TextView isDesireTv;
     private TextView isInReasonLayoutTv;
     private TextView isRegularAddressTv;
-    private TextView otherReasonTv;
+    private EditText other_reason_et;
     private TextView isManagePlanTv;
     private TextView statusTv;
     private TextView measureTv;
@@ -102,7 +104,7 @@ public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
 
     private void assignViews() {
         informationSourceTv = (TextView) findViewById(R.id.information_source_tv);
-        shopnameTv = (TextView) findViewById(R.id.shopname_tv);
+        shopnameEt = (EditText) findViewById(R.id.shopname_et);
         genderTv = (TextView) findViewById(R.id.gender_tv);
         identityAddressEt = (EditText) findViewById(R.id.identity_address_et);
         nameEt = (EditText) findViewById(R.id.name_et);
@@ -114,7 +116,7 @@ public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
         isDesireTv = (TextView) findViewById(R.id.is_desire_tv);
         isInReasonLayoutTv = (TextView) findViewById(R.id.is_in_reason_layout_tv);
         isRegularAddressTv = (TextView) findViewById(R.id.is_regular_address_tv);
-        otherReasonTv = (TextView) findViewById(R.id.other_reason_tv);
+        other_reason_et = (EditText) findViewById(R.id.other_reason_et);
         isManagePlanTv = (TextView) findViewById(R.id.is_manage_plan_tv);
         statusTv = (TextView) findViewById(R.id.status_tv);
         measureTv = (TextView) findViewById(R.id.measure_tv);
@@ -123,7 +125,7 @@ public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
 
         id = getIntent().getStringExtra("id");
         nameEt.setText(getIntent().getStringExtra("name"));
-        shopnameTv.setText(getIntent().getStringExtra("shopname"));
+        shopnameEt.setText(getIntent().getStringExtra("shopname"));
         addressEt.setText(getIntent().getStringExtra("address"));
         relationId = getIntent().getStringExtra("relationId");
         sourceType = getIntent().getStringExtra("sourceType");
@@ -131,6 +133,112 @@ public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
         if(sourceType.equals("06")){
             informationSourceTv.setText("客户经理提报");
         }
+
+        informationSourceTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                chickDialog("无证户信息来源", "bean.sourceType", WZHXXLY_Key, WZHXXLY_Value, informationSourceTv);
+            }
+        });
+
+        genderTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                chickDialog("性别", "bean.gender", XB_key, XB_Value, genderTv);
+            }
+        });
+
+        streetTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                if(JD_Key == null || JD_Value == null) loadStreet(true);
+                else chickDialog("经营场所所在街道", "bean.community.street.id", JD_Key, JD_Value, streetTv);
+            }
+        });
+
+        communityTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                if(!StringUtility.isEmpty(streetId)) {
+                    loadCommunity(streetId, true);
+                }else{
+                    showToast("请选择街道", NothaveLicenseCustomerInfoActivity.this);
+                }
+            }
+        });
+
+        helpingGroupsTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                chickDialog("帮扶群体", "bean.support_groups", BFQT_Key, BFQT_Value, helpingGroupsTv);
+            }
+        });
+
+        isPunishTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                chickDialog("是否受过处罚","bean.isPunish", SFCF_key, SFCF_Value, isPunishTv);
+            }
+        });
+
+        isDesireTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                chickDialog("当事人有无办证意愿","bean.hasDesire", BZYY_key, BZYY_Value, isDesireTv);
+            }
+        });
+
+        isInReasonLayoutTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                chickDialog("经营地点是否符合合理化布局要求","bean.reasonableLayout", BJYQ_key, BJYQ_Value, isInReasonLayoutTv);
+            }
+        });
+
+        isRegularAddressTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                chickDialog("有无固定经营场所","bean.hasBusinessPremises", GDJYCS_key, GDJYCS_Value, isRegularAddressTv);
+            }
+        });
+
+        statusTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                chickDialog("经营状况","bean.managerstateId", JYZK_Key, JYZK_Value, statusTv);
+            }
+        });
+
+        measureTv.setOnClickListener(new ViewClickVibrate(){
+
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                chickDialog("采取措施","bean.measuresId", CQCS_Key, CQCS_Value, measureTv);
+            }
+        });
+
+        loadInfo();
     }
 
     private void loadInfo() {
@@ -177,7 +285,7 @@ public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
                                 }
 
                                 nameEt.setText(StringUtility.isEmpty(data.getString("name"))?"":data.getString("name"));
-                                shopnameTv.setText(StringUtility.isEmpty(data.getString("shopName"))?"":data.getString("shopName"));
+                                shopnameEt.setText(StringUtility.isEmpty(data.getString("shopName"))?"":data.getString("shopName"));
                                 addressEt.setText(StringUtility.isEmpty(data.getString("address"))?"":data.getString("address"));
 
                                 JSONObject community = data.getJSONObject("community");
@@ -249,7 +357,7 @@ public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
                                     isRegularAddressTv.setText("有");
                                 }
 
-                                otherReasonTv.setText(StringUtility.isEmpty(data.getString("otherReasons"))?"":data.getString("otherReasons"));
+                                other_reason_et.setText(StringUtility.isEmpty(data.getString("otherReasons"))?"":data.getString("otherReasons"));
                                 isManagePlanTv.setText(StringUtility.isEmpty(data.getString("managementPlan"))?"":data.getString("managementPlan"));
 
                                 String  measuresId = StringUtility.isEmpty(data.getString("measuresId"))?"":data.getString("measuresId");
@@ -359,12 +467,12 @@ public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
                                     for (int i = 0; i < JD_Key.length; i++) {
                                         String street = JD_Key[i];
                                         if (street.equals(streetId)) {
-                                            addressEt.setText(JD_Value[i]);
+                                            streetTv.setText(JD_Value[i]);
                                         }
                                     }
                                 }
                             }else {
-                                chickDialog("经营场所所在街道", "bean.community.street.id", JD_Key, JD_Value, addressEt);
+                                chickDialog("经营场所所在街道", "bean.community.street.id", JD_Key, JD_Value, streetTv);
                             }
 
                         }else {
@@ -513,6 +621,107 @@ public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
 
     }
 
+    private void sendData(){
+        StringBuffer buffer = new StringBuffer("");
+
+        if(!StringUtility.isEmpty(id)) buffer.append("&bean.id="+id);
+        if(!StringUtility.isEmpty(relationId) && relationId.length() > 0) buffer.append("&bean.relationId="+relationId);
+        if(!StringUtility.isEmpty(sourceType)) buffer.append("&bean.sourceType="+sourceType);
+        if(!StringUtility.isEmpty(streetId)) buffer.append("&bean.community.street.id="+streetId);
+        if(!StringUtility.isEmpty(communityId)) buffer.append("&bean.community.id="+communityId);
+        if(!StringUtility.isEmpty(support_groups)) buffer.append("&bean.support_groups="+support_groups);
+        if(!StringUtility.isEmpty(gender)) buffer.append("&bean.gender="+gender);
+        if(!StringUtility.isEmpty(isPunish)) buffer.append("&bean.isPunish="+isPunish);
+        if(!StringUtility.isEmpty(hasDesire)) buffer.append("&bean.hasDesire="+hasDesire);
+        if(!StringUtility.isEmpty(reasonableLayout)) buffer.append("&bean.reasonableLayout="+reasonableLayout);
+        if(!StringUtility.isEmpty(hasBusinessPremises)) buffer.append("&bean.hasBusinessPremises="+hasBusinessPremises);
+        if(!StringUtility.isEmpty(measuresId)) buffer.append("&bean.measuresId="+measuresId);
+        if(!StringUtility.isEmpty(managerstateId)) buffer.append("&bean.managerstateId="+managerstateId);
+
+        if(!StringUtility.isEmpty(version)) buffer.append("&bean.version="+version);
+        if(!StringUtility.isEmpty(valid)) buffer.append("&bean.valid="+valid);
+
+        if(!StringUtility.isEmpty(nameEt.getText().toString())) buffer.append("&bean.name="+nameEt.getText().toString());
+        if(!StringUtility.isEmpty(shopnameEt.getText().toString())) buffer.append("&bean.shopName="+shopnameEt.getText().toString());
+        if(!StringUtility.isEmpty(identityAddressEt.getText().toString())) buffer.append("&bean.hometown="+identityAddressEt.getText().toString());
+        if(!StringUtility.isEmpty(addressEt.getText().toString())) buffer.append("&bean.address="+addressEt.getText().toString());
+        if(!StringUtility.isEmpty(other_reason_et.getText().toString())) buffer.append("&bean.otherReasons="+other_reason_et.getText().toString());
+        if(!StringUtility.isEmpty(isManagePlanTv.getText().toString())) buffer.append("&bean.managementPlan="+isManagePlanTv.getText().toString());
+
+        System.out.println("buffer :"+buffer.toString());
+
+        if(StringUtility.isEmpty(shopnameEt.getText().toString())){
+            showToast("请输入商店名称", this);
+        }else if(StringUtility.isEmpty(addressEt.getText().toString())){
+            showToast("请输入经营地址", this);
+        }else if(StringUtility.isEmpty(communityId)){
+            showToast("请输入经营社区", this);
+        }else {
+            final KeerAlertDialog pd = showKeerAlertDialog(R.string.sending);
+            pd.show();
+
+            RequestParams params = new RequestParams();
+            params.put("data","{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+Constant.MWB_Base_URL+"noLiceRegistry!save.action?privilegeFlag=EDIT"+buffer+"\",\"type\":\"WebExecutor\",\"method\":\"GET\"},\"app\":\"1001\"}");
+
+            HttpClient.post(Constant.EXEC, params, new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    pd.dismiss();
+
+                    try {
+                        if (StringUtility.isSuccess(response)) {
+
+                            String messageSting = response.getString("message");
+
+                            JSONObject message = new JSONObject(messageSting);
+
+                            if (StringUtility.isSuccess(message)) {
+
+                                if(Constant.isWZHTB){
+                                    Constant.isWZHTB = false;
+                                    Constant.isWZHTBFinish = true;
+                                }
+
+                                Constant.isRefreshUNID = true;
+                                finish();
+
+                            } else {
+                                showToast(message.getString("message"), NothaveLicenseCustomerInfoActivity.this);
+                            }
+
+                        } else {
+                            showToast(response.getString("message"), NothaveLicenseCustomerInfoActivity.this);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    pd.dismiss();
+                    showNetworkError(NothaveLicenseCustomerInfoActivity.this);
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    pd.dismiss();
+                    showNetworkError(NothaveLicenseCustomerInfoActivity.this);
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    pd.dismiss();
+                    showNetworkError(NothaveLicenseCustomerInfoActivity.this);
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+            });
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -533,7 +742,7 @@ public class NothaveLicenseCustomerInfoActivity extends BaseActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_save){
-
+            sendData();
             return true;
         }
         return super.onOptionsItemSelected(item);

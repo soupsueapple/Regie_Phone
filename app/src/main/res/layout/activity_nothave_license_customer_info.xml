@@ -49,8 +49,8 @@
                             android:layout_height="wrap_content"
                             android:text="商店名称：" />
 
-                        <TextView
-                            android:id="@+id/shopname_tv"
+                        <EditText
+                            android:id="@+id/shopname_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -60,7 +60,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginLeft="5dp">
+                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -269,8 +270,8 @@
                         android:layout_height="wrap_content"
                         android:text="其他原因：" />
 
-                    <TextView
-                        android:id="@+id/other_reason_tv"
+                    <EditText
+                        android:id="@+id/other_reason_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
