@@ -42,7 +42,7 @@ public class ReportComplanintsMainActivity extends BaseFragmentActivity implemen
         back_tv = (TextView) findViewById(R.id.back_tv);
         title_tv = (TextView) findViewById(R.id.title_tv);
 
-        title_tv.setText("日常服务");
+        title_tv.setText("未处理");
         back_tv.setOnClickListener(new ViewClickVibrate() {
             @Override
             public void onClick(View view) {

@@ -90,6 +90,7 @@ public class CustomerInfoMainFragmentActivity extends BaseFragmentActivity imple
 
         switch (view.getId()){
             case R.id.customer_ll:
+                title_tv.setText("经营户信息");
                 CustomerInfoFragment customerInfoFragment = (CustomerInfoFragment) fm.findFragmentByTag("customer");
                 if(customerInfoFragment == null){
                     customerInfoFragment = new CustomerInfoFragment();
@@ -102,6 +103,7 @@ public class CustomerInfoMainFragmentActivity extends BaseFragmentActivity imple
 
                 break;
             case R.id.all_city_customer_ll:
+                title_tv.setText("全市经营户信息");
                 AllCityCustomerInfoFragment allCityCustomerFragment = (AllCityCustomerInfoFragment) fm.findFragmentByTag("allCity");
                 if(allCityCustomerFragment == null){
                     allCityCustomerFragment = new AllCityCustomerInfoFragment();

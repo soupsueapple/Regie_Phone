@@ -22,6 +22,7 @@ import com.keertech.regie_phone.Activity.NothaveLicenseCustomer.NothaveLicenseCu
 import com.keertech.regie_phone.Activity.ProblemChecking.ProblemCheckingMainActivity;
 import com.keertech.regie_phone.Activity.ReportComplanints.ReportComplanintsMainActivity;
 import com.keertech.regie_phone.Activity.SystemSetting.SystemSettingActivity;
+import com.keertech.regie_phone.Activity.VisitCheck.VisitCheckMainActivity;
 import com.keertech.regie_phone.Activity.XZFW.XZFWMainActivity;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Models.Apps;
@@ -410,7 +411,8 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "暗访检查":
-
+                            intent = new Intent(MainActivity.this, VisitCheckMainActivity.class);
+                            startActivity(intent);
                             break;
                         case "无证户信息":
                             intent = new Intent(MainActivity.this, NothaveLicenseCustomerMainActivity.class);

@@ -52,7 +52,7 @@ public class ProblemCheckingMainActivity extends BaseFragmentActivity implements
         checkedRecordLl.setOnClickListener(this);
         departmentCheckingLl.setOnClickListener(this);
 
-        title_tv.setText("问题核查");
+        title_tv.setText("市管组核查");
         back_tv.setOnClickListener(new ViewClickVibrate() {
             @Override
             public void onClick(View view) {

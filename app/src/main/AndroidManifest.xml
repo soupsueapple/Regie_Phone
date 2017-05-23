@@ -172,6 +172,9 @@
         <activity android:name=".Activity.NothaveLicenseCustomer.NothaveLicenseCustomerAddActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.VisitCheck.VisitCheckMainActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 
