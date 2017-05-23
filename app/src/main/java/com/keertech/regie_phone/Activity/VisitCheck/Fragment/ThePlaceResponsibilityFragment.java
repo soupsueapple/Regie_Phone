@@ -1,6 +1,8 @@
 package com.keertech.regie_phone.Activity.VisitCheck.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +10,24 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.keertech.regie_phone.Activity.VisitCheck.ThePlaceResponsibility.ThePlaceResponsibilityInfoActivity;
 import com.keertech.regie_phone.BaseFragment;
+import com.keertech.regie_phone.Constant.Constant;
+import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.R;
+import com.keertech.regie_phone.Utility.KeerAlertDialog;
+import com.keertech.regie_phone.Utility.StringUtility;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static com.keertech.regie_phone.R.id.recycler_view;
 
 /**
  * Created by soup on 2017/5/23.
@@ -29,9 +42,81 @@ public class ThePlaceResponsibilityFragment extends BaseFragment{
     RecyclerAdapter recyclerAdapter = new RecyclerAdapter();
 
     private void assignViews(View convertView) {
-        recyclerView = (RecyclerView) convertView.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) convertView.findViewById(recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(recyclerAdapter);
+
+        assignPostList();
     }
 
+    private void assignPostList() {
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.loading);
+        pd.show();
+
+        RequestParams params = new RequestParams();
+        params.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\"" + Constant.MWB_Base_URL + "marketSecretlyCheckMobile!assignPostList.action\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
+
+        HttpClient.post(Constant.EXEC, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                pd.dismiss();
+
+                try {
+                    if(StringUtility.isSuccess(response)) {
+                        String messageSting = response.getString("message");
+
+                        JSONObject message = new JSONObject(messageSting);
+
+                        if (StringUtility.isSuccess(message)) {
+
+                            JSONArray data = message.getJSONArray("data");
+
+                            if(datas.size() > 0) datas.clear();
+
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject object = data.getJSONObject(i);
+                                datas.add(object);
+                            }
+
+                            recyclerAdapter.notifyDataSetChanged();
+
+                        } else {
+                            showToast(message.getString("message"), getActivity());
+                        }
+                    }else{
+                        showToast(response.getString("message"), getActivity());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,9 +172,9 @@ public class ThePlaceResponsibilityFragment extends BaseFragment{
                 holder.searchTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(getActivity(), BSZRInfoActivity.class);
-//                        intent.putExtra("taskId", taskId);
-//                        getActivity().startActivity(intent);
+                        Intent intent = new Intent(getActivity(), ThePlaceResponsibilityInfoActivity.class);
+                        intent.putExtra("taskId", taskId);
+                        getActivity().startActivity(intent);
                     }
                 });
 
