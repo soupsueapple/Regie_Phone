@@ -243,8 +243,6 @@ public class ThePlaceResponsibilityInfoActivity extends BaseActivity{
                             }else{
                                 notlicenseSalesYesRb.setChecked(false);
                                 notlicenseSalesNoRb.setChecked(true);
-
-
                             }
 
                             String id = data.getString("id");

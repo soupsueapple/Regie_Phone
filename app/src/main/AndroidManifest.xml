@@ -178,6 +178,15 @@
         <activity android:name=".Activity.VisitCheck.ThePlaceResponsibility.ThePlaceResponsibilityInfoActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.VisitCheck.MyselfResponsibility.MyselfResponsibilityInfoActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.VisitCheck.MyselfResponsibility.ChooseCustomerActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.VisitCheck.MyselfResponsibility.ChooseNotHasLicenseActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 

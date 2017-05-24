@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/shopname_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="店铺名称" />
+
+                <TextView
+                    android:id="@+id/checked_date_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/shopname_tv"
+                    android:layout_alignBottom="@+id/shopname_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/shopname_tv"
+                    android:layout_toRightOf="@+id/shopname_tv"
+                    android:text="检查时间" />
+
+                <TextView
+                    android:id="@+id/address_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/shopname_tv"
+                    android:layout_alignStart="@+id/shopname_tv"
+                    android:layout_below="@+id/shopname_tv"
+                    android:layout_marginTop="10dp"
+                    android:text="经营地址" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/address_tv"
+                    android:layout_margin="10dp"
+                    android:background="@color/gray_black"></LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="违规行为"
+                    android:textColor="@color/gray_green" />
+
+                <RadioGroup
+                    android:id="@+id/secret_sales_gp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/tv1"
+                    android:layout_alignLeft="@+id/tv1"
+                    android:layout_alignStart="@+id/tv1"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="暗中售卖" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/red" />
+
+                    <RadioButton
+                        android:id="@+id/secret_sales_yes_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="是" />
+
+                    <RadioButton
+                        android:id="@+id/secret_sales_no_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="否" />
+
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/publicly_sales_gp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/secret_sales_gp"
+                    android:layout_alignStart="@id/secret_sales_gp"
+                    android:layout_alignLeft="@id/secret_sales_gp">
+
+                    <TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="公开摆卖" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/red"/>
+
+                    <RadioButton
+                        android:id="@+id/publicly_sales_yes_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="是"/>
+
+                    <RadioButton
+                        android:id="@+id/publicly_sales_no_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:checked="true"/>
+
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/notlicense_sales_gp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/publicly_sales_gp"
+                    android:layout_alignStart="@id/publicly_sales_gp"
+                    android:layout_alignLeft="@id/publicly_sales_gp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="无证经营"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/red"/>
+
+                    <RadioButton
+                        android:id="@+id/notlicense_sales_yes_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="是"/>
+
+                    <RadioButton
+                        android:id="@+id/notlicense_sales_no_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:checked="true"/>
+
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="违规卷烟品规"
+                    android:layout_below="@+id/notlicense_sales_gp"
+                    android:layout_alignLeft="@+id/notlicense_sales_gp"
+                    android:layout_alignStart="@+id/notlicense_sales_gp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/textView25"
+                    android:textColor="@color/gray_green"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView25"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/license_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/license_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="有证户"/>
+
+                <EditText
+                    android:id="@+id/license_customer_tv"
+                    android:layout_width="@dimen/x90"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:editable="false"/>
+
+                <TextView
+                    android:id="@+id/match_license_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="匹配"
+                    android:padding="5dp"
+                    android:background="@drawable/green_button"
+                    android:textColor="@color/color_white"/>
+
+                <TextView
+                    android:id="@+id/cancel_license_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="取消选择"
+                    android:textColor="@color/red"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/not_license_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/not_license_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="无证户"/>
+
+                <EditText
+                    android:id="@+id/not_license_customer_tv"
+                    android:layout_width="@dimen/x90"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:editable="false"/>
+
+                <TextView
+                    android:id="@+id/match_not_license_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="匹配"
+                    android:padding="5dp"
+                    android:background="@drawable/green_button"
+                    android:textColor="@color/color_white"/>
+
+                <TextView
+                    android:id="@+id/cancel_not_license_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="取消选择"
+                    android:textColor="@color/red"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:id="@+id/ll">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_green"
+                    android:text="退回理由"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/return_reason_et"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_height="100dp"
+                    android:gravity="top"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/verify_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="确认"
+                    android:textColor="@color/color_white"
+                    android:background="@drawable/green_button"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/return_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="退回"
+                    android:textColor="@color/color_white"
+                    android:background="@drawable/green_button"
+                    android:padding="5dp"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

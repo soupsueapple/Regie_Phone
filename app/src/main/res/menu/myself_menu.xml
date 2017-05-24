@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".BaseActivity">
+
+    <item android:id="@+id/verify_action"
+        android:title="确认"
+        app:showAsAction="always"
+        />
+
+    <item android:id="@+id/return_action"
+        android:title="退回"
+        app:showAsAction="always"
+        />
+</menu>
