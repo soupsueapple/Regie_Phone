@@ -96,7 +96,7 @@ public class VisitCheckMainActivity extends BaseFragmentActivity implements View
         FragmentTransaction ft = fm.beginTransaction();
 
         switch (view.getId()){
-            case R.id.group_checking_ll:
+            case R.id.theplace_responsibility_ll:
                 title_tv.setText("本所责任");
 
                 ThePlaceResponsibilityFragment thePlaceResponsibilityFragment = (ThePlaceResponsibilityFragment) fm.findFragmentByTag("thePlace");
@@ -110,7 +110,7 @@ public class VisitCheckMainActivity extends BaseFragmentActivity implements View
                 myselfResiponsibilityTv.setBackgroundResource(R.drawable.brzr0);
                 superintendentVerifyTv.setBackgroundResource(R.drawable.szqr0);
                 break;
-            case R.id.checked_record_ll:
+            case R.id.myself_resiponsibility_ll:
                 title_tv.setText("本人责任");
 
                 MySelfResponsibilityFragment mySelfResponsibilityFragment = (MySelfResponsibilityFragment) fm.findFragmentByTag("mySelf");
@@ -124,7 +124,7 @@ public class VisitCheckMainActivity extends BaseFragmentActivity implements View
                 myselfResiponsibilityTv.setBackgroundResource(R.drawable.brzr1);
                 superintendentVerifyTv.setBackgroundResource(R.drawable.szqr0);
                 break;
-            case R.id.department_checking_ll:
+            case R.id.superintendent_verify_ll:
                 title_tv.setText("所长确认");
 
                 SuperintendentVerifyFragment superintendentVerifyFragment = (SuperintendentVerifyFragment) fm.findFragmentByTag("super");

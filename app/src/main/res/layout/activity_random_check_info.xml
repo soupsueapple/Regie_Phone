@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/shopname_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="武汉市新洲区银枫副食店"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/license_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="420117105337"
+                    android:layout_below="@+id/shopname_tv"
+                    android:layout_alignLeft="@+id/shopname_tv"
+                    android:layout_alignStart="@+id/shopname_tv"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="银枫"
+                    android:layout_alignBaseline="@+id/license_tv"
+                    android:layout_alignBottom="@+id/license_tv"
+                    android:layout_toRightOf="@+id/license_tv"
+                    android:layout_toEndOf="@+id/license_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp" />
+
+                <TextView
+                    android:id="@+id/phone_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/name_tv"
+                    android:layout_alignBottom="@+id/name_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/name_tv"
+                    android:layout_toRightOf="@+id/name_tv" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/gray_black"
+                    android:layout_below="@id/license_tv"
+                    android:id="@+id/linearLayout19"
+                    android:orientation="horizontal"></LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="经营异常信息"
+                    android:textColor="@color/gray_green"
+                    android:layout_below="@+id/linearLayout19"
+                    android:layout_alignLeft="@+id/linearLayout19"
+                    android:layout_alignStart="@+id/linearLayout19"
+                    android:id="@+id/textView21" />
+
+                <TextView
+                    android:id="@+id/add_abnormal_info_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xz"
+                    android:layout_below="@+id/linearLayout19"
+                    android:layout_alignRight="@+id/linearLayout19"
+                    android:layout_alignEnd="@+id/linearLayout19" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView21"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+
+                <LinearLayout
+                    android:id="@+id/measure_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recycler_view"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="处理措施："
+                        android:textColor="@color/gray_green" />
+
+                    <EditText
+                        android:id="@+id/measure_et"
+                        android:layout_width="@dimen/x120"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/choose_measure_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="选择"
+                        android:textColor="@color/gray_blue"
+                        android:layout_marginLeft="10dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/book_number_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/measure_ll">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="通知书号: "
+                        android:textColor="@color/gray_green"
+                        android:layout_marginLeft="10dp"/>
+
+                    <TextView
+                        android:id="@+id/add_book_number_tv"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/jia"/>
+
+                    <TextView
+                        android:id="@+id/book_number_recycler_tv"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/color_black"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/book_number_recycler_view"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"></android.support.v7.widget.RecyclerView>
+
+                    <EditText
+                        android:id="@+id/book_number_recycler_et"
+                        android:layout_width="@dimen/x90"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:gravity="top"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@id/book_number_ll"
+                    android:id="@+id/check_group_opinion_ll">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="检查组意见："
+                        android:textColor="@color/gray_green"/>
+
+                    <EditText
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/check_group_opinion_et"
+                        android:layout_width="match_parent"
+                        android:textSize="15sp"
+                        android:gravity="top"
+                        android:layout_height="100dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@id/check_group_opinion_ll"
+                    android:id="@+id/check_object_opinion_ll">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="被检查对象意见："
+                        android:textColor="@color/gray_green"/>
+
+                    <EditText
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/check_object_opinion_et"
+                        android:layout_width="match_parent"
+                        android:textSize="15sp"
+                        android:gravity="top"
+                        android:layout_height="100dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/check_object_opinion_ll"
+                    android:orientation="horizontal"
+                    android:layout_centerHorizontal="true">
+
+                    <TextView
+                        android:id="@+id/autograph_tv"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:text="点击签名"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"/>
+
+                    <CheckBox
+                        android:id="@+id/reject_cb"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="是否拒签"
+                        android:layout_marginLeft="10dp"/>
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/eyewitness_autograph_tv"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:text="点击见证人签名"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:padding="5dp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

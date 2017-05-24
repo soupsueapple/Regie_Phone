@@ -66,5 +66,6 @@ public class Constant {
     public static boolean isRefreshBSZR = false;
     public static boolean isRefreshBRZR = false;
     public static boolean isRefreshSZQR = false;
+    public static boolean isRefreshRandom = false;
 
 }

@@ -940,7 +940,7 @@ public class CheckingActivity extends BaseActivity{
                 @Override
                 public void onClick(View v) {
                     tjItems.remove(p);
-                    recyclerAdapter.notifyDataSetChanged();
+                    tJRecyclerAdapter.notifyDataSetChanged();
                 }
             });
 
