@@ -65,5 +65,6 @@ public class Constant {
     public static boolean isWZHTBFinish = false;
     public static boolean isRefreshBSZR = false;
     public static boolean isRefreshBRZR = false;
+    public static boolean isRefreshSZQR = false;
 
 }
