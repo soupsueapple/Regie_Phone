@@ -86,7 +86,6 @@ public class RandomCheckMainActivity extends BaseFragmentActivity implements Vie
     }
 
     private void changeBgByMenu(View view){
-        VibrateHelp.vSimple(view.getContext());
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();

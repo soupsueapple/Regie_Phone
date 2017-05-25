@@ -196,6 +196,9 @@
         <activity android:name=".Activity.RandomCheck.RandomCheckInfoActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.SalesInteraction.SalesInteractionMainActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="熊良提"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/phone_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="156728716273"
+        android:layout_alignBaseline="@+id/name_tv"
+        android:layout_alignBottom="@+id/name_tv"
+        android:layout_toRightOf="@+id/name_tv"
+        android:layout_toEndOf="@+id/name_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/license_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="420117105337"
+        android:layout_below="@+id/name_tv"
+        android:layout_alignLeft="@+id/name_tv"
+        android:layout_alignStart="@+id/name_tv"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2分钟"
+        android:layout_alignBaseline="@+id/license_tv"
+        android:layout_alignBottom="@+id/license_tv"
+        android:layout_toRightOf="@+id/license_tv"
+        android:layout_toEndOf="@+id/license_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/shopname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="熊良提经营店"
+        android:layout_below="@+id/license_tv"
+        android:layout_alignLeft="@+id/license_tv"
+        android:layout_alignStart="@+id/license_tv"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:background="@color/gray_black"
+        android:layout_below="@id/shopname_tv"></LinearLayout>
+
+</RelativeLayout>

@@ -22,6 +22,7 @@ import com.keertech.regie_phone.Activity.NothaveLicenseCustomer.NothaveLicenseCu
 import com.keertech.regie_phone.Activity.ProblemChecking.ProblemCheckingMainActivity;
 import com.keertech.regie_phone.Activity.RandomCheck.RandomCheckMainActivity;
 import com.keertech.regie_phone.Activity.ReportComplanints.ReportComplanintsMainActivity;
+import com.keertech.regie_phone.Activity.SalesInteraction.SalesInteractionMainActivity;
 import com.keertech.regie_phone.Activity.SystemSetting.SystemSettingActivity;
 import com.keertech.regie_phone.Activity.VisitCheck.VisitCheckMainActivity;
 import com.keertech.regie_phone.Activity.XZFW.XZFWMainActivity;
@@ -420,7 +421,8 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "专销互动":
-
+                            intent = new Intent(MainActivity.this, SalesInteractionMainActivity.class);
+                            startActivity(intent);
                             break;
                         case "随机检查":
                             intent = new Intent(MainActivity.this, RandomCheckMainActivity.class);
