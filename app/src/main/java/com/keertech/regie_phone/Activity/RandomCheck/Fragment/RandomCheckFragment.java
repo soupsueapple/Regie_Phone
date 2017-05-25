@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.keertech.regie_phone.Activity.CustomerInfo.AllCityCustomerInfo.CustomerInfoActivity;
 import com.keertech.regie_phone.Activity.RandomCheck.RandomCheckInfoActivity;
 import com.keertech.regie_phone.BaseFragment;
 import com.keertech.regie_phone.R;
@@ -101,10 +102,10 @@ public class RandomCheckFragment extends BaseFragment{
                     @Override
                     public void onClick(View v) {
 
-//                        Intent intent = new Intent(getActivity(), OperatorInfoActivity2.class);
-//                        intent.putExtra("id", customerId);
-//                        intent.putExtra("needLocation", 0);
-//                        getActivity().startActivity(intent);
+                        Intent intent = new Intent(getActivity(), CustomerInfoActivity.class);
+                        intent.putExtra("id", customerId);
+                        intent.putExtra("needLocation", 0);
+                        getActivity().startActivity(intent);
                     }
                 });
 

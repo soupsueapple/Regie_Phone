@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/license_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="许可证号"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/shopname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="店铺名称"
+        android:layout_alignBaseline="@+id/license_tv"
+        android:layout_alignBottom="@+id/license_tv"
+        android:layout_toRightOf="@+id/license_tv"
+        android:layout_toEndOf="@+id/license_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登记人姓名"
+        android:layout_below="@+id/license_tv"
+        android:layout_alignLeft="@+id/license_tv"
+        android:layout_alignStart="@+id/license_tv"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/common_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="市管员"
+        android:layout_alignBaseline="@+id/name_tv"
+        android:layout_alignBottom="@+id/name_tv"
+        android:layout_toRightOf="@+id/name_tv"
+        android:layout_toEndOf="@+id/name_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/report_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提报时间"
+        android:layout_alignBaseline="@+id/common_tv"
+        android:layout_alignBottom="@+id/common_tv"
+        android:layout_toRightOf="@+id/common_tv"
+        android:layout_toEndOf="@+id/common_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/measure_result_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="处理结果"
+        android:layout_below="@+id/name_tv"
+        android:layout_alignLeft="@+id/name_tv"
+        android:layout_alignStart="@+id/name_tv"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/inspect_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="调查时间"
+        android:layout_alignBaseline="@+id/measure_result_tv"
+        android:layout_alignBottom="@+id/measure_result_tv"
+        android:layout_toRightOf="@+id/measure_result_tv"
+        android:layout_toEndOf="@+id/measure_result_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/search_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/ic_menu_search"
+        android:layout_below="@+id/report_tv"
+        android:layout_alignRight="@+id/linearLayout20"
+        android:layout_alignEnd="@+id/linearLayout20" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_black"
+        android:layout_margin="10dp"
+        android:layout_below="@id/inspect_time"
+        android:id="@+id/linearLayout20"></LinearLayout>
+
+</RelativeLayout>
