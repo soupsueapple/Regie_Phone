@@ -223,6 +223,12 @@
         <activity android:name=".Activity.ProblemList.APCDFeedbackActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.CommonPosition.CommonPositionListActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.CommonPosition.CommonMapActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 

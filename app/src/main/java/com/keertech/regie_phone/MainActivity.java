@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.keertech.regie_phone.Activity.CommonPosition.CommonPositionListActivity;
 import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfoMainFragmentActivity;
 import com.keertech.regie_phone.Activity.NothaveLicenseCustomer.NothaveLicenseCustomerMainActivity;
 import com.keertech.regie_phone.Activity.ProblemChecking.ProblemCheckingMainActivity;
@@ -434,7 +435,8 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "市管员位置":
-
+                            intent = new Intent(MainActivity.this, CommonPositionListActivity.class);
+                            startActivity(intent);
                             break;
                         case "零售户勘查":
 
