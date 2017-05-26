@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfoMainFragmentActivity;
 import com.keertech.regie_phone.Activity.NothaveLicenseCustomer.NothaveLicenseCustomerMainActivity;
 import com.keertech.regie_phone.Activity.ProblemChecking.ProblemCheckingMainActivity;
+import com.keertech.regie_phone.Activity.ProblemList.ProblemListActivity;
 import com.keertech.regie_phone.Activity.RandomCheck.RandomCheckMainActivity;
 import com.keertech.regie_phone.Activity.ReportComplanints.ReportComplanintsMainActivity;
 import com.keertech.regie_phone.Activity.SalesInteraction.SalesInteractionMainActivity;
@@ -429,7 +430,8 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "问题清单":
-
+                            intent = new Intent(MainActivity.this, ProblemListActivity.class);
+                            startActivity(intent);
                             break;
                         case "市管员位置":
 

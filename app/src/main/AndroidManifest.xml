@@ -205,6 +205,24 @@
         <activity android:name=".Activity.SalesInteraction.NotHaveLicenseCustomerInformationReportTableActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.ProblemList.ProblemListActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemList.ReportComplaintActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemList.CaseSuperViseActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemList.PapersDeadlineActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemList.MarketSurveyActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemList.APCDFeedbackActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 
