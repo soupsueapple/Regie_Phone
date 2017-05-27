@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl">
+
+    <TextView
+        android:id="@+id/person_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="申请人"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/department_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="部门"
+        android:layout_alignBaseline="@+id/person_tv"
+        android:layout_alignBottom="@+id/person_tv"
+        android:layout_toRightOf="@+id/person_tv"
+        android:layout_toEndOf="@+id/person_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="类型"
+        android:layout_alignBaseline="@+id/department_tv"
+        android:layout_alignBottom="@+id/department_tv"
+        android:layout_toRightOf="@+id/department_tv"
+        android:layout_toEndOf="@+id/department_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:id="@+id/date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="申请日期"
+        android:layout_below="@+id/person_tv"
+        android:layout_alignLeft="@+id/person_tv"
+        android:layout_alignStart="@+id/person_tv"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/status_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="状态"
+        android:layout_alignBaseline="@+id/date_tv"
+        android:layout_alignBottom="@+id/date_tv"
+        android:layout_toRightOf="@+id/date_tv"
+        android:layout_toEndOf="@+id/date_tv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/date_tv"
+        android:background="@color/gray_black"
+        android:layout_margin="10dp"></LinearLayout>
+
+</RelativeLayout>

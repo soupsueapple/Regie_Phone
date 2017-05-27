@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.keertech.regie_phone.Activity.CheckManage.CheckManageActivity;
 import com.keertech.regie_phone.Activity.CommonPosition.CommonPositionListActivity;
 import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfoMainFragmentActivity;
 import com.keertech.regie_phone.Activity.NothaveLicenseCustomer.NothaveLicenseCustomerMainActivity;
@@ -449,7 +450,8 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "考勤管理":
-
+                            intent = new Intent(MainActivity.this, CheckManageActivity.class);
+                            startActivity(intent);
                             break;
                         case "通知公告":
 
