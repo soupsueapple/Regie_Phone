@@ -33,6 +33,7 @@ import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Models.Apps;
 import com.keertech.regie_phone.Models.TerraceApp;
 import com.keertech.regie_phone.Network.HttpClient;
+import com.keertech.regie_phone.Activity.PurchasePrice.PurchasePriceMainActivity;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
 import com.keertech.regie_phone.Utility.VibrateHelp;
@@ -444,7 +445,8 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "卷烟购进价":
-
+                            intent = new Intent(MainActivity.this, PurchasePriceMainActivity.class);
+                            startActivity(intent);
                             break;
                         case "考勤管理":
 

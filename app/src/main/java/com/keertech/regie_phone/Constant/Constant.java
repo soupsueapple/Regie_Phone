@@ -70,4 +70,5 @@ public class Constant {
     public static boolean isRefresYZHBSS = false;
     public static boolean isRefresWZH = false;
     public static boolean isRefresRe = false;
+    public static boolean isRefresPurchasePirce = false;
 }
