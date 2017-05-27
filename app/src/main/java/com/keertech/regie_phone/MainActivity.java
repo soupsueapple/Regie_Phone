@@ -22,6 +22,7 @@ import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfoMainFragmentAc
 import com.keertech.regie_phone.Activity.NothaveLicenseCustomer.NothaveLicenseCustomerMainActivity;
 import com.keertech.regie_phone.Activity.ProblemChecking.ProblemCheckingMainActivity;
 import com.keertech.regie_phone.Activity.ProblemList.ProblemListActivity;
+import com.keertech.regie_phone.Activity.Prospecting.ProspectingListActivity;
 import com.keertech.regie_phone.Activity.RandomCheck.RandomCheckMainActivity;
 import com.keertech.regie_phone.Activity.ReportComplanints.ReportComplanintsMainActivity;
 import com.keertech.regie_phone.Activity.SalesInteraction.SalesInteractionMainActivity;
@@ -439,7 +440,8 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "零售户勘查":
-
+                            intent = new Intent(MainActivity.this, ProspectingListActivity.class);
+                            startActivity(intent);
                             break;
                         case "卷烟购进价":
 
