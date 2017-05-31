@@ -239,7 +239,7 @@ public class NotHaveLicenseCustomerInformationReportTableActivity extends BaseAc
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if(Constant.isWZHTBFinish){
             Constant.isWZHTBFinish = false;

@@ -33,7 +33,7 @@ import com.keertech.regie_phone.Activity.PurchasePrice.PurchasePriceMainActivity
 import com.keertech.regie_phone.Activity.RandomCheck.RandomCheckMainActivity;
 import com.keertech.regie_phone.Activity.ReportComplanints.ReportComplanintsMainActivity;
 import com.keertech.regie_phone.Activity.SalesInteraction.SalesInteractionMainActivity;
-import com.keertech.regie_phone.Activity.Service.LocationService;
+import com.keertech.regie_phone.Service.LocationService;
 import com.keertech.regie_phone.Activity.SystemSetting.SystemSettingActivity;
 import com.keertech.regie_phone.Activity.VisitCheck.VisitCheckMainActivity;
 import com.keertech.regie_phone.Activity.XZFW.XZFWMainActivity;

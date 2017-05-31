@@ -39,7 +39,7 @@ public class KeepLiveActivity extends BaseActivity{
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         Log.d(TAG, "=============onResume==========");
         if (isScreenOn()) {

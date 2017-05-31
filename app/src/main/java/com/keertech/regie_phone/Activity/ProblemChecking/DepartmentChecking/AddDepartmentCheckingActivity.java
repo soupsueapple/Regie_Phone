@@ -377,7 +377,7 @@ public class AddDepartmentCheckingActivity extends BaseActivity{
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if(Constant.isRefresJZZZSFinish){
             Constant.isRefresJZZZSFinish = false;

@@ -162,7 +162,7 @@ public class AddNotHasLicenseActivity extends BaseActivity{
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if(Constant.isRefresNoJZZZS){
             loadCust();

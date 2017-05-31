@@ -1,12 +1,15 @@
-package com.keertech.regie_phone.Activity.Service;
+package com.keertech.regie_phone.Service;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -113,6 +116,21 @@ public class LocationService extends Service{
         return null;
     }
 
+    Handler handler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            Notification notification = getDefaultNotification(
+                    (String) msg.obj, false);
+            startForeground(Constant.NOTIFICATION_ID, notification);
+
+//            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//            mNotificationManager.notify(Constant.NOTIFICATION_ID, notification);
+        }
+    };
+
     public static Notification getDefaultNotification(String str, boolean isRed) {
         Context context = RegieApplication.getContext();
         Intent intent = new Intent(Constant.ACTION_NOTIFICATION_CLICK);
@@ -123,8 +141,7 @@ public class LocationService extends Service{
             view.setTextColor(R.id.textView2, Color.RED);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_launcher).setContentTitle("通知").setTicker("新消息");
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context).setContentTitle("通知").setTicker("新消息");
         mBuilder.setAutoCancel(true);
 
         mBuilder.setContentIntent(pendingIntent);
@@ -206,9 +223,9 @@ public class LocationService extends Service{
                     StringUtility.putSharedPreferences(getApplicationContext(), Constant.LOCATION_TIME,
                             Constant.LOCATION_TIME, DateTimeUtil.getCurrDateTimeStr());
 
-                    Notification notification = getDefaultNotification(
-                            "定位上传成功: " + DateTimeUtil.getCurrDateTimeStr(), false);
-                    startForeground(Constant.NOTIFICATION_ID, notification);
+                    Message msg = Message.obtain();
+                    msg.obj = "定位上传成功: " + DateTimeUtil.getCurrDateTimeStr();
+                    handler.sendMessage(msg);
                 } else {
                     doLogin(lat, lng);
                 }
@@ -218,11 +235,11 @@ public class LocationService extends Service{
             public void onFailure(int statusCode, Header[] headers, String responseString,
                                   Throwable throwable) {
 
-                Notification notification = getDefaultNotification(
-                        "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr(), true);
-                startForeground(Constant.NOTIFICATION_ID, notification);
+                Message msg = Message.obtain();
+                msg.obj = "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr();
+                handler.sendMessage(msg);
 
-                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString() + "\n" + responseString);
+//                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString() + "\n" + responseString);
 
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
@@ -231,11 +248,11 @@ public class LocationService extends Service{
             public void onFailure(int statusCode, Header[] headers, Throwable throwable,
                                   JSONObject errorResponse) {
 
-                Notification notification = getDefaultNotification(
-                        "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr(), true);
-                startForeground(Constant.NOTIFICATION_ID, notification);
+                Message msg = Message.obtain();
+                msg.obj = "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr();
+                handler.sendMessage(msg);
 
-                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString() + "\n" + errorResponse.toString());
+//                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString() + "\n" + errorResponse.toString());
 
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
@@ -244,11 +261,11 @@ public class LocationService extends Service{
             public void onFailure(int statusCode, Header[] headers, Throwable throwable,
                                   JSONArray errorResponse) {
 
-                Notification notification = getDefaultNotification(
-                        "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr(), true);
-                startForeground(Constant.NOTIFICATION_ID, notification);
+                Message msg = Message.obtain();
+                msg.obj = "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr();
+                handler.sendMessage(msg);
 
-                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString());
+//                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString());
 
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }

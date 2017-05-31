@@ -191,7 +191,7 @@ public class AddCustomerDepartmentCheckingActivity extends BaseActivity{
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if(Constant.isRefresJZZZS){
             loadCust();

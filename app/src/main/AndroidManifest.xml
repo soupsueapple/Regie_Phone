@@ -258,21 +258,12 @@
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 
-        <service android:name=".Activity.Service.LocationService"
+        <service android:name=".Service.LocationService"
             android:enabled="true"
             android:exported="true"
             android:process=":location1" >
             <intent-filter android:priority="1000" >
-                <action android:name="com.keer.mobileworkerrace.LocationService" />
-            </intent-filter>
-        </service>
-
-        <service android:name=".Activity.Service.LocationService2"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":location2" >
-            <intent-filter android:priority="1000" >
-                <action android:name="com.keer.mobileworkerrace.LocationService2" />
+                <action android:name="com.keertech.regie_phone.Service.LocationService" />
             </intent-filter>
         </service>
 

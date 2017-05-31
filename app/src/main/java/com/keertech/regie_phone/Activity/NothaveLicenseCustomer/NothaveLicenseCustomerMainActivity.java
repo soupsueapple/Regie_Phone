@@ -93,7 +93,7 @@ public class NothaveLicenseCustomerMainActivity extends BaseActivity{
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if(Constant.isRefreshUNID){
             Constant.isRefreshUNID = false;

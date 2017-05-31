@@ -1,4 +1,4 @@
-package com.keertech.regie_phone.Activity.Service;
+package com.keertech.regie_phone.Service;
 
 import android.app.Service;
 import android.content.Intent;

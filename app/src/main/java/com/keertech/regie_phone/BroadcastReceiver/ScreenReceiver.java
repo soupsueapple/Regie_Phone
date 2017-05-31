@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.keertech.regie_phone.Activity.Service.LocationService;
+import com.keertech.regie_phone.Service.LocationService;
 import com.keertech.regie_phone.KeepLiveActivity;
 import com.keertech.regie_phone.RegieApplication;
 import com.keertech.regie_phone.Utility.CheckTopTask;
