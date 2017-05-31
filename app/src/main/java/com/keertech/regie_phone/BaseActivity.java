@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -171,5 +172,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         return null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getLocalClassName());
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getLocalClassName());
+        MobclickAgent.onPause(this);
+    }
 
 }

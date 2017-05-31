@@ -10,6 +10,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.keertech.regie_phone.BroadcastReceiver.ScreenReceiver;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Utility.StringUtility;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 
@@ -29,6 +30,10 @@ public class RegieApplication extends Application{
         StringUtility.putSharedPreferences(getApplicationContext(), Constant.LOCATION_TIME, Constant.LOCATION_TIME,"");
 
         context = getApplicationContext();
+
+        MobclickAgent.setDebugMode(true);
+        MobclickAgent.openActivityDurationTrack(false);
+        MobclickAgent.setCatchUncaughtExceptions(true);
 
         registerScreenReceiver();
 

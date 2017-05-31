@@ -47,4 +47,5 @@ dependencies {
     apt 'com.zhy:mpermission-compiler:1.0.0'
     compile 'com.zhy:mpermission-api:1.0.0'
     testCompile 'junit:junit:4.12'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

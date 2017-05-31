@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by soup on 2017/5/3.
@@ -31,5 +32,19 @@ public class BaseFragmentActivity extends FragmentActivity{
 
     protected KeerAlertDialog showKeerAlertDialog(int strID){
         return new KeerAlertDialog(this, getResources().getString(strID));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getLocalClassName());
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getLocalClassName());
+        MobclickAgent.onPause(this);
     }
 }

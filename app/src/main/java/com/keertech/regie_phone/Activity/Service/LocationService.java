@@ -25,6 +25,7 @@ import com.keertech.regie_phone.Utility.DateTimeUtil;
 import com.keertech.regie_phone.Utility.StringUtility;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -221,7 +222,7 @@ public class LocationService extends Service{
                         "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr(), true);
                 startForeground(Constant.NOTIFICATION_ID, notification);
 
-//                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString() + "\n" + responseString);
+                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString() + "\n" + responseString);
 
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
@@ -234,7 +235,7 @@ public class LocationService extends Service{
                         "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr(), true);
                 startForeground(Constant.NOTIFICATION_ID, notification);
 
-//                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString() + "\n" + errorResponse.toString());
+                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString() + "\n" + errorResponse.toString());
 
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
@@ -247,7 +248,7 @@ public class LocationService extends Service{
                         "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr(), true);
                 startForeground(Constant.NOTIFICATION_ID, notification);
 
-//                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString());
+                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString());
 
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
@@ -267,7 +268,7 @@ public class LocationService extends Service{
 
                 }
             } else {
-//                MobclickAgent.reportError(getApplicationContext(), "定位失败" + Constant.userId);
+                MobclickAgent.reportError(getApplicationContext(), "定位失败" + Constant.userId);
             }
 
         }
