@@ -10,4 +10,5 @@
     <string name="sending">提交中</string>
     <string name="locationing">定位中</string>
     <string name="uploading_autograhf">上传签名</string>
+    <string name="loadcustomer">加载经营户中</string>
 </resources>

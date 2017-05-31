@@ -31,7 +31,11 @@ public class CustomerInfoMainFragmentActivity extends BaseFragmentActivity imple
     private TextView back_tv;
     private TextView title_tv;
 
+    String url = "";
+
     private void assignViews() {
+        url = getIntent().getStringExtra("url");
+
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         customerLl = (LinearLayout) findViewById(R.id.customer_ll);
         customerTv = (TextView) findViewById(R.id.customer_tv);
@@ -56,6 +60,7 @@ public class CustomerInfoMainFragmentActivity extends BaseFragmentActivity imple
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         CustomerInfoFragment customerInfoFragment = new CustomerInfoFragment();
+        customerInfoFragment.url = url;
         ft.add(R.id.realtabcontent, customerInfoFragment, "customer");
         ft.commit();
 
@@ -94,6 +99,7 @@ public class CustomerInfoMainFragmentActivity extends BaseFragmentActivity imple
                 CustomerInfoFragment customerInfoFragment = (CustomerInfoFragment) fm.findFragmentByTag("customer");
                 if(customerInfoFragment == null){
                     customerInfoFragment = new CustomerInfoFragment();
+                    customerInfoFragment.url = url;
                     ft.add(R.id.realtabcontent, customerInfoFragment, "customer");
                 }
                 showFragment("customer", fm, ft);

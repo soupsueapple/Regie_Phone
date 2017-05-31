@@ -246,7 +246,34 @@
         <activity android:name=".Activity.CheckManage.CreateCheckActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.Notice.NoticeActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.Notice.NoticeOperatorMainActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".KeepLiveActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
+        </service>
+
+        <service android:name=".Activity.Service.LocationService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":location1" >
+            <intent-filter android:priority="1000" >
+                <action android:name="com.keer.mobileworkerrace.LocationService" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".Activity.Service.LocationService2"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":location2" >
+            <intent-filter android:priority="1000" >
+                <action android:name="com.keer.mobileworkerrace.LocationService2" />
+            </intent-filter>
         </service>
 
         <meta-data

@@ -90,6 +90,8 @@ public class CustomerInfoFragment extends BaseFragment{
     String currentporpertiyCode = "";
     String currentcommonId = "";
 
+    String url = "";
+
     RecyclerAdapter recyclerAdapter = new RecyclerAdapter();
 
     private void assignViews(View convertView) {
@@ -420,7 +422,7 @@ public class CustomerInfoFragment extends BaseFragment{
         pd.show();
 
         RequestParams requestParams = new RequestParams();
-        requestParams.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+ Constant.MWB_Base_URL +"customerInfo!searchBeans.action?privilegeFlag=VIEW&start="+index+"&limit=20"+other+"\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
+        requestParams.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\""+ Constant.MWB_Base_URL + url +"?privilegeFlag=VIEW"+other+"\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
 
 
         HttpClient.post(Constant.EXEC, requestParams, new JsonHttpResponseHandler() {

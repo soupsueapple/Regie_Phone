@@ -72,4 +72,14 @@ public class Constant {
     public static boolean isRefresRe = false;
     public static boolean isRefresPurchasePirce = false;
     public static boolean isRefresCheck = false;
+
+    public static final String LOCATION_TIME = "licationTime";
+
+    public static long upLocationTime = 0;
+
+    public static final String ACTION_NOTIFICATION_CLICK = "com.keertech.emessage.phone.notificationClick";//通知提醒
+
+    public final static int NOTIFICATION_ID = 109982;
+
+    public static final int LOCATION_INTERVAL_TIME = 5000;
 }

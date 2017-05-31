@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,13 +23,17 @@ import android.widget.Toast;
 import com.keertech.regie_phone.Activity.CheckManage.CheckManageActivity;
 import com.keertech.regie_phone.Activity.CommonPosition.CommonPositionListActivity;
 import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfoMainFragmentActivity;
+import com.keertech.regie_phone.Activity.CustomerInfo.CustomerMapActivity;
 import com.keertech.regie_phone.Activity.NothaveLicenseCustomer.NothaveLicenseCustomerMainActivity;
+import com.keertech.regie_phone.Activity.Notice.NoticeActivity;
 import com.keertech.regie_phone.Activity.ProblemChecking.ProblemCheckingMainActivity;
 import com.keertech.regie_phone.Activity.ProblemList.ProblemListActivity;
 import com.keertech.regie_phone.Activity.Prospecting.ProspectingListActivity;
+import com.keertech.regie_phone.Activity.PurchasePrice.PurchasePriceMainActivity;
 import com.keertech.regie_phone.Activity.RandomCheck.RandomCheckMainActivity;
 import com.keertech.regie_phone.Activity.ReportComplanints.ReportComplanintsMainActivity;
 import com.keertech.regie_phone.Activity.SalesInteraction.SalesInteractionMainActivity;
+import com.keertech.regie_phone.Activity.Service.LocationService;
 import com.keertech.regie_phone.Activity.SystemSetting.SystemSettingActivity;
 import com.keertech.regie_phone.Activity.VisitCheck.VisitCheckMainActivity;
 import com.keertech.regie_phone.Activity.XZFW.XZFWMainActivity;
@@ -34,7 +41,7 @@ import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Models.Apps;
 import com.keertech.regie_phone.Models.TerraceApp;
 import com.keertech.regie_phone.Network.HttpClient;
-import com.keertech.regie_phone.Activity.PurchasePrice.PurchasePriceMainActivity;
+import com.keertech.regie_phone.Utility.DateTimeUtil;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
 import com.keertech.regie_phone.Utility.VibrateHelp;
@@ -46,6 +53,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
@@ -89,6 +99,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         setToolbarTitle("武汉烟草移动办公平台");
+
+        Intent intent = new Intent(this, LocationService.class);
+        startService(intent);
 
         apps = (ArrayList<Apps>) getIntent().getSerializableExtra("apps");
         apkId = getIntent().getIntExtra("apkId", 2);
@@ -373,6 +386,135 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private KeerAlertDialog filePd;
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            filePd.dismiss();
+
+            Intent intent = new Intent(MainActivity.this, CustomerMapActivity.class);
+            intent.putExtra("fileName", (String) msg.obj);
+            startActivity(intent);
+        }
+    };
+
+    protected class WriteThead implements Runnable {
+
+        private String json = "";
+
+        public WriteThead(String json){
+            this.json = json;
+        }
+
+        @Override
+        public void run() {
+            File sdcard = Environment.getExternalStorageDirectory();
+            String path = sdcard.getPath()+File.separator+Constant.Base_path;
+            String fileName = path + File.separator + DateTimeUtil.getCurrDateTimeStr()+".txt";
+
+            try {
+                FileWriter writer=new FileWriter(fileName);
+                writer.write(json);
+                writer.close();
+
+                Thread.sleep(50);
+
+                Message message = Message.obtain();
+                message.obj = fileName;
+                handler.sendMessage(message);
+
+            } catch (IOException e) {
+                filePd.dismiss();
+                e.printStackTrace();
+            }catch (InterruptedException e) {
+                filePd.dismiss();
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    private void searchCustomerInfo() {
+        String other = "";
+
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.loadcustomer);
+        pd.show();
+
+        HttpClient.get(Constant.EXEC + "?data=%7B%22postHandler%22:%5B%5D,%22preHandler%22:%5B%5D,%22executor%22:%7B%22url%22:%22" + Constant.MWB_Base_URL + "customerInfo!searchBeans.action%3fprivilegeFlag=VIEW%26start=" + 0 + "%26limit=3000" + other + "%22,%22type%22:%22WebExecutor%22%7D,%22app%22:%221001%22%7D", null, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                pd.dismiss();
+
+                System.out.println("response :" + response.toString());
+
+                try {
+
+                    if (StringUtility.isSuccess(response)) {
+                        String messageSting = response.getString("message");
+
+                        JSONObject message = new JSONObject(messageSting);
+
+                        if (StringUtility.isSuccess(message)) {
+
+
+                            JSONArray data = message.getJSONArray("data");
+
+                            ArrayList<JSONObject> datas = new ArrayList<JSONObject>();
+
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject object = data.getJSONObject(i);
+                                datas.add(object);
+                            }
+
+                            filePd = showKeerAlertDialog(R.string.loading);
+                            filePd.show();
+                            WriteThead wt = new WriteThead(data.toString());
+                            Thread thread = new Thread(wt);
+                            thread.start();
+
+                        } else {
+                            showToast(response.getString("message"), MainActivity.this);
+                        }
+                    } else {
+                        showToast(response.getString("message"), MainActivity.this);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                pd.dismiss();
+                showNetworkError(MainActivity.this);
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                pd.dismiss();
+                showNetworkError(MainActivity.this);
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                pd.dismiss();
+                showNetworkError(MainActivity.this);
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
     class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapter.GridRecyclerHolder>{
 
         @Override
@@ -415,6 +557,7 @@ public class MainActivity extends BaseActivity {
                             break;
                         case "经营户信息":
                             intent = new Intent(MainActivity.this, CustomerInfoMainFragmentActivity.class);
+                            intent.putExtra("url", "customerInfo!searchBeans.action");
                             startActivity(intent);
                             break;
                         case "暗访检查":
@@ -454,7 +597,8 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "通知公告":
-
+                            intent = new Intent(MainActivity.this, NoticeActivity.class);
+                            startActivity(intent);
                             break;
                         case "系统设置":
                             intent = new Intent(MainActivity.this, SystemSettingActivity.class);
@@ -463,7 +607,7 @@ public class MainActivity extends BaseActivity {
                             startActivity(intent);
                             break;
                         case "经营户位置":
-
+                            searchCustomerInfo();
                             break;
                     }
 
