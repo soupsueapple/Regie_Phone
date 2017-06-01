@@ -33,7 +33,6 @@ import com.keertech.regie_phone.Activity.PurchasePrice.PurchasePriceMainActivity
 import com.keertech.regie_phone.Activity.RandomCheck.RandomCheckMainActivity;
 import com.keertech.regie_phone.Activity.ReportComplanints.ReportComplanintsMainActivity;
 import com.keertech.regie_phone.Activity.SalesInteraction.SalesInteractionMainActivity;
-import com.keertech.regie_phone.Service.LocationService;
 import com.keertech.regie_phone.Activity.SystemSetting.SystemSettingActivity;
 import com.keertech.regie_phone.Activity.VisitCheck.VisitCheckMainActivity;
 import com.keertech.regie_phone.Activity.XZFW.XZFWMainActivity;
@@ -41,6 +40,7 @@ import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Models.Apps;
 import com.keertech.regie_phone.Models.TerraceApp;
 import com.keertech.regie_phone.Network.HttpClient;
+import com.keertech.regie_phone.Service.UpdateLocationService;
 import com.keertech.regie_phone.Utility.DateTimeUtil;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity {
 
         setToolbarTitle("武汉烟草移动办公平台");
 
-        Intent intent = new Intent(this, LocationService.class);
+        Intent intent = new Intent(this, UpdateLocationService.class);
         startService(intent);
 
         apps = (ArrayList<Apps>) getIntent().getSerializableExtra("apps");

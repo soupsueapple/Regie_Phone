@@ -28,7 +28,6 @@ import com.keertech.regie_phone.Utility.DateTimeUtil;
 import com.keertech.regie_phone.Utility.StringUtility;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.umeng.analytics.MobclickAgent;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -37,10 +36,10 @@ import org.json.JSONObject;
 import java.util.Date;
 
 /**
- * Created by soup on 2017/5/31.
+ * Created by soup on 2017/6/1.
  */
 
-public class LocationService extends Service{
+public class UpdateLocationService extends Service{
 
     public LocationClient mLocationClient;
     public MyLocationListener mMyLocationListener;
@@ -229,9 +228,9 @@ public class LocationService extends Service{
                     StringUtility.putSharedPreferences(getApplicationContext(), Constant.LOCATION_TIME,
                             Constant.LOCATION_TIME, DateTimeUtil.getCurrDateTimeStr());
 
-                    Message msg = Message.obtain();
-                    msg.obj = "定位上传成功: " + DateTimeUtil.getCurrDateTimeStr();
-                    handler.sendMessage(msg);
+                    Notification notification = getDefaultNotification(
+                            "定位上传成功: " + DateTimeUtil.getCurrDateTimeStr(), true);
+                    startForeground(Constant.NOTIFICATION_ID, notification);
                 } else {
                     doLogin(lat, lng);
                 }
@@ -241,9 +240,11 @@ public class LocationService extends Service{
             public void onFailure(int statusCode, Header[] headers, String responseString,
                                   Throwable throwable) {
 
-                Message msg = Message.obtain();
-                msg.obj = "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr();
-                handler.sendMessage(msg);
+                System.out.println("定位上传失败");
+
+                Notification notification = getDefaultNotification(
+                        "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr(), true);
+                startForeground(Constant.NOTIFICATION_ID, notification);
 
 //                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString() + "\n" + responseString);
 
@@ -254,9 +255,11 @@ public class LocationService extends Service{
             public void onFailure(int statusCode, Header[] headers, Throwable throwable,
                                   JSONObject errorResponse) {
 
-                Message msg = Message.obtain();
-                msg.obj = "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr();
-                handler.sendMessage(msg);
+                System.out.println("定位上传失败");
+
+                Notification notification = getDefaultNotification(
+                        "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr(), true);
+                startForeground(Constant.NOTIFICATION_ID, notification);
 
 //                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString() + "\n" + errorResponse.toString());
 
@@ -267,9 +270,11 @@ public class LocationService extends Service{
             public void onFailure(int statusCode, Header[] headers, Throwable throwable,
                                   JSONArray errorResponse) {
 
-                Message msg = Message.obtain();
-                msg.obj = "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr();
-                handler.sendMessage(msg);
+                System.out.println("定位上传失败");
+
+                Notification notification = getDefaultNotification(
+                        "定位上传失败: " + DateTimeUtil.getCurrDateTimeStr(), true);
+                startForeground(Constant.NOTIFICATION_ID, notification);
 
 //                MobclickAgent.reportError(getApplicationContext(), "定位上传失败" + Constant.userId + "\n" + throwable.toString());
 
@@ -304,4 +309,5 @@ public class LocationService extends Service{
 
         }
     }
+
 }

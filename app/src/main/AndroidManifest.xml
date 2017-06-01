@@ -261,9 +261,18 @@
         <service android:name=".Service.LocationService"
             android:enabled="true"
             android:exported="true"
-            android:process=":location1" >
+            android:process=":location" >
             <intent-filter android:priority="1000" >
                 <action android:name="com.keertech.regie_phone.Service.LocationService" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".Service.UpdateLocationService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":UpdateLocationService" >
+            <intent-filter android:priority="1001" >
+                <action android:name="com.keertech.regie_phone.Service.UpdateLocationService" />
             </intent-filter>
         </service>
 

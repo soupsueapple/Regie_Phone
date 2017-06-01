@@ -41,8 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         android:id="@+id/username_et"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:inputType="number"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <EditText
         android:id="@+id/password_et"
