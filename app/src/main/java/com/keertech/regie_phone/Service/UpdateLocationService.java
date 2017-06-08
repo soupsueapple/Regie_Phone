@@ -35,6 +35,8 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+import static com.keertech.regie_phone.Constant.Constant.userId;
+
 /**
  * Created by soup on 2017/6/1.
  */
@@ -94,8 +96,6 @@ public class UpdateLocationService extends Service{
 
         acquireWakeLock();
 
-
-
         flags = START_STICKY;
         return super.onStartCommand(intent, flags, startId);
     }
@@ -127,8 +127,8 @@ public class UpdateLocationService extends Service{
                     (String) msg.obj, false);
             startForeground(Constant.NOTIFICATION_ID, notification);
 
-//            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//            mNotificationManager.notify(Constant.NOTIFICATION_ID, notification);
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(Constant.NOTIFICATION_ID, notification);
         }
     };
 
@@ -141,13 +141,16 @@ public class UpdateLocationService extends Service{
         if (isRed)
             view.setTextColor(R.id.textView2, Color.RED);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context).setContentTitle("通知").setTicker("新消息");
+//        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.logo).setContentTitle("通知").setTicker("新消息");
+        mBuilder.setPriority(Notification.PRIORITY_MIN);
         mBuilder.setAutoCancel(true);
 
-        mBuilder.setContentIntent(pendingIntent);
+//        mBuilder.setContentIntent(pendingIntent);
         mBuilder.setContent(view);
         mBuilder.setAutoCancel(true);
+
+        System.out.println("getDefaultNotification");
 
         return mBuilder.build();
     }
@@ -213,8 +216,15 @@ public class UpdateLocationService extends Service{
             }
         }
 
-        HttpClient.get(Constant.Base_URL + "location.action?userId=" + Constant.userId + "&longitude_bd=" + lng
-                + "&latitude_bd=" + lat + "", null, new JsonHttpResponseHandler() {
+        System.out.println(Constant.Base_URL + "location.action?userId=" + userId + "&longitude_bd=" + lng
+                + "&latitude_bd=" + lat + "");
+
+        RequestParams params = new RequestParams();
+        params.put("userId", userId);
+        params.put("longitude_bd", lng);
+        params.put("latitude_bd", lat);
+
+        HttpClient.get(Constant.Base_URL + "location.action" , params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -229,7 +239,7 @@ public class UpdateLocationService extends Service{
                             Constant.LOCATION_TIME, DateTimeUtil.getCurrDateTimeStr());
 
                     Notification notification = getDefaultNotification(
-                            "定位上传成功: " + DateTimeUtil.getCurrDateTimeStr(), true);
+                            "定位上传成功: " + DateTimeUtil.getCurrDateTimeStr(), false);
                     startForeground(Constant.NOTIFICATION_ID, notification);
                 } else {
                     doLogin(lat, lng);
@@ -288,11 +298,11 @@ public class UpdateLocationService extends Service{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             if (bdLocation.getLocType() == 61 || bdLocation.getLocType() == 161) {
-                Constant.userId = StringUtility.getSharedPreferencesForString(getApplicationContext(), "id", "id");
+                userId = StringUtility.getSharedPreferencesForString(getApplicationContext(), "id", "id");
 
-                if (!StringUtility.isEmpty(Constant.userId)) {
+                if (!StringUtility.isEmpty(userId)) {
 
-                    System.out.println("upLocation");
+                    System.out.println("upLocation: " + bdLocation.getLatitude() + "   " + bdLocation.getLongitude());
 
                     upLocation(bdLocation.getLatitude(), bdLocation.getLongitude());
 

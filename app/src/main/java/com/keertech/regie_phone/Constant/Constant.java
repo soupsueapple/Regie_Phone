@@ -14,15 +14,15 @@ public class Constant {
         return context.getFilesDir().getPath()+"/";
     }
 
-    public final static String Base_URL = "http://221.232.151.12:1000/mg/mg!";
-    public final static String MWB_Base_URL = "http://10.69.0.188:8080/newmwb/";
-    public final static String CISS_Base_URL = "http://10.69.0.107:8080/CISS/";
-    public final static String MIIS_Base_URL = "http://10.69.0.108:9080/miis/";
-
-//    public final static String Base_URL = "http://192.168.9.9:8080/mg/mg!";
-//    public final static String MWB_Base_URL = "http://192.168.9.9:8080/newmwb/";
+//    public final static String Base_URL = "http://221.232.151.12:1000/mg/mg!";
+//    public final static String MWB_Base_URL = "http://10.69.0.188:8080/newmwb/";
 //    public final static String CISS_Base_URL = "http://10.69.0.107:8080/CISS/";
-//    public final static String MIIS_Base_URL = "http://192.168.9.9:8080/miis/";
+//    public final static String MIIS_Base_URL = "http://10.69.0.108:9080/miis/";
+
+    public final static String Base_URL = "http://192.168.9.9:8080/mg/mg!";
+    public final static String MWB_Base_URL = "http://192.168.9.9:8080/newmwb/";
+    public final static String CISS_Base_URL = "http://10.69.0.107:8080/CISS/";
+    public final static String MIIS_Base_URL = "http://192.168.9.9:8080/miis/";
 
     public final static String EXEC = "exec.action";
 
@@ -77,7 +77,7 @@ public class Constant {
 
     public static long upLocationTime = 0;
 
-    public static final String ACTION_NOTIFICATION_CLICK = "com.keertech.emessage.phone.notificationClick";//通知提醒
+    public static final String ACTION_NOTIFICATION_CLICK = "com.keertech.regie_phone.notification";//通知提醒
 
     public final static int NOTIFICATION_ID = 109983;
 

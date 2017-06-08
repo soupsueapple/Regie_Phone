@@ -134,6 +134,24 @@ public class LocationService extends Service{
     };
 
     public static Notification getDefaultNotification(String str, boolean isRed) {
+//        Context context = RegieApplication.getContext();
+//        Intent intent = new Intent(Constant.ACTION_NOTIFICATION_CLICK);
+//
+//        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.mote);
+//        view.setTextViewText(R.id.textView2, str);
+//        if (isRed)
+//            view.setTextColor(R.id.textView2, Color.RED);
+//
+//        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context).setContentTitle("通知").setTicker("新消息");
+//        mBuilder.setAutoCancel(true);
+//
+//        mBuilder.setContentIntent(pendingIntent);
+//        mBuilder.setContent(view);
+//        mBuilder.setAutoCancel(true);
+//
+//        return mBuilder.build();
+
         Context context = RegieApplication.getContext();
         Intent intent = new Intent(Constant.ACTION_NOTIFICATION_CLICK);
 
