@@ -40,6 +40,7 @@ import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Models.Apps;
 import com.keertech.regie_phone.Models.TerraceApp;
 import com.keertech.regie_phone.Network.HttpClient;
+import com.keertech.regie_phone.Service.LocationService2;
 import com.keertech.regie_phone.Service.UpdateLocationService;
 import com.keertech.regie_phone.Utility.DateTimeUtil;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
@@ -102,6 +103,9 @@ public class MainActivity extends BaseActivity {
 
         Intent intent = new Intent(this, UpdateLocationService.class);
         startService(intent);
+
+        Intent intent2 = new Intent(this, LocationService2.class);
+        startService(intent2);
 
         apps = (ArrayList<Apps>) getIntent().getSerializableExtra("apps");
         apkId = getIntent().getIntExtra("apkId", 2);

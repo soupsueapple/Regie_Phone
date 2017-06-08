@@ -1,16 +1,19 @@
 package com.keertech.regie_phone.Service;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.PowerManager;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -22,6 +25,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Network.HttpClient;
+import com.keertech.regie_phone.ProcessService;
 import com.keertech.regie_phone.R;
 import com.keertech.regie_phone.RegieApplication;
 import com.keertech.regie_phone.Utility.DateTimeUtil;
@@ -48,12 +52,18 @@ public class UpdateLocationService extends Service{
 
     private PowerManager.WakeLock mWakeLock = null;
 
+    private MyBinder binder;
+    private MyConn conn;
+
     @Override
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
 
         System.out.println("onCreate");
+
+        binder = new MyBinder();
+        if(conn==null) conn = new MyConn();
 
         mLocationClient = new LocationClient(getApplicationContext());
         mMyLocationListener = new MyLocationListener();
@@ -91,6 +101,13 @@ public class UpdateLocationService extends Service{
     }
 
     @Override
+    public void onStart(Intent intent, int startId) {
+        super.onStart(intent, startId);
+
+        UpdateLocationService.this.bindService(new Intent(this,LocationService2.class),conn, Context.BIND_IMPORTANT);
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // TODO Auto-generated method stub
 
@@ -114,7 +131,7 @@ public class UpdateLocationService extends Service{
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return binder;
     }
 
     Handler handler = new Handler(){
@@ -317,6 +334,29 @@ public class UpdateLocationService extends Service{
         @Override
         public void onConnectHotSpotMessage(String s, int i) {
 
+        }
+    }
+
+    class MyBinder extends ProcessService.Stub{
+        @Override
+        public String getServiceName() throws RemoteException {
+            return "I am FirstService";
+        }
+    }
+
+    class  MyConn implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            ActivityManager activityManager = (ActivityManager) UpdateLocationService.this
+                    .getSystemService(Context.ACTIVITY_SERVICE);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            UpdateLocationService.this.startService(new Intent(UpdateLocationService.this,LocationService2.class));
+            //绑定FirstService
+            UpdateLocationService.this.bindService(new Intent(UpdateLocationService.this,LocationService2.class),conn, Context.BIND_IMPORTANT);
         }
     }
 

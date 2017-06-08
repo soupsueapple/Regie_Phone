@@ -79,7 +79,7 @@ public class Constant {
 
     public static final String ACTION_NOTIFICATION_CLICK = "com.keertech.regie_phone.notification";//通知提醒
 
-    public final static int NOTIFICATION_ID = 109983;
-
+//    public final static int NOTIFICATION_ID = 109983;
+    public final static int NOTIFICATION_ID = 1;
     public static final int LOCATION_INTERVAL_TIME = 5000;
 }
