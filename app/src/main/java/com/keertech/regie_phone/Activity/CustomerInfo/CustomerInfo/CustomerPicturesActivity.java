@@ -106,6 +106,8 @@ public class CustomerPicturesActivity extends BaseActivity{
 
         liceNo = getIntent().getStringExtra("liceNo");
 
+        loadImages();
+
         Uris = new ArrayList<>();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
