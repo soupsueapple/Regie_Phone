@@ -266,7 +266,7 @@ public class PurchasePriceMainActivity extends BaseActivity{
                 String purchasePrice = object.getString("name");
                 final String collectionDate = object.getString("collectionDate");
 
-                final String id = object.getString("id");
+                final String id = object.getString("postId");
 
                 holder.idTv.setText(cigName);
                 holder.nameTv.setText(purchasePrice);

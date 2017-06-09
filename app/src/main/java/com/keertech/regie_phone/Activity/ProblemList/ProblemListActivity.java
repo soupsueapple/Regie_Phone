@@ -85,6 +85,8 @@ public class ProblemListActivity extends BaseActivity{
                             startActivity(intent);
                             break;
                         case "客户经理提报":
+                            intent = new Intent(ProblemListActivity.this, ManagerReportActivity.class);
+                            startActivity(intent);
                             break;
                     }
                 }

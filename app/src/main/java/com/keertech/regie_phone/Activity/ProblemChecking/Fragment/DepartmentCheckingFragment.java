@@ -189,6 +189,8 @@ public class DepartmentCheckingFragment extends BaseFragment{
             @Override
             public void onClick(View view) {
                 super.onClick(view);
+                Intent intent = new Intent(getActivity(), AddDepartmentCheckingActivity.class);
+                startActivity(intent);
             }
         });
 

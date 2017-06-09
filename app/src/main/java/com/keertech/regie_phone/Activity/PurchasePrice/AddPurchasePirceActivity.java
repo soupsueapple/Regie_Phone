@@ -220,6 +220,9 @@ public class AddPurchasePirceActivity extends BaseActivity{
                 buffer.append("\"beanList[" + i + "].cigCode\":\"" + object.getString("cigCode") + "\"");
                 buffer.append(",\"beanList[" + i + "].cigName\":\"" + object.getString("cigName") + "\"");
 
+                if("null".equals(object.getString("purchasePrice")))buffer.append(",\"beanList[" + i + "].purchasePrice\":\"0.0\"");
+                else buffer.append(",\"beanList[" + i + "].purchasePrice\":\"" + object.getString("purchasePrice") + "\"");
+
                 if("null".equals(object.getString("purchasePrice2")))buffer.append(",\"beanList[" + i + "].purchasePrice2\":\"0.0\"");
                 else buffer.append(",\"beanList[" + i + "].purchasePrice2\":\"" + object.getString("purchasePrice2") + "\"");
 

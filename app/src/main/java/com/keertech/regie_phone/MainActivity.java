@@ -42,7 +42,6 @@ import com.keertech.regie_phone.Models.TerraceApp;
 import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.Service.LocationService2;
 import com.keertech.regie_phone.Service.UpdateLocationService;
-import com.keertech.regie_phone.Utility.DateTimeUtil;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
 import com.keertech.regie_phone.Utility.VibrateHelp;
@@ -417,7 +416,7 @@ public class MainActivity extends BaseActivity {
         public void run() {
             File sdcard = Environment.getExternalStorageDirectory();
             String path = sdcard.getPath()+File.separator+Constant.Base_path;
-            String fileName = path + File.separator + DateTimeUtil.getCurrDateTimeStr()+".txt";
+            String fileName = path + File.separator + System.currentTimeMillis()+".txt";
 
             try {
                 FileWriter writer=new FileWriter(fileName);
@@ -531,11 +530,7 @@ public class MainActivity extends BaseActivity {
         public void onBindViewHolder(GridRecyclerHolder holder, int position) {
             holder.iv.setImageResource(icons[position]);
 
-            if(isNotice){
-                holder.notice_tv.setVisibility(View.VISIBLE);
-            }else{
-                holder.notice_tv.setVisibility(View.GONE);
-            }
+
 
             final String name = names[position];
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -602,6 +597,7 @@ public class MainActivity extends BaseActivity {
                             break;
                         case "通知公告":
                             intent = new Intent(MainActivity.this, NoticeActivity.class);
+                            intent.putExtra("json",datajson);
                             startActivity(intent);
                             break;
                         case "系统设置":
@@ -614,9 +610,14 @@ public class MainActivity extends BaseActivity {
                             searchCustomerInfo();
                             break;
                     }
-
                 }
             });
+
+            if(isNotice && name.equals("通知公告")){
+                holder.notice_tv.setVisibility(View.VISIBLE);
+            }else{
+                holder.notice_tv.setVisibility(View.GONE);
+            }
         }
 
         @Override

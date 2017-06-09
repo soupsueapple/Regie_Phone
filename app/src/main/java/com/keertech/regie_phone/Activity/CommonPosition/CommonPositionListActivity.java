@@ -71,6 +71,7 @@ public class CommonPositionListActivity extends BaseActivity{
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                pd.dismiss();
 
                 try {
 

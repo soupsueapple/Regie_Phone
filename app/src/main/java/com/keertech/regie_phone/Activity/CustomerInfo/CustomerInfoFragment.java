@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfo.CustomerInfoActivity;
@@ -25,7 +26,6 @@ import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.R;
-import com.keertech.regie_phone.Utility.DateTimeUtil;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
 import com.keertech.regie_phone.Utility.StringUtility;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -108,6 +108,7 @@ public class CustomerInfoFragment extends BaseFragment{
         recyclerView = (RecyclerView) convertView.findViewById(recycler_view);
         searchFab = (FloatingActionButton) convertView.findViewById(R.id.search_fab);
         mapFab = (FloatingActionButton) convertView.findViewById(R.id.map_fab);
+        mapFab.setVisibility(View.VISIBLE);
 
         communityTv.setOnClickListener(new ViewClickVibrate(){
 
@@ -204,7 +205,7 @@ public class CustomerInfoFragment extends BaseFragment{
     private void fileWrite(String json){
         File sdcard = Environment.getExternalStorageDirectory();
         String path = sdcard.getPath()+File.separator+Constant.Base_path;
-        String fileName = path + File.separator + DateTimeUtil.getCurrDateTimeStr()+".txt";
+        String fileName = path + File.separator + System.currentTimeMillis()+".txt";
 
         try {
             FileWriter writer=new FileWriter(fileName);
@@ -655,7 +656,40 @@ public class CustomerInfoFragment extends BaseFragment{
                     }
                 }
 
+                Double bd_longitude = null;
+                if(StringUtility.notObjEmpty(object, "bd_longitude")) bd_longitude = object.getDouble("bd_longitude");
+
+                if(bd_longitude == null){
+                    holder.shopnameTv.setTextColor(getActivity().getResources().getColor(R.color.red));
+                }else {
+                    if (bd_longitude == 0) {
+                        holder.shopnameTv.setTextColor(getActivity().getResources().getColor(R.color.red));
+                    } else {
+                        holder.shopnameTv.setTextColor(getActivity().getResources().getColor(R.color.color_black));
+                    }
+                }
+
                 holder.lookUpTv.setOnClickListener(new ViewClickVibrate(){
+
+                    @Override
+                    public void onClick(View view) {
+                        super.onClick(view);
+
+                        try {
+                            Intent intent = new Intent(getActivity(), CustomerInfoActivity.class);
+                            intent.putExtra("id", object.getString("id"));
+                            if (!object.isNull("needLocation"))
+                                intent.putExtra("needLocation", object.getInt("needLocation"));
+                            else intent.putExtra("needLocation", false);
+                            getActivity().startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+                holder.rl.setOnClickListener(new ViewClickVibrate(){
 
                     @Override
                     public void onClick(View view) {
@@ -694,6 +728,7 @@ public class CustomerInfoFragment extends BaseFragment{
             private TextView dateTv;
             private TextView shopnameTv;
             private TextView lookUpTv, picTv, markTv;
+            RelativeLayout rl;
 
             private void assignViews(View itemView) {
                 licenseTv = (TextView) itemView.findViewById(R.id.license_tv);
@@ -704,6 +739,7 @@ public class CustomerInfoFragment extends BaseFragment{
                 lookUpTv = (TextView) itemView.findViewById(R.id.look_up_tv);
                 picTv = (TextView) itemView.findViewById(R.id.pic_tv);
                 markTv = (TextView) itemView.findViewById(R.id.mark_tv);
+                rl = (RelativeLayout) itemView.findViewById(R.id.rl);
             }
 
 

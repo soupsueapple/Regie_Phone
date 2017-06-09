@@ -252,6 +252,9 @@
         <activity android:name=".Activity.Notice.NoticeOperatorMainActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.ProblemList.ManagerReportActivity"
+            android:screenOrientation="portrait"></activity>
+
         <activity android:name=".KeepLiveActivity"
             android:screenOrientation="portrait"></activity>
 

@@ -16,6 +16,7 @@
             android:id="@+id/dialog_username_ed"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:singleLine="true"/>
     </LinearLayout>
     

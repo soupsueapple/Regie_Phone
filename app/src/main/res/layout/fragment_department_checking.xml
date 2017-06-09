@@ -8,7 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/linearLayout9">
+        android:id="@+id/linearLayout9"
+        android:layout_marginTop="5dp">
 
         <LinearLayout
             android:id="@+id/start_date_ll"
@@ -16,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="5dp">
 
             <TextView
                 android:id="@+id/start_date_tv"
@@ -42,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp">
 

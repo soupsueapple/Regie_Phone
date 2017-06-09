@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.keertech.regie_phone.Activity.CustomerInfo.AllCityCustomerInfo.CustomerInfoActivity;
@@ -442,11 +443,7 @@ public class AllCityCustomerInfoFragment extends BaseFragment{
                 holder.nameTv.setText(object.getString("chargerName"));
                 holder.dateTv.setText(object.getString("deliverTime").replaceAll(" 00:00:00", ""));
 
-                if(object.getInt("door_photo") == 1){
-                    holder.picTv.setVisibility(View.VISIBLE);
-                }else{
-                    holder.picTv.setVisibility(View.GONE);
-                }
+                holder.picTv.setVisibility(View.GONE);
 
                 int mark = object.getInt("mark");
 
@@ -458,6 +455,26 @@ public class AllCityCustomerInfoFragment extends BaseFragment{
 
 
                 holder.lookUpTv.setOnClickListener(new ViewClickVibrate(){
+
+                    @Override
+                    public void onClick(View view) {
+                        super.onClick(view);
+
+                        try {
+                            Intent intent = new Intent(getActivity(), CustomerInfoActivity.class);
+                            intent.putExtra("id", object.getString("id"));
+                            if (!object.isNull("needLocation"))
+                                intent.putExtra("needLocation", object.getInt("needLocation"));
+                            else intent.putExtra("needLocation", false);
+                            getActivity().startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+                holder.rl.setOnClickListener(new ViewClickVibrate(){
 
                     @Override
                     public void onClick(View view) {
@@ -496,6 +513,7 @@ public class AllCityCustomerInfoFragment extends BaseFragment{
             private TextView dateTv;
             private TextView shopnameTv;
             private TextView lookUpTv, picTv, markTv;
+            RelativeLayout rl;
 
             private void assignViews(View itemView) {
                 licenseTv = (TextView) itemView.findViewById(R.id.license_tv);
@@ -506,6 +524,7 @@ public class AllCityCustomerInfoFragment extends BaseFragment{
                 lookUpTv = (TextView) itemView.findViewById(R.id.look_up_tv);
                 picTv = (TextView) itemView.findViewById(R.id.pic_tv);
                 markTv = (TextView) itemView.findViewById(R.id.mark_tv);
+                rl = (RelativeLayout) itemView.findViewById(R.id.rl);
             }
 
 

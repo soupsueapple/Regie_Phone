@@ -13,8 +13,17 @@ import android.widget.TextView;
 import com.keertech.regie_phone.Activity.CustomerInfo.AllCityCustomerInfo.CustomerInfoActivity;
 import com.keertech.regie_phone.Activity.RandomCheck.RandomCheckInfoActivity;
 import com.keertech.regie_phone.BaseFragment;
+import com.keertech.regie_phone.Constant.Constant;
+import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.R;
+import com.keertech.regie_phone.Utility.DateTimeUtil;
+import com.keertech.regie_phone.Utility.KeerAlertDialog;
+import com.keertech.regie_phone.Utility.StringUtility;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,8 +54,91 @@ public class RandomCheckFragment extends BaseFragment{
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerAdapter);
+
+        customerList();
     }
 
+    private void customerList() {
+        final KeerAlertDialog pd = showKeerAlertDialog(R.string.loading);
+        pd.show();
+
+        RequestParams params = new RequestParams();
+        params.put("data", "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\"" + Constant.MWB_Base_URL + "checkCustomer!customerList.action\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}");
+
+        HttpClient.post(Constant.EXEC, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                pd.dismiss();
+
+                try {
+                    if(StringUtility.isSuccess(response)) {
+                        String messageSting = response.getString("message");
+
+                        JSONObject message = new JSONObject(messageSting);
+
+                        if (StringUtility.isSuccess(message)) {
+
+                            dateTv.setText(DateTimeUtil.getFormatDate(DateTimeUtil.getCurrDate(), DateTimeUtil.MONTHFORMAT));
+
+                            String ym = message.getString("ym");
+                            String checkers = message.getString("checkers");
+                            JSONArray list = message.getJSONArray("list");
+
+                            checkingPeopleTv.setText("检查人：" + checkers);
+                            dateTv.setText(ym);
+
+                            if(datas.size() > 0) datas.clear();
+
+                            int yjc = 0;
+
+                            for (int i = 0; i < list.length(); i++) {
+                                JSONObject object = list.getJSONObject(i);
+                                int status = object.getInt("status");
+                                if(status == 1) yjc += 1;
+                                datas.add(object);
+                            }
+
+                            checkedNumberTv.setText(yjc + "/" + datas.size());
+
+                            recyclerAdapter.notifyDataSetChanged();
+
+                        } else {
+                            showToast(message.getString("message"), getActivity());
+                        }
+                    }else{
+                        showToast(response.getString("message"), getActivity());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                pd.dismiss();
+                showNetworkError(getActivity());
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

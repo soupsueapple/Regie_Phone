@@ -2,6 +2,7 @@ package com.keertech.regie_phone.Activity.Notice;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +16,15 @@ import com.keertech.regie_phone.Activity.VisitCheck.VisitCheckMainActivity;
 import com.keertech.regie_phone.BaseActivity;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.R;
+import com.keertech.regie_phone.Utility.StringUtility;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static com.keertech.regie_phone.R.id.recycler_view;
 
 /**
  * Created by soup on 2017/5/31.
@@ -34,7 +39,27 @@ public class NoticeActivity extends BaseActivity{
     private RecyclerView recyclerView;
 
     private void assignViews() {
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(recyclerAdapter);
+
+        String json = getIntent().getStringExtra("json");
+
+        if(!StringUtility.isEmpty(json)){
+            try {
+                JSONArray data = new JSONArray(json);
+
+                for(int i=0;i<data.length();i++){
+                    JSONObject object = data.getJSONObject(i);
+                    datas.add(object);
+                }
+
+                recyclerAdapter.notifyDataSetChanged();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

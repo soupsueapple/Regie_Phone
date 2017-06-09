@@ -2,19 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/ll">
+    android:id="@+id/ll"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="@dimen/x30"
-        android:layout_height="@dimen/x30"
-        android:background="@drawable/scdc0"
-        android:layout_margin="10dp"/>
-
-    <TextView
-        android:id="@+id/name_tv"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="举报投诉"
-        android:layout_gravity="center"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="@dimen/x30"
+            android:layout_height="@dimen/x30"
+            android:background="@drawable/scdc0"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="举报投诉"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_black"
+        android:layout_margin="10dp"></LinearLayout>
 
 </LinearLayout>

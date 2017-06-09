@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.keertech.regie_phone.Activity.SalesInteraction.Fragment.CustomerInformationReportTableFragment;
 import com.keertech.regie_phone.Activity.SalesInteraction.Fragment.NotHaveLicenseCustomerInformationReportTableFragment;
 import com.keertech.regie_phone.BaseActivity;
+import com.keertech.regie_phone.BaseFragmentActivity;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.R;
 import com.keertech.regie_phone.Utility.VibrateHelp;
@@ -20,7 +21,7 @@ import com.keertech.regie_phone.Utility.VibrateHelp;
  * Created by soup on 2017/5/25.
  */
 
-public class SalesInteractionMainActivity extends BaseActivity implements View.OnClickListener{
+public class SalesInteractionMainActivity extends BaseFragmentActivity implements View.OnClickListener{
 
     private LinearLayout linearLayout;
     private LinearLayout customerInformationReportTableLl;
@@ -89,7 +90,7 @@ public class SalesInteractionMainActivity extends BaseActivity implements View.O
         FragmentTransaction ft = fm.beginTransaction();
 
         switch (view.getId()){
-            case R.id.random_check_ll:
+            case R.id.customer_information_report_table_ll:
                 title_tv.setText("有证户信息提报表");
                 CustomerInformationReportTableFragment customerInformationReportTableFragment = (CustomerInformationReportTableFragment) fm.findFragmentByTag("customer");
                 if(customerInformationReportTableFragment == null){
@@ -100,7 +101,7 @@ public class SalesInteractionMainActivity extends BaseActivity implements View.O
                 customerInformationReportTableTv.setBackgroundResource(R.drawable.zm_yzhxxtbb1);
                 notHaveLicenseCustomerInformationReportTableTv.setBackgroundResource(R.drawable.zm_wzhxxtbb0);
                 break;
-            case R.id.checked_record_ll:
+            case R.id.not_have_license_customer_information_report_table_ll:
                 title_tv.setText("无证户信息提报表");
                 NotHaveLicenseCustomerInformationReportTableFragment notHaveLicenseCustomerInformationReportTableFragment = (NotHaveLicenseCustomerInformationReportTableFragment) fm.findFragmentByTag("notlicense");
                 if(notHaveLicenseCustomerInformationReportTableFragment == null){

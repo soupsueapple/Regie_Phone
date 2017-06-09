@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.keertech.regie_phone.BaseActivity;
@@ -360,6 +361,38 @@ public class AddServicePlanAcvitivy extends BaseActivity{
                     }
                 });
 
+                holder.rl.setOnClickListener(new ViewClickVibrate(){
+
+                    @Override
+                    public void onClick(View view) {
+                        super.onClick(view);
+
+                        try {
+
+                            if (object.getBoolean("checked")) {
+                                object.put("checked", false);
+                            } else {
+                                object.put("checked", true);
+                            }
+
+                            Message msg = Message.obtain();
+                            handler.sendMessage(msg);
+
+                            int num = 0;
+
+                            for(JSONObject o: datas){
+                                if (o.getBoolean("checked")) num += 1;
+                            }
+
+                            select_num_tv.setText("你已选择"+ num + "个经营户");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
                 holder.licenseTv.setOnClickListener(new ViewClickVibrate(){
 
                     @Override
@@ -460,6 +493,7 @@ public class AddServicePlanAcvitivy extends BaseActivity{
             private TextView communityTv;
             private CheckBox checkbox;
             private TextView serviceNumTv;
+            RelativeLayout rl;
 
             private void assignViews(View itemView) {
                 shopnameTv = (TextView) itemView.findViewById(R.id.shopname_tv);
@@ -469,6 +503,7 @@ public class AddServicePlanAcvitivy extends BaseActivity{
                 communityTv = (TextView) itemView.findViewById(R.id.community_tv);
                 checkbox = (CheckBox) itemView.findViewById(R.id.checkbox);
                 serviceNumTv = (TextView) itemView.findViewById(R.id.service_num_tv);
+                rl = (RelativeLayout)itemView.findViewById(R.id.rl);
             }
 
 
