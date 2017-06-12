@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.keertech.regie_phone.Activity.XZFW.ServiceRecord.ServiceRecordInfoListActivity;
@@ -214,6 +215,25 @@ public class FWYCMainFragment extends BaseFragment{
                     }
                 });
 
+                holder.rl.setOnClickListener(new ViewClickVibrate(){
+
+                    @Override
+                    public void onClick(View view) {
+                        super.onClick(view);
+
+                        Constant.isYc = true;
+
+                        Intent intent = new Intent(getActivity(), ServiceRecordInfoListActivity.class);
+                        intent.putExtra("name", name);
+                        intent.putExtra("deptName", deptName);
+                        intent.putExtra("number", number);
+                        intent.putExtra("postId", postId);
+                        intent.putExtra("date", monthTv.getText().toString());
+                        startActivity(intent);
+
+                    }
+                });
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -230,12 +250,14 @@ public class FWYCMainFragment extends BaseFragment{
             private TextView streetTv;
             private TextView serviceNumTv;
             private TextView serviceInfoTv;
+            RelativeLayout rl;
 
             private void assignViews(View itemView) {
                 nameTv = (TextView) itemView.findViewById(R.id.name_tv);
                 streetTv = (TextView) itemView.findViewById(R.id.street_tv);
                 serviceNumTv = (TextView) itemView.findViewById(R.id.service_num_tv);
                 serviceInfoTv = (TextView) itemView.findViewById(R.id.service_info_tv);
+                rl = (RelativeLayout) itemView.findViewById(R.id.rl);
             }
 
 

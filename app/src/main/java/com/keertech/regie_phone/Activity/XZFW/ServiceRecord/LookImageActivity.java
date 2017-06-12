@@ -324,10 +324,22 @@ public class LookImageActivity extends BaseActivity{
 
             Image image = Uris.get(position);
 
-            File file = new File(image.getUrl());
+            if(image.getUrl().length() > 0){
+                File file = new File(image.getUrl());
 
-            Drawable drawable =new BitmapDrawable(decodeFile(file, 144, 226));
-            holder.imageItem.setImageDrawable(drawable);
+                Drawable drawable =new BitmapDrawable(decodeFile(file, 144, 226));
+                holder.imageItem.setImageDrawable(drawable);
+            }else{
+
+                File myCaptureFile = getFile(image.getName());
+
+                Drawable drawable =new BitmapDrawable(decodeFile(myCaptureFile, 244, 326));
+                holder.imageItem.setImageDrawable(drawable);
+
+
+            }
+
+
 
             holder.image_ll.setOnClickListener(new ViewClickVibrate(){
 

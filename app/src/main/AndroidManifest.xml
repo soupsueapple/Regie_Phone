@@ -258,6 +258,12 @@
         <activity android:name=".KeepLiveActivity"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".Activity.ProblemChecking.DepartmentChecking.ChooseNotHasLicenseActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Activity.ProblemChecking.DepartmentChecking.DepartmentNoLicenseCheckingActivity"
+            android:screenOrientation="portrait"></activity>
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
 

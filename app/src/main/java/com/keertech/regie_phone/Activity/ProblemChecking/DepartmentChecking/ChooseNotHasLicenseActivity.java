@@ -88,6 +88,8 @@ public class ChooseNotHasLicenseActivity extends BaseActivity{
             }
         });
 
+        id = getIntent().getStringExtra("id");
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerAdapter);
 

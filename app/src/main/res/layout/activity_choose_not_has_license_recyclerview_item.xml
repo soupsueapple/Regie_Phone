@@ -47,7 +47,9 @@
         android:layout_below="@+id/name_tv"
         android:layout_alignLeft="@+id/name_tv"
         android:layout_alignStart="@+id/name_tv"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/checkbox"
+        android:layout_toStartOf="@+id/checkbox" />
 
     <CheckBox
         android:id="@+id/checkbox"

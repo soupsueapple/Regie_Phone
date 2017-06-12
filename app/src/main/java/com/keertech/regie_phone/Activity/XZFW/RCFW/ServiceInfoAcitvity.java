@@ -25,6 +25,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.keertech.core.json.Json;
+import com.keertech.regie_phone.Activity.CustomerInfo.CustomerInfo.CustomerInfoActivity;
 import com.keertech.regie_phone.BaseActivity;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
@@ -283,6 +284,8 @@ public class ServiceInfoAcitvity extends BaseActivity{
                 }
             }
         });
+
+
 
         getToolbar().setNavigationOnClickListener(new ViewClickVibrate(){
 
@@ -569,13 +572,15 @@ public class ServiceInfoAcitvity extends BaseActivity{
                 switch (id){
                     case R.id.not_matching_yes_rb:
                         marketInspect.setIsRzConform(new Integer(1));
+
+                        editDialog("实际经营人", "rzConform_Remark", notMatchingNoteTv);
                         break;
                     case R.id.not_matching_no_rb:
                         marketInspect.setIsRzConform(new Integer(0));
                         break;
                 }
 
-                editDialog("实际经营人", "rzConform_Remark", notMatchingNoteTv);
+
             }
         });
 
@@ -585,12 +590,14 @@ public class ServiceInfoAcitvity extends BaseActivity{
                 switch (id){
                     case R.id.address_changed_yes_rb:
                         marketInspect.setIsAddressChange(new Integer(1));
+
+                        editDialog("经营地址", "addressChange_Remark", addressChangedNoteTv);
                         break;
                     case R.id.address_changed_no_rb:
                         marketInspect.setIsAddressChange(new Integer(0));
                         break;
                 }
-                editDialog("经营地址", "addressChange_Remark", addressChangedNoteTv);
+
             }
         });
 
@@ -720,6 +727,7 @@ public class ServiceInfoAcitvity extends BaseActivity{
     private void uploadAllImage(ArrayList<Image> Uris, boolean isSingle) {
         if (Uris.size() > 0) {
             KeerAlertDialog pd = showKeerAlertDialog(R.string.sending);
+            pd.show();
 
             int update = 0;
 
@@ -748,6 +756,7 @@ public class ServiceInfoAcitvity extends BaseActivity{
     private void uploadImage(File file, String filename, final int f, final int imageSize, final boolean isSingle, final ArrayList<Image> Uris, final int index) {
 
         final KeerAlertDialog pd = showKeerAlertDialog(R.string.sending);
+        pd.show();
 
         String action = isSingle ? "marketInspect!uploadDoorP.action" : "marketInspect!uploadEvidenceP.action";
 
@@ -1234,6 +1243,7 @@ public class ServiceInfoAcitvity extends BaseActivity{
         }
 
         final KeerAlertDialog pd = showKeerAlertDialog(R.string.sending);
+        pd.show();
 
         String base = "{\"postHandler\":[],\"preHandler\":[],\"executor\":{\"url\":\"" + Constant.MWB_Base_URL + "marketInspect!outShop.action?privilegeFlag=EDIT" + buffer + "\",\"type\":\"WebExecutor\"},\"app\":\"1001\"}";
 
@@ -1421,9 +1431,9 @@ public class ServiceInfoAcitvity extends BaseActivity{
         int id = item.getItemId();
 
         if(id == R.id.action_customer){
-//            Intent intent = new Intent(this, OperatorInfoActivity.class);
-//            intent.putExtra("id",customerId);
-//            startActivity(intent);
+            Intent intent = new Intent(this, CustomerInfoActivity.class);
+            intent.putExtra("id",customerId);
+            startActivity(intent);
             return true;
         }
 

@@ -283,12 +283,13 @@ public class CheckingActivity extends BaseActivity{
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerAdapter);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         gridLayoutManager.offsetChildrenHorizontal(2);
         gridLayoutManager.offsetChildrenVertical(2);
 
         tjRecyclerView.setItemAnimator(new DefaultItemAnimator());
         tjRecyclerView.setLayoutManager(gridLayoutManager);
+        tjRecyclerView.setAdapter(tJRecyclerAdapter);
 
         id = getIntent().getIntExtra("id", 0);
         status = getIntent().getIntExtra("status", 0);
@@ -340,6 +341,8 @@ public class CheckingActivity extends BaseActivity{
             addAbnormalInfoTv.setVisibility(View.GONE);
         }
         Constant.isRefresJZZZSGrid = false;
+
+        loadData();
     }
 
     private void loadData(){
@@ -388,6 +391,19 @@ public class CheckingActivity extends BaseActivity{
                             addressTv.setText(shopAddress);
                             licenseTv.setText(liceNo);
                             nameTv.setText(chargerName);
+
+                            if(StringUtility.notObjEmpty(data, "noticeNumber")){
+                                String noticeNumber = data.getString("noticeNumber");
+                                if(noticeNumber.length() > 0){
+                                    String[] noticeNumbers = noticeNumber.split(",");
+
+                                    for(String n: noticeNumbers){
+                                        tjItems.add(n);
+                                    }
+
+                                    tJRecyclerAdapter.notifyDataSetChanged();
+                                }
+                            }
 
 
                             if(!data.isNull("reason")){

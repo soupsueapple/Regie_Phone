@@ -129,6 +129,8 @@ public class DepartmentNoLicenseCheckingActivity extends BaseActivity{
             addCustomerTv.setVisibility(View.GONE);
             checkedRecordTv.setVisibility(View.GONE);
         }
+
+        loadCust();
     }
 
     private void loadCust(){
@@ -313,9 +315,10 @@ public class DepartmentNoLicenseCheckingActivity extends BaseActivity{
                     holder.checkingTv.setText("修改");
                 }
 
-                holder.checkingTv.setOnClickListener(new View.OnClickListener() {
+                holder.checkingTv.setOnClickListener(new ViewClickVibrate() {
                     @Override
                     public void onClick(View v) {
+                        super.onClick(v);
                         Intent intent = new Intent(DepartmentNoLicenseCheckingActivity.this, CheckingActivity.class);
                         intent.putExtra("id", idInt);
                         intent.putExtra("status", checkStatus);
@@ -328,9 +331,10 @@ public class DepartmentNoLicenseCheckingActivity extends BaseActivity{
                     }
                 });
 
-                holder.delTv.setOnClickListener(new View.OnClickListener() {
+                holder.delTv.setOnClickListener(new ViewClickVibrate() {
                     @Override
                     public void onClick(View v) {
+                        super.onClick(v);
                         AlertDialog.Builder builder = new AlertDialog.Builder(DepartmentNoLicenseCheckingActivity.this);
                         builder.setMessage("删除检查对象");
                         builder.setTitle("提示");

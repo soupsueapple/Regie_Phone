@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/gray_white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -66,12 +67,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="性别：" />
+                            android:text="性别："
+                            android:layout_gravity="center"/>
 
                         <TextView
                             android:id="@+id/gender_tv"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/input"/>
 
                     </LinearLayout>
 
@@ -136,12 +139,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="经营场所所在街道：" />
+                        android:text="经营场所所在街道："
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/street_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"/>
 
                 </LinearLayout>
 
@@ -153,12 +158,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="经营场所所在社区：" />
+                        android:text="经营场所所在社区："
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/community_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"/>
 
                 </LinearLayout>
 
@@ -170,12 +177,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="帮扶群体：" />
+                        android:text="帮扶群体："
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/helping_groups_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"/>
 
                 </LinearLayout>
 
@@ -187,12 +196,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="是否受过处罚：" />
+                        android:text="是否受过处罚："
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/is_punish_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"/>
 
                 </LinearLayout>
 
@@ -217,12 +228,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="当事人有无办证意愿：" />
+                        android:text="当事人有无办证意愿："
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/is_desire_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"/>
 
                 </LinearLayout>
 
@@ -234,12 +247,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="经营地点是否符合合理化布局：" />
+                        android:text="经营地点是否符合合理化布局："
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/is_in_reason_layout_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"/>
 
                 </LinearLayout>
 
@@ -251,12 +266,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="有无固定经营场所：" />
+                        android:text="有无固定经营场所："
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/is_regular_address_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"/>
 
                 </LinearLayout>
 
@@ -285,12 +302,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="对不符合办证的后续管理计划：" />
+                        android:text="对不符合办证的后续管理计划："
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/is_manage_plan_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
 
@@ -302,29 +321,34 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="经营状态：" />
+                        android:text="经营状态："
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/status_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="采取措施：" />
+                        android:text="采取措施："
+                        android:layout_gravity="center"/>
 
                     <TextView
                         android:id="@+id/measure_tv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input"/>
 
                 </LinearLayout>
 

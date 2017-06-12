@@ -233,7 +233,7 @@ public class ServiceRecordInfoActivity extends BaseActivity{
         File file = (getFile(name));
 
         if(file.exists()){
-            try {;
+            try {
 
                 Bitmap bitmap  = BitmapFactory.decodeFile(file.getAbsolutePath());
                 Drawable drawable =new BitmapDrawable(bitmap);

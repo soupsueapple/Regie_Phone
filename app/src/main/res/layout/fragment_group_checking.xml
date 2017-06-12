@@ -13,14 +13,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="许可证号"/>
+            android:hint="许可证号"/>
 
         <EditText
             android:id="@+id/shopname_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="店铺名称"/>
+            android:hint="店铺名称"/>
 
     </LinearLayout>
 
@@ -33,7 +33,7 @@
             android:id="@+id/name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="经营人"
+            android:hint="经营人"
             android:layout_weight="1"/>
 
         <LinearLayout

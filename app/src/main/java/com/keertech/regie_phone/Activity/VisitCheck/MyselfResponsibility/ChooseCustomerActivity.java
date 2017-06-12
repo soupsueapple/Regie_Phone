@@ -521,7 +521,7 @@ public class ChooseCustomerActivity extends BaseActivity{
 
         @Override
         public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            RecyclerHolder holder = new RecyclerHolder(LayoutInflater.from(ChooseCustomerActivity.this).inflate(R.layout.activity_add_customer_department_checking_recyclerview_item, parent, false));
+            RecyclerHolder holder = new RecyclerHolder(LayoutInflater.from(ChooseCustomerActivity.this).inflate(R.layout.activity_choose_customer_recyclerview_item, parent, false));
             return holder;
         }
 

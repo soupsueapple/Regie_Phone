@@ -134,7 +134,7 @@ public class ThePlaceResponsibilityInfoActivity extends BaseActivity{
             }
         });
 
-        chooseCooperateCommonTv.setOnClickListener(new ViewClickVibrate(){
+        chooseResponsibilityCommonTv.setOnClickListener(new ViewClickVibrate(){
 
             @Override
             public void onClick(View view) {

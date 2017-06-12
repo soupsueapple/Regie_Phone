@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.keertech.regie_phone.Activity.VisitCheck.ThePlaceResponsibility.ThePlaceResponsibilityInfoActivity;
 import com.keertech.regie_phone.BaseFragment;
 import com.keertech.regie_phone.Constant.Constant;
+import com.keertech.regie_phone.Listener.ViewClickVibrate;
 import com.keertech.regie_phone.Network.HttpClient;
 import com.keertech.regie_phone.R;
 import com.keertech.regie_phone.Utility.KeerAlertDialog;
@@ -169,9 +170,10 @@ public class ThePlaceResponsibilityFragment extends BaseFragment{
 
                 final String taskId = object.getString("taskId");
 
-                holder.searchTv.setOnClickListener(new View.OnClickListener() {
+                holder.searchTv.setOnClickListener(new ViewClickVibrate() {
                     @Override
                     public void onClick(View v) {
+                        super.onClick(v);
                         Intent intent = new Intent(getActivity(), ThePlaceResponsibilityInfoActivity.class);
                         intent.putExtra("taskId", taskId);
                         getActivity().startActivity(intent);

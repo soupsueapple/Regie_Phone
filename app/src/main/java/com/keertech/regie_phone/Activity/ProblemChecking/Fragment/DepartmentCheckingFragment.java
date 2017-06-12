@@ -23,6 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.keertech.regie_phone.Activity.ProblemChecking.DepartmentChecking.AddDepartmentCheckingActivity;
+import com.keertech.regie_phone.Activity.ProblemChecking.DepartmentChecking.DepartmentCustomerCheckingActivity;
+import com.keertech.regie_phone.Activity.ProblemChecking.DepartmentChecking.DepartmentNoLicenseCheckingActivity;
 import com.keertech.regie_phone.BaseFragment;
 import com.keertech.regie_phone.Constant.Constant;
 import com.keertech.regie_phone.Listener.ViewClickVibrate;
@@ -444,36 +446,39 @@ public class DepartmentCheckingFragment extends BaseFragment{
                 final int p = position;
 
                 if(postType == 1){
-                    holder.rl.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            final JSONObject object = datas.get(p);
-
-                            try {
-                                final String ID = object.getString("id");
-                                final int status = object.getInt("status");
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                builder.setMessage("是否删除本次集中整治");
-                                builder.setTitle("提示");
-                                builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if(status == 1) delete(ID, object); else showToast("集中整治已完成无法删除!", getActivity());
-                                    }
-                                });
-                                builder.setNegativeButton("取消", null);
-
-                                builder.create().show();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            return false;
-                        }
-                    });
+                    holder.del_tv.setVisibility(View.VISIBLE);
                 }else{
-                    holder.rl.setOnLongClickListener(null);
+                    holder.del_tv.setVisibility(View.GONE);
                 }
+
+                holder.del_tv.setOnClickListener(new ViewClickVibrate(){
+
+                    @Override
+                    public void onClick(View view) {
+                        super.onClick(view);
+                        final JSONObject object = datas.get(p);
+
+                        try {
+                            final String ID = object.getString("id");
+                            final int status = object.getInt("status");
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setMessage("是否删除本次集中整治");
+                            builder.setTitle("提示");
+                            builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if(status == 1) delete(ID, object); else showToast("集中整治已完成无法删除!", getActivity());
+                                }
+                            });
+                            builder.setNegativeButton("取消", null);
+
+                            builder.create().show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
                 if(status == 1){
                     holder.customerNumberTv.setTextColor(getResources().getColor(R.color.red));
@@ -485,35 +490,36 @@ public class DepartmentCheckingFragment extends BaseFragment{
                     final Date plancheckDate = DateTimeUtil.getFormatDate(plancheckdateString, DateTimeUtil.TIME_FORMAT);
                     final Date currentDate = new Date();
 
-                    holder.customerLl.setOnClickListener(new View.OnClickListener() {
+                    holder.customerLl.setOnClickListener(new ViewClickVibrate() {
                         @Override
                         public void onClick(View v) {
+                            super.onClick(v);
 
                             if(currentDate.getTime() >= plancheckDate.getTime()) {
 
-//                                Intent intent = new Intent(getActivity(), CustomerActivity.class);
-//                                intent.putExtra("object", object.toString());
-//                                intent.putExtra("id", id);
-//                                intent.putExtra("type", type);
-//                                intent.putExtra("postType", postType);
-//                                startActivity(intent);
+                                Intent intent = new Intent(getActivity(), DepartmentCustomerCheckingActivity.class);
+                                intent.putExtra("object", object.toString());
+                                intent.putExtra("id", id);
+                                intent.putExtra("type", type);
+                                intent.putExtra("postType", postType);
+                                startActivity(intent);
                             }else{
                                 showToast("检查时间还没有到", getActivity());
                             }
                         }
                     });
 
-                    holder.nothasLicenseLl.setOnClickListener(new View.OnClickListener() {
+                    holder.nothasLicenseLl.setOnClickListener(new ViewClickVibrate() {
                         @Override
                         public void onClick(View v) {
-
+                            super.onClick(v);
                             if(currentDate.getTime() >= plancheckDate.getTime()) {
-//                                Intent intent = new Intent(getActivity(), NoLiceRegistryActivity.class);
-//                                intent.putExtra("id", id);
-//                                intent.putExtra("object", object.toString());
-//                                intent.putExtra("type", type);
-//                                intent.putExtra("postType", postType);
-//                                startActivity(intent);
+                                Intent intent = new Intent(getActivity(), DepartmentNoLicenseCheckingActivity.class);
+                                intent.putExtra("id", id);
+                                intent.putExtra("object", object.toString());
+                                intent.putExtra("type", type);
+                                intent.putExtra("postType", postType);
+                                startActivity(intent);
 
                             }else{
                                 showToast("检查时间还没有到", getActivity());
@@ -529,28 +535,30 @@ public class DepartmentCheckingFragment extends BaseFragment{
 
                     holder.statusTv.setText("已结束");
 
-                    holder.customerLl.setOnClickListener(new View.OnClickListener() {
+                    holder.customerLl.setOnClickListener(new ViewClickVibrate() {
                         @Override
                         public void onClick(View v) {
-//                            Intent intent = new Intent(getActivity(), CustomerActivity.class);
-//                            intent.putExtra("object", object.toString());
-//                            intent.putExtra("id", id);
-//                            intent.putExtra("type", type);
-//                            intent.putExtra("postType", postType);
-//                            intent.putExtra("ck", true);
-//                            startActivity(intent);
+                            super.onClick(v);
+
+                            Intent intent = new Intent(getActivity(), DepartmentCustomerCheckingActivity.class);
+                            intent.putExtra("object", object.toString());
+                            intent.putExtra("id", id);
+                            intent.putExtra("type", type);
+                            intent.putExtra("postType", postType);
+                            startActivity(intent);
                         }
                     });
-                    holder.nothasLicenseLl.setOnClickListener(new View.OnClickListener() {
+
+                    holder.nothasLicenseLl.setOnClickListener(new ViewClickVibrate() {
                         @Override
                         public void onClick(View v) {
-//                            Intent intent = new Intent(getActivity(), CustomerActivity.class);
-//                            intent.putExtra("object", object.toString());
-//                            intent.putExtra("id", id);
-//                            intent.putExtra("type", type);
-//                            intent.putExtra("postType", postType);
-//                            intent.putExtra("ck", true);
-//                            startActivity(intent);
+                            super.onClick(v);
+                            Intent intent = new Intent(getActivity(), DepartmentNoLicenseCheckingActivity.class);
+                            intent.putExtra("id", id);
+                            intent.putExtra("object", object.toString());
+                            intent.putExtra("type", type);
+                            intent.putExtra("postType", postType);
+                            startActivity(intent);
                         }
                     });
                 }
@@ -653,7 +661,7 @@ public class DepartmentCheckingFragment extends BaseFragment{
             private TextView customerNumberTv;
             private LinearLayout nothasLicenseLl;
             private TextView nothasLicenseTv;
-            private TextView statusTv;
+            private TextView statusTv, del_tv;
 
             private void assignViews(View itemView) {
                 rl = (RelativeLayout) itemView.findViewById(R.id.rl);
@@ -667,6 +675,7 @@ public class DepartmentCheckingFragment extends BaseFragment{
                 nothasLicenseLl = (LinearLayout) itemView.findViewById(R.id.nothas_license_ll);
                 nothasLicenseTv = (TextView) itemView.findViewById(R.id.nothas_license_tv);
                 statusTv = (TextView) itemView.findViewById(R.id.status_tv);
+                del_tv = (TextView) itemView.findViewById(R.id.del_tv);
             }
 
 
